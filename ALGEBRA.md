@@ -1,224 +1,98 @@
-# Ω-Math v0.1 — Algebra Research
+# Ω-Math v0.9 — Algebraic Layer
 
 ## Purpose
 
-The central algebraic question is not how to add `−1` and `+1`. Ordinary arithmetic already knows that.
+Ω-Math does not assign ordinary arithmetic meaning to the symbols `0, 1, −1, +1`. Algebra is typed: entity states and relation states belong to disjoint domains.
 
-The question is:
+The algebraic layer studies which compositions are legal, which structures are derived, and which stronger laws require additional semantics.
 
-> What operations are legal on typed entities and typed relations, and what algebraic structures arise from those operations?
+## 1. Primitive domains
 
-## 1. Primitive types
+`EntityState = {0,1}`
 
-`Entity = {0,1}`
+`RelationState = {−1,+1}`
 
-`Relation = {−1,+1}`
+These domains are disjoint by type.
 
-These are disjoint typed domains even though their labels are numerical.
+## 2. Entity algebra
 
-## 2. Entity operations
+Primitive entity-state operations are intentionally minimal:
 
-At v0.1 we define only equality and distinction for entity values.
+- equality/distinction are defined;
+- entity-state addition is not primitive;
+- arithmetic coercion is forbidden unless an external model explicitly declares it.
 
-Equality:
+`DIST(a,b)=0` when `a=b`, otherwise `1`.
 
-`Eq(a,b) = true` when `a=b`.
+## 3. Path composition is the canonical sequential composition
 
-Distinction:
+For compatible paths `P=(r₁,...,rₙ)` and `Q=(q₁,...,qₘ)`, `P⧺Q` is their ordered concatenation.
 
-`D(a,b) = 0` when `a=b`.
-`D(a,b) = 1` when `a≠b`.
+Path concatenation is associative, and the empty path `ε_e` is the identity for compatible path concatenation.
 
-We deliberately do not define entity addition as primitive.
+This does not introduce a primitive relation identity.
 
-## 3. Relation composition
+## 4. Relation-to-relation collapse
 
-Given:
+A primitive binary operation `REL_COMPOSE : RelationState × RelationState → RelationState` is **not required** by the minimal language.
 
-`A —r₁→ B —r₂→ C`
+Sequential relational organization is retained as a path. Any collapse of a path into a single relation is an explicitly declared derived abstraction and may lose information.
 
-we want to study whether a composed relation
+## 5. Sign product
 
-`r₁ ⊙ r₂`
+For a path `P=(r₁,...,rₙ)`, define the derived sign summary `Σ(P)=∏ᵢ sign(rᵢ)`.
 
-can be defined.
+For non-empty paths over `{−1,+1}`, this remains in `{−1,+1}` and is associative and commutative as an ordinary multiplication operation on the summary values.
 
-The four primitive cases are:
+This is a valid algebraic **summary**, not a universal law of relational composition. It can lose path length, order, intermediate entities, alternatives and conflicts.
 
-`(+1) ⊙ (+1)`
-`(+1) ⊙ (−1)`
-`(−1) ⊙ (+1)`
-`(−1) ⊙ (−1)`
+## 6. Parallel aggregation is separate
 
-Their values must not be assigned by ordinary arithmetic before the semantics of composition are specified.
+Several relations sharing endpoints are not sequential composition. In particular, `A —(+1)→ B` and `A —(−1)→ B` do not imply a primitive relation `0`.
 
-## 4. Candidate composition laws
+Possible representations include multirelations, conflict records or richer structures, but none is promoted to a primitive without declared semantics and tests.
 
-We will test at least four candidate families.
+## 7. Direction and reversal
 
-### A. Arithmetic projection
+`rev(r₁,...,rₙ)=(rₙ,...,r₁)` is a sequence operation. It does not imply that reverse directed edges exist. Therefore `REL_INV` is not primitive.
 
-Map relation states directly onto integers and use multiplication or addition.
+## 8. Identity and inverse
 
-This is a baseline, not the Ω definition.
+No primitive relation identity or inverse is admitted in v0.9. The path-level identity is supplied by `ε_e`. A relation inverse requires additional semantics for directed relations and cannot be inferred from sign labels.
 
-### B. Sign composition
+## 9. Established algebraic laws
 
-Use multiplication:
+| Structure | Law | Status |
+|---|---|---|
+| Path concatenation | associativity | DERIVED |
+| Path concatenation | empty-path identity | DERIVED |
+| Exact path equality | reflexive/symmetric/transitive | DERIVED |
+| Sign summary | closure on non-empty paths | DERIVED |
+| Sign summary | associativity | DERIVED from multiplication |
+| Sign summary | commutativity | DERIVED for the summary operation |
+| Primitive relation composition | closure | NOT ADMITTED |
+| Primitive relation composition | identity | NOT ADMITTED |
+| Primitive relation composition | inverse | NOT ADMITTED |
+| Universal physical composition law | — | OPEN |
 
-`(+1)·(+1)=+1`
-`(+1)·(−1)=−1`
-`(−1)·(+1)=−1`
-`(−1)·(−1)=+1`
+## 10. Richer composition remains model-relative
 
-This models parity of relation polarity.
+If a future model defines a richer composition operator, its associativity, identity, inverse and closure must be proved or tested for that exact representation. Failure is a structural result, not something to repair silently.
 
-### C. Context-dependent composition
+## 11. Algebra and behavior
 
-The result may depend on the intermediate entity state:
+Equal sign summaries do not imply equal paths or equal future behavior. Behavioral equivalence requires a declared observation/dynamics/task criterion.
 
-`r₁ ⊙_b r₂`
+`equal summary ≠ equal path ≠ equal structure ≠ equal behavior`.
 
-This is important if the same relation pair behaves differently in different states.
+## 12. Admission and verification
 
-### D. Structural composition
+Any new algebraic primitive requires: typed signature; domain restrictions; semantics; algebraic laws; information-loss analysis; counterexamples/failure conditions; comparison with existing mathematics; and executable or exhaustive tests where finite verification is possible.
 
-The composition result may not be a single sign at all. It may be a relation plus information about path multiplicity, conflict or uncertainty.
+## 13. Status
 
-This is likely the most important candidate to test rather than assume away.
+`CANONICAL / v0.9 SYNCHRONIZED`
 
-## 5. Why a sign may be insufficient
+The minimal algebraic boundary is closed: path composition is defined; sign multiplication is a derived summary; primitive relation composition, identity and inverse remain outside the required core.
 
-Suppose:
-
-`A → B → C`
-
-and there are two paths:
-
-`A —(+1)→ B —(+1)→ C`
-
-`A —(−1)→ D —(+1)→ C`
-
-A single relation value from `A` to `C` cannot preserve the fact that the paths disagree.
-
-Therefore higher-order structure may require a value richer than `{−1,+1}`.
-
-The primitive relation can remain binary while the composed object becomes structured.
-
-This is a key research direction.
-
-## 6. Identity
-
-An identity relation would need an element `I` such that:
-
-`I ⊙ r = r`
-
-and
-
-`r ⊙ I = r`.
-
-There is no third primitive relation value available in v0.1.
-
-Therefore we must determine whether identity can be represented structurally rather than by adding a new primitive.
-
-## 7. Inverse
-
-For a relation `r`, an inverse operation would satisfy some criterion involving:
-
-`r⁻¹`
-
-and the reverse path.
-
-But because `+1` and `−1` are semantic states rather than assumed group elements, we do not yet identify:
-
-`(+1)⁻¹ = +1`
-
-or
-
-`(+1)⁻¹ = −1`.
-
-Both are hypotheses requiring a defined semantics.
-
-## 8. Associativity
-
-A candidate composition `⊙` must be tested for:
-
-`(a ⊙ b) ⊙ c = a ⊙ (b ⊙ c)`.
-
-If associativity fails, that failure is important: it tells us that relational composition depends on grouping or intermediate structure.
-
-If associativity holds under a specified model, we gain an algebraic structure that can be studied formally.
-
-## 9. Commutativity
-
-Test:
-
-`a ⊙ b = b ⊙ a`.
-
-There is no reason to assume this.
-
-Directed relations naturally suggest non-commutativity.
-
-## 10. Closure
-
-For a candidate binary composition on relation values, closure would require:
-
-`a,b ∈ {−1,+1}  ⇒  a ⊙ b ∈ {−1,+1}`.
-
-If empirical or structural composition produces a richer object, closure in the primitive relation set fails. That may be a feature rather than an error.
-
-## 11. Important separation
-
-There are at least three different operations that can look like “combining relations”:
-
-1. **Path composition** — sequential relation through an intermediate entity.
-2. **Parallel aggregation** — several relations between the same endpoints.
-3. **State transition** — a relation changes because the system changes.
-
-They must not be collapsed into one operator.
-
-## 12. Parallel conflict
-
-If two relations connect the same endpoints:
-
-`A —(+1)→ B`
-
-and
-
-`A —(−1)→ B`
-
-we do not force them to cancel to `0`.
-
-The correct representation may be a multirelation, a conflict state, a weighted structure or an unresolved pair.
-
-The important point is that `0` is not a primitive relation value in Ω-Math v0.1.
-
-## 13. Research tests
-
-The algebra branch should enumerate all compositions of length 2, 3 and 4 and test:
-
-- closure;
-- associativity;
-- commutativity;
-- identity;
-- inverse;
-- path equivalence;
-- conflict preservation;
-- sensitivity to entity state;
-- sensitivity to direction.
-
-The output should distinguish mathematically derived properties from properties observed only in a chosen model.
-
-## 14. First expected result
-
-The first deliverable is not a grand theorem.
-
-It is a complete table of legal typed operations and their status:
-
-`DEFINED`
-`DERIVED`
-`HYPOTHESIZED`
-`UNDEFINED`
-`REJECTED`
-
-That table becomes the algebraic backbone of Ω-Math.
+See `PATH_ALGEBRA.md`, `RELATION_COMPOSITION.md`, `OPERATOR_TABLE.md`, and `FRONTIER_CLOSURE_v0.9.md` for corresponding canonical definitions and limits.
