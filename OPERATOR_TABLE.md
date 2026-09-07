@@ -1,4 +1,4 @@
-# Ω-Math v0.8 — Canonical Operator Table
+# Ω-Math v0.9 — Canonical Operator Table
 
 This is the canonical operator inventory. An operator may not silently change type or meaning between documents.
 
@@ -6,9 +6,10 @@ This is the canonical operator inventory. An operator may not silently change ty
 |---|---|---|---|
 | `DIST` | `Entity × Entity → Distinction` | DEFINED | typed comparison |
 | `INCIDENT` | `Entity × Relation → Incidence` | DEFINED | structural query |
-| `PATH` | `Relation* → Path` | DEFINED | compatible ordered sequence |
+| `PATH` | `Relation* → Path` | DEFINED | ordered compatible sequence |
+| `PATH_EQ` | `Path × Path → Boolean` | DERIVED / ADMITTED | exact sequence equality only |
 | `CYCLE` | `Path → Cycle ∪ Failure` | DEFINED | declared return criterion |
-| `CONCAT` / `⧺` | `Path × Path → Path` | DEFINED | compatible endpoints |
+| `CONCAT` / `⧺` | `Path × Path → Path` | DEFINED | compatible endpoints; empty path is identity |
 | `SIGN` | `Path → SignSequence / Summary` | DERIVED | product is summary only |
 | `COMPARE` | `State × State → ChangeRecord` | DEFINED | not subtraction |
 | `TRANSFORM` | `State × Rule/Input → State or Successors` | DEFINED | deterministic or branching |
@@ -29,21 +30,24 @@ This is the canonical operator inventory. An operator may not silently change ty
 | `FEEDBACK` | `State/Model × Dynamics → RecurrentDependency` | DEFINED FRAMEWORK |
 | `COARSE` | `Structure × Criterion → MacroObject` | DEFINED FRAMEWORK | emergence candidate |
 
-## Reserved / unresolved
+## Derived closures
 
-The following are not canonical primitives:
+- `ε_e` is the identity of path concatenation: `ε_e⧺P=P` and `P⧺ε_e=P`.
+- `s≈∞s' ⇔ ∀h∈ℕ₀, s≈ₕs'` is derived from finite-horizon equivalence.
+- Rich path equivalence is task-relative and is not identified with exact sequence equality.
+- Quotient geometry is a derived construction subject to explicit compatibility/separation conditions; see `QUOTIENT_GEOMETRY_CONDITIONS.md`.
 
-`REL_COMPOSE` — primitive relation-to-relation collapse remains OPEN.
+## Non-primitive / external modules
 
-`REL_ID` — no primitive identity relation is required while empty-path identity is available as a structural candidate; canonical admission remains OPEN.
+`REL_COMPOSE` — primitive relation-to-relation collapse is not required; path formation is the sequential composition layer.
 
-`REL_INV` — primitive relation inverse remains OPEN; path reversal is structural and does not imply a relation-state inverse.
+`REL_ID` — not a primitive relation; empty-path identity is sufficient for path concatenation.
 
-`PATH_EQ` — canonical universal path equivalence remains OPEN.
+`REL_INV` — not a primitive relation; path reversal does not imply a reverse edge.
 
 `CAUSE` — causal semantics require explicit intervention/counterfactual criteria.
 
-`PROB` — probability is a separate typed extension, not implied by branching.
+`PROB` — probability requires an independently declared probabilistic kernel.
 
 `ENERGY` — physical energy is not transformation cost by definition.
 
@@ -65,4 +69,4 @@ Every new primitive must declare:
 
 ## Status
 
-`DEFINED / CANONICAL INVENTORY`
+`DEFINED / CANONICAL INVENTORY / v0.9 SYNCHRONIZED`
