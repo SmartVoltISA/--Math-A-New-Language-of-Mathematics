@@ -1,184 +1,195 @@
-# Ω-Math v0.3 — Research Status
+# Ω-Math v0.4 — Research Status
 
 ## Current state
 
-The repository contains a typed structural core, explicit transformations, invariants/symmetry rules, path algebra, behavioral equivalence, and a first transformation-derived metric baseline.
+The repository now contains a typed relational language with explicit syntax, semantics, operator discipline, reduction rules, transformations, invariants/symmetry, path algebra, behavioral equivalence and a first transformation-derived metric baseline.
 
-The current result is deliberately conservative: the signed relation algebra works as a **summary algebra**, while paths remain first-class objects whenever order, intermediate structure, multiplicity or conflict matters.
+The central discipline is:
 
-## Closed milestones in the current cycle
+`define → derive → execute → verify → compare → falsify → record`.
+
+The language deliberately separates mathematical representation from physical interpretation.
+
+## v0.4 language milestones
+
+### L1 — Canonical type system
+
+Entity state, relation state, relation absence, identity and configuration are explicitly typed.
+
+Status: `DEFINED`.
+
+### L2 — Canonical operator inventory
+
+`OPERATOR_TABLE.md` fixes the signatures and status of current operators and reserves unresolved operators from silent use.
+
+Status: `DEFINED`.
+
+### L3 — Semantic discipline
+
+`SEMANTICS.md` records direction, absence, path, transformation, observation, equivalence, quotient, causality, memory and emergence semantics.
+
+Status: `DEFINED`.
+
+### L4 — Reduction discipline
+
+`REDUCTION_RULES.md` formalizes task-relative sufficiency and gives the canonical counterexample pattern:
+
+`Q(x)=Q(y)` while `F(x)≠F(y)`.
+
+Status: `DEFINED / DERIVED METHODOLOGICAL RULE`.
+
+### L5 — Canonical reference examples
+
+`CANONICAL_EXAMPLES.md` fixes minimal interpretations of entities, relations, paths, transformations, observations and reductions.
+
+Status: `DEFINED`.
+
+## Closed mathematical milestones
 
 ### M1 — Four length-2 signed cases
 
-Enumerated exhaustively:
-
-`(+,+) → +`
-`(+,-) → -`
-`(-,+) → -`
-`(-,-) → +`
-
-The sign-product operation on `{−1,+1}` is closed, commutative and associative.
+`(+,+)→+`, `(+,-)→-`, `(-,+)→-`, `(-,-)→+` under the scalar sign-product summary.
 
 Status: `DERIVED`.
 
-### M2 — Candidate relation reduction
+### M2 — Sign-product is not universal relation composition
 
-The sign-product is a valid scalar reduction, but not a universal semantics for sequential relations.
-
-`PATH → SIGN PRODUCT` is therefore retained as a summary map, not as the definition of relation composition.
+The scalar sign-product is closed and useful as a summary, but path information can affect behavior.
 
 Status: `COUNTEREXAMPLE / REJECTED AS UNIVERSAL LAW`.
 
-### M3 — Associativity lengths 3–4
+### M3 — Path associativity
 
-For the scalar sign-product summary, associativity follows from the binary operation and therefore extends to arbitrary finite sign sequences.
+Path concatenation is associative. Scalar sign-product is associative. Neither result licenses erasure of intermediate path structure.
 
-For full path semantics, associativity belongs to path concatenation itself and does not justify erasing intermediate structure.
+Status: `DEFINED / DERIVED`.
 
-Status: `DERIVED` for summary algebra; `DEFINED` for path concatenation.
+### M4 — Parallel-path conflict
 
-### M4 — Conflicting parallel paths
-
-Parallel paths cannot be collapsed to one primitive relation without an additional rule for multiplicity, conflict, selection or richer relation state.
+Conflicting or multiple parallel paths cannot be silently collapsed to one primitive relation state.
 
 Status: `OPEN / NO SILENT COLLAPSE`.
 
 ### M5 — Finite-horizon behavioral equivalence
 
-Behavioral equivalence is defined relative to declared observations, inputs/interventions, transition rule, determinism and horizon.
+`x ≈ᵦ,h y` is defined by equality of declared observations through horizon `h` under the same declared inputs for deterministic systems.
 
-For deterministic finite-horizon behavior:
-
-`x ≈ᵦ,h y` iff the declared observations match through horizon `h` under the same declared inputs.
-
-The equivalence classes are nested:
-
-`≈ᵦ,h+1 ⊆ ≈ᵦ,h`.
-
-At `h=0`, this reduces to observational equivalence.
+`≈ᵦ,h+1 ⊆ ≈ᵦ,h` follows directly from the definition.
 
 Status: `DEFINED / DERIVED`.
 
-### M6 — Quotient and invariant preservation
+### M6 — Invariants and symmetry
 
-A quotient is behavior- or structure-preserving only relative to explicitly declared observations, transformations and retained quantities.
-
-An invariant must specify the transformation family under which it is preserved:
-
-`I(T(S)) = I(S)`.
-
-Label permutation is a mandatory first representation control for structural claims.
+An invariant is always relative to a declared transformation family. Label permutation is a mandatory representation control unless labels are part of the modeled object.
 
 Status: `DEFINED / DERIVED METHODOLOGICAL RULE`.
 
-### M7 — Path-profile sufficiency
+### M7 — Path-profile insufficiency
 
-A restricted profile containing endpoint, length and sign sequence/product is not universally sufficient for future behavior. PATH-DYNAMICS-001 gives a formal deterministic counterexample in which intermediate organization changes the trajectory while the restricted profile remains identical.
+`EXPERIMENT_PATH_DYNAMICS_001.md` gives a deterministic counterexample where equal endpoints, length and sign summary hide different intermediate organization and future behavior.
 
 Status: `COUNTEREXAMPLE`.
 
 ### M8 — Transformation-derived metric baseline
 
-With a fixed finite relation-slot representation, a primitive sign-flip transformation of unit cost induces a distance equal to the minimum number of flips. The resulting function satisfies non-negativity, identity of indiscernibles, symmetry and triangle inequality.
-
-The result is the discrete Hamming/hypercube geometry of the chosen representation.
+A fixed relation-slot representation with unit-cost sign flips induces the Hamming/hypercube metric.
 
 Status: `DERIVED BASELINE`.
 
-This demonstrates that quantitative geometry can arise from a transformation/cost system, but does not establish a unique or physical Ω metric.
+This is not a unique Ω metric and not physical space.
 
-## Relation composition decision
+## Current algebraic decision
 
 `PATH CONCATENATION`: `DEFINED`.
 
 `SIGN-PRODUCT SUMMARY`: `DERIVED`.
 
-`SIGN-PRODUCT AS COMPLETE RELATION COMPOSITION`: `REJECTED` as an information-preserving universal law.
+`SIGN-PRODUCT AS COMPLETE RELATION COMPOSITION`: `REJECTED` as a universal information-preserving law.
 
 `PRIMITIVE RELATION REDUCTION`: `OPEN`.
 
-The repository must preserve path information until a sufficiency theorem or an explicitly task-relative reduction justifies its removal.
+Path information must be retained until sufficiency is demonstrated for the declared task.
 
-## Structural and behavioral findings retained from earlier work
+## Current geometry decision
 
-The topology and structure experiments show that equal entity counts, relation counts, sign counts, degree sequences and selected aggregate graph statistics can still hide different path organization and controlled dynamic responses.
+Transformation-derived distance is a valid mathematical construction when the admissible transformations and costs are declared. The next task is to remove artificial fixed-slot assumptions.
 
-Therefore aggregate graph statistics are not automatically complete state descriptions.
+Required tests:
 
-The behavioral-equivalence experiments show:
-
-`static observational equivalence ≠ behavioral equivalence`.
-
-The collapse experiments show:
-
-`observation collapse ≠ system change`.
-
-`vertex quotient ≠ relation quotient ≠ path quotient`.
+1. relation addition/removal;
+2. entity-state changes;
+3. principled nonnegative costs;
+4. label-permutation invariance;
+5. reversible versus irreversible transformations;
+6. directed versus symmetric distance;
+7. quotient-induced distance and well-definedness;
+8. comparison with standard graph/edit/configuration metrics.
 
 ## Point / boundary status
 
-Executed experiments support, within tested models:
+Executed closure, reconnection, redundancy and combined-factor probes did not establish a unique single Point-like object.
+
+The current evidence supports only:
 
 `relations → closure → relational separation → candidate core/interface`.
 
-Closure-only, closure-plus-reconnection, closure-plus-redundancy and combined-factor probes did not establish a unique single Point-like object. Strong closure can fragment; high connectivity alone does not create the required boundary behavior.
+The Point remains `OPEN` and must be treated as a multi-criterion intermediate regime rather than maximum closure or maximum connectivity.
 
-Therefore the Point remains `OPEN` and must be tested as an intermediate regime satisfying multiple simultaneous criteria.
+## Research-map position
 
-## Next layer — general transformation geometry
+The formalism now has enough structure for direct technical comparison with existing mathematics rather than only philosophical comparison.
 
-The fixed-slot metric is only a baseline. The next tests must remove its artificial restrictions:
+Primary comparison targets:
 
-1. allow relation addition/removal;
-2. allow entity-state changes;
-3. define costs without smuggling in physical energy;
-4. test label-permutation invariance;
-5. test reversible versus irreversible transformations;
-6. compare directed and symmetric distances;
-7. test quotient-induced distances and well-definedness;
-8. compare with standard graph metrics only after the Ω quantity is defined.
+- category/compositional systems;
+- graph transformation/rewrite systems;
+- type/equivalence systems;
+- transition-system behavioral equivalence;
+- coarse-graining and causal emergence;
+- relational/pregeometric approaches.
 
-A successful metric is still only a mathematical structure. A physical interpretation requires an independent bridge and prediction.
+The purpose is to identify both independent reconstruction and genuine mathematical novelty. Similarity is not claimed as novelty.
 
-## What remains explicitly open
+## Explicitly open
 
 - canonical primitive relation composition;
 - canonical path equivalence;
 - universal sufficient path profile;
-- canonical metric for unrestricted transformations;
+- unrestricted canonical metric;
+- quotient geometry;
 - physical time;
 - probability;
 - energy;
 - physical ontology;
-- emergence criterion independent of a selected task;
+- task-independent emergence criterion;
 - self-model and causal self-reference;
-- physical bridge and empirical predictions.
+- physical bridge and independent empirical predictions.
 
 ## Confidence labels
 
-`DEFINED` = introduced by the language.
+`DEFINED` = language rule introduced explicitly.
 
 `DERIVED` = follows formally from current rules.
 
-`EXECUTED` = evaluated by an explicit finite construction or computation.
+`EXECUTED` = evaluated by an explicit finite construction/computation.
 
-`SUPPORTED` = survived specified controls.
+`SUPPORTED` = survives specified controls.
 
 `COUNTEREXAMPLE` = evidence against a universal claim.
 
-`REJECTED` = claim no longer retained as valid under documented evidence.
+`REJECTED` = claim no longer retained under documented evidence.
 
 `OPEN` = unresolved.
 
 ## Critical methodological rule
-
-The ability to express a phenomenon in Ω-Math is not evidence that Ω-Math explains it.
 
 `representable ≠ explained`
 
 `correlated ≠ caused`
 
 `stable ≠ fundamental`
+
+`compressed ≠ equivalent`
 
 `emergent candidate ≠ emergence proven`
 
@@ -188,4 +199,8 @@ The ability to express a phenomenon in Ω-Math is not evidence that Ω-Math expl
 
 Status: `OPEN`.
 
-No physical interpretation is accepted until an Ω quantity is defined independently, mapped to established observables, tested against controls, and used to make predictions not used in its construction.
+No physical interpretation is accepted until an Ω quantity is independently defined, mapped to established observables, tested against controls and used to make predictions not used in its construction.
+
+## Version
+
+**Ω-Math v0.4** — typed relational language, explicit semantics and reduction discipline, tested composition/path layer, and first transformation-derived metric baseline.
