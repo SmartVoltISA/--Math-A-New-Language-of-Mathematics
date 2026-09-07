@@ -6,7 +6,7 @@ Is a scalar sign-product or a restricted path profile sufficient to determine fu
 
 ## Status
 
-`EXECUTED / COUNTEREXAMPLE`
+`FORMAL COUNTEREXAMPLE`
 
 ## Construction
 
