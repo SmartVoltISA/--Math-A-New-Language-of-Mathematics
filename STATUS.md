@@ -1,179 +1,163 @@
-# Ω-Math v0.2 — Research Status
+# Ω-Math v0.3 — Research Status
 
 ## Current state
 
-The foundation is written into the repository and the formal language is being treated as an object of study, not as a finished theory.
+The repository now contains a typed structural core plus an explicit transformation layer and tested path/composition semantics.
 
-The v0.2 structural expansion adds an explicit typed object system, transformation layer, invariant/symmetry layer and path algebra layer.
+The current result is deliberately conservative: the signed relation algebra works as a **summary algebra**, while paths remain first-class objects whenever order, intermediate structure, multiplicity or conflict matters.
 
-## Primitive layer
+## Closed milestones in the current cycle
 
-### Defined
+### M1 — Four length-2 signed cases
 
-- Entity domain: `{0,1}` as state values.
-- Relation domain: `{−1,+1}`.
-- Type separation between the two domains.
-- Entity identity/state separation `eᵢ=(i,sᵢ)`.
-- Identity, state and observation distinctions.
-- Explicit relation domain `D_R`.
-- System configuration/state.
-- Structural transition concept.
-- Typed object categories.
-- Path object and path concatenation.
-- Transformation object and composition.
-- Identity transformation.
-- Invariant definition relative to a transformation family.
-- Symmetry definition relative to an equivalence.
+Enumerated exhaustively:
 
-### Not yet derived
+`(+,+) → +`
+`(+,-) → -`
+`(-,+) → -`
+`(-,-) → +`
 
-- unique primitive relation composition;
-- identity relation as a relation-state primitive;
-- relation inverse;
+The sign-product operation on `{−1,+1}` is closed, commutative and associative.
+
+Status: `DERIVED`.
+
+### M2 — Candidate relation reduction
+
+The sign-product is a valid scalar reduction, but not a universal semantics for sequential relations.
+
+`PATH → SIGN PRODUCT` is therefore retained as a summary map, not as the definition of relation composition.
+
+Status: `COUNTEREXAMPLE / REJECTED AS UNIVERSAL LAW`.
+
+### M3 — Associativity lengths 3–4
+
+For the scalar sign-product summary, associativity follows from the binary operation and therefore extends to arbitrary finite sign sequences.
+
+For full path semantics, associativity belongs to path concatenation itself and does not justify erasing intermediate structure.
+
+Status: `DERIVED` for summary algebra; `DEFINED` for path concatenation.
+
+### M4 — Conflicting parallel paths
+
+Parallel paths cannot be collapsed to one primitive relation without an additional rule for multiplicity, conflict, selection or richer relation state.
+
+Status: `OPEN / NO SILENT COLLAPSE`.
+
+### M5 — Finite-horizon behavioral equivalence
+
+Behavioral equivalence is defined relative to declared observations, inputs/interventions, transition rule, determinism and horizon.
+
+For deterministic finite-horizon behavior:
+
+`x ≈ᵦ,h y` iff the declared observations match through horizon `h` under the same declared inputs.
+
+The equivalence classes are nested:
+
+`≈ᵦ,h+1 ⊆ ≈ᵦ,h`.
+
+At `h=0`, this reduces to observational equivalence.
+
+Status: `DEFINED / DERIVED`.
+
+### M6 — Quotient and invariant preservation
+
+A quotient is behavior- or structure-preserving only relative to explicitly declared observations, transformations and retained quantities.
+
+An invariant must specify the transformation family under which it is preserved:
+
+`I(T(S)) = I(S)`.
+
+Label permutation is a mandatory first representation control for structural claims.
+
+Status: `DEFINED / DERIVED METHODOLOGICAL RULE`.
+
+### M7 — Path-profile sufficiency
+
+A restricted profile containing endpoint, length and sign sequence/product is not universally sufficient for future behavior. PATH-DYNAMICS-001 gives a deterministic counterexample in which intermediate organization changes the trajectory while the restricted profile remains identical.
+
+Status: `COUNTEREXAMPLE`.
+
+## Relation composition decision
+
+`PATH CONCATENATION`: `DEFINED`.
+
+`SIGN-PRODUCT SUMMARY`: `DERIVED`.
+
+`SIGN-PRODUCT AS COMPLETE RELATION COMPOSITION`: `REJECTED` as an information-preserving universal law.
+
+`PRIMITIVE RELATION REDUCTION`: `OPEN`.
+
+The repository must preserve path information until a sufficiency theorem or an explicitly task-relative reduction justifies its removal.
+
+## Structural and behavioral findings retained from earlier work
+
+The topology and structure experiments show that equal entity counts, relation counts, sign counts, degree sequences and selected aggregate graph statistics can still hide different path organization and controlled dynamic responses.
+
+Therefore aggregate graph statistics are not automatically complete state descriptions.
+
+The behavioral-equivalence experiments show:
+
+`static observational equivalence ≠ behavioral equivalence`.
+
+The collapse experiments show:
+
+`observation collapse ≠ system change`.
+
+`vertex quotient ≠ relation quotient ≠ path quotient`.
+
+## Point / boundary status
+
+Executed experiments support, within tested models:
+
+`relations → closure → relational separation → candidate core/interface`.
+
+Closure-only, closure-plus-reconnection, closure-plus-redundancy and combined-factor probes did not establish a unique single Point-like object. Strong closure can fragment; high connectivity alone does not create the required boundary behavior.
+
+Therefore the Point remains `OPEN` and must be tested as an intermediate regime satisfying multiple simultaneous criteria.
+
+## Next layer — quantitative structure
+
+The current dependency barrier has been reached. The next layer can now investigate quantities that are **derived from transformations** rather than inserted as primitives.
+
+Priority order:
+
+1. define admissible transformation costs;
+2. derive task-relative transformation distance;
+3. test non-negativity, identity of indiscernibles, symmetry and triangle inequality where applicable;
+4. identify when directed/asymmetric cost is necessary;
+5. test metric invariance under declared symmetries;
+6. compare derived quantities with standard graph distance only as an external comparison, not as an assumed definition;
+7. investigate whether geometry can emerge as a stable quotient of transformation structure.
+
+## What remains explicitly open
+
+- canonical primitive relation composition;
 - canonical path equivalence;
 - universal sufficient path profile;
 - canonical metric;
 - physical time;
 - probability;
 - energy;
-- physical ontology.
+- physical ontology;
+- emergence criterion independent of a selected task;
+- self-model and causal self-reference;
+- physical bridge and empirical predictions.
 
-## v0.2 formal expansion
+## Confidence labels
 
-### Transformation
-
-`TRANSFORMATION.md` defines mappings between configurations/states, composition, identity, inverse where applicable, transformation classes, change, symmetry, derived transformation-cost distance and structural loss.
-
-### Type system
-
-`TYPE_SYSTEM.md` makes input/output types explicit and lists forbidden silent coercions. In particular:
-
-`state 0 ≠ relation −1 ≠ relation absence`.
-
-### Invariants and symmetry
-
-`INVARIANTS.md` establishes that every invariant is relative to a named transformation family. Label permutation is the first mandatory representation control.
-
-### Path algebra
-
-`PATH_ALGEBRA.md` separates path concatenation from the still-open question of reducing a path to a primitive relation. It introduces path profiles as a testable candidate descriptor.
-
-## Existing concepts that must NOT be reinvented
-
-The Ω research history already contains working concepts for:
-
-- state;
-- difference/distinguishability;
-- memory;
-- history/trace;
-- transitions;
-- cycles;
-- connectivity;
-- stability/lifetime;
-- independent paths;
-- structural change;
-- information versus organization;
-- internal dynamics;
-- experimental controls.
-
-Ω-Math should formalize and connect these concepts rather than create duplicate names.
-
-## Behavioral-equivalence findings
-
-The executed constructions provide two important formal counterexamples:
-
-1. identical current observations can hide different transition structure;
-2. identical entity-state composition can hide different relational organization and therefore different future trajectories under the same explicit propagation rule.
-
-Therefore:
-
-`static observational equivalence ≠ behavioral equivalence`.
-
-A behavior-preserving quotient must specify which observations, inputs and horizons it preserves.
-
-## Structure findings
-
-`TOPOLOGY-003` and `STRUCTURE-004` show that equal entity counts, relation counts, sign counts and selected graph statistics can still hide different path organization and different controlled dynamic responses.
-
-Therefore aggregate graph statistics are not automatically complete state descriptions.
-
-## Collapse findings
-
-`EQUIV-001` shows that a structural quotient cannot be defined by vertex merging alone. A complete relational quotient needs explicit entity, relation and path mapping rules.
-
-This gives the current collapse discipline:
-
-`observation collapse ≠ system change`
-
-`vertex quotient ≠ relation quotient ≠ path quotient`.
-
-## Point/boundary findings
-
-Executed results support, within tested models:
-
-`relations → closure → relational separation → candidate core/interface`.
-
-The tested closure-only, closure-plus-reconnection, closure-plus-redundancy and first combined-factor probes did **not** establish a single Point-like object. Strong closure can produce fragmentation, while strong combined mechanisms can produce near-global connectivity without a low-conductance dominant boundary.
-
-Therefore the Point remains `OPEN` and must be searched as an intermediate regime satisfying multiple simultaneous criteria rather than as maximum closure or maximum connectivity.
-
-## Open questions ranked by dependency
-
-### Q1 — Relation composition
-
-Can sequential relations be reduced to a relation without losing path information or importing ordinary arithmetic?
-
-### Q2 — Path algebra
-
-Which path equivalences and reductions preserve the selected structural/behavioral semantics?
-
-### Q3 — Structural invariants
-
-Which properties survive relabeling, permutation and representation changes?
-
-### Q4 — Quantification
-
-Which numbers arise naturally as measurements of Ω-structures rather than primitives?
-
-### Q5 — Dynamics
-
-Can transition rules be expressed entirely in relational terms?
-
-### Q6 — Memory
-
-Can functional memory be represented as a persistent relational structure with an intervention-tested effect?
-
-### Q7 — Emergence
-
-Under what conditions can a stable relation pattern become a higher-level entity?
-
-### Q8 — Self-model
-
-Can a system represent and causally use a model of its own state?
-
-### Q9 — Consciousness
-
-Do any self-model/feedback structures predict phenomena associated with consciousness better than simpler controls?
-
-### Q10 — Physical bridge
-
-Can the formalism reproduce independently established physical mathematics or observations without hidden imported assumptions?
-
-## Current confidence labels
-
-`DEFINED` = language definition.
+`DEFINED` = introduced by the language.
 
 `DERIVED` = follows formally from current rules.
 
-`EMPIRICALLY OBSERVED` = reported by an executed experiment.
+`EXECUTED` = evaluated by an explicit finite construction or computation.
 
 `SUPPORTED` = survived specified controls.
 
+`COUNTEREXAMPLE` = evidence against a universal claim.
+
+`REJECTED` = claim no longer retained as valid under documented evidence.
+
 `OPEN` = unresolved.
-
-`COUNTEREXAMPLE` = evidence against a stated universal claim.
-
-`REJECTED` = claim no longer retained as valid under the documented evidence.
 
 ## Critical methodological rule
 
@@ -187,18 +171,7 @@ The ability to express a phenomenon in Ω-Math is not evidence that Ω-Math expl
 
 `emergent candidate ≠ emergence proven`
 
-## Next formal milestone
-
-1. Enumerate the four length-2 signed relation cases.
-2. Test candidate relation-level reductions against explicit path semantics.
-3. Test associativity at lengths 3–4.
-4. Construct conflicting parallel-path counterexamples.
-5. Define finite-horizon behavioral equivalence precisely and test nesting.
-6. Test quotient preservation of declared invariants.
-7. Test whether path profiles are sufficient for the selected propagation dynamics.
-8. Only then derive quantitative geometry from transformation cost.
-
-## Physical hypotheses
+## Physical hypothesis
 
 `H-BH-0` — extreme relational distinguishability collapse may have a physically meaningful correspondence with characteristic black-hole behavior.
 
