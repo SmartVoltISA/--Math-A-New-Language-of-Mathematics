@@ -41,15 +41,16 @@ where `E` is the set of entity states, `Dᴿ ⊆ E × E` is the domain on which 
 2. **Algebra** — legal typed operations and relation composition.
 3. **Structure** — paths, cycles, connectivity, boundaries, invariants.
 4. **Transformation** — changes of configurations, symmetry, quotient and structural loss.
-5. **Dynamics** — state, transition, change, order, causality.
-6. **Memory** — retained state that can causally affect future behavior.
-7. **Emergence** — stable higher-level structures arising from lower-level relations.
-8. **Self-reference** — systems that represent and act upon their own state.
-9. **Consciousness research** — an explicit hypothesis layer built on the previous levels, never assumed as a primitive.
+5. **Quantification** — transformation costs and derived distance/geometry.
+6. **Dynamics** — state, transition, change, order, causality.
+7. **Memory** — retained state that can causally affect future behavior.
+8. **Emergence** — stable higher-level structures arising from lower-level relations.
+9. **Self-reference** — systems that represent and act upon their own state.
+10. **Consciousness research** — an explicit hypothesis layer built on the previous levels, never assumed as a primitive.
 
 ## Working chain
 
-`distinction → relation → configuration → structure → path → transformation → invariant → equivalence → quotient → dynamics → memory → self-model → feedback → emergence`
+`distinction → relation → configuration → structure → path → transformation → invariant → equivalence → quotient → metric candidate → dynamics → memory → self-model → feedback → emergence`
 
 This chain is a research decomposition, not a theorem.
 
@@ -62,13 +63,19 @@ Path concatenation is defined as the primary sequential operation. The sign-prod
 `(-,+)→-`
 `(-,-)→+`
 
-However, experiments show that reducing a path to its sign-product can erase intermediate organization and change predicted future behavior under explicit transition rules.
+However, a formal counterexample shows that reducing a path to its sign-product can erase intermediate organization and change predicted future behavior under an explicit transition rule.
 
 Therefore:
 
 `PATH CONCATENATION ≠ SIGN-PRODUCT REDUCTION`.
 
 The sign-product is a **summary**, not a universal information-preserving definition of relation composition. Primitive relation reduction remains open.
+
+## Transformation-derived geometry
+
+A first baseline has now been derived: if primitive transformations flip relation signs at unit cost, the minimum transformation cost is a genuine metric on the fixed finite relation-sign space. It is the discrete Hamming/hypercube geometry of that chosen representation.
+
+This is a baseline, not a physical-space derivation. The general Ω metric remains open until costs, transformations, symmetries and quotient compatibility are tested without artificial fixed-slot assumptions.
 
 ## Existing Ω research integrated into this language
 
@@ -129,16 +136,20 @@ Ordinary arithmetic must not be used to silently identify entity values with rel
 
 `BEHAVIORAL_EQUIVALENCE.md` defines finite-horizon behavioral equivalence relative to observations, inputs/interventions, transition rules and horizon. `EXPERIMENT_PATH_DYNAMICS_001.md` demonstrates why restricted path summaries cannot be assumed behavior-sufficient.
 
+### Quantitative structure
+
+`GEOMETRY_FROM_TRANSFORMATION.md` defines transformation-derived distance and its metric conditions. `EXPERIMENT_METRIC_001.md` gives the first explicit metric baseline.
+
 ## Current open problem
 
-The relation-composition milestone is now closed at the level that can be justified:
+The relation-composition milestone is closed at the level that can be justified:
 
 - path composition is defined;
 - sign-product is derived as a scalar summary;
 - sign-product is rejected as a universal information-preserving relation law;
 - primitive relation reduction remains open.
 
-The next central problem is **quantitative structure derived from transformations**: whether a meaningful distance/geometry can emerge from admissible transformation costs without being inserted as an ordinary geometric primitive.
+The next central problem is **general transformation geometry**: allow relation addition/removal and entity-state changes, define principled costs, test symmetry and quotient compatibility, and determine whether a stable geometry can emerge without importing physical space by assumption.
 
 ## Long-term question
 
@@ -157,16 +168,18 @@ If it cannot, the failure is a valid result.
 - `STRUCTURE.md` — graphs, paths, cycles, boundaries and structural quantities.
 - `TRANSFORMATION.md` — transformations, symmetry, quotient-related change and derived distance.
 - `INVARIANTS.md` — invariants and symmetry framework.
+- `GEOMETRY_FROM_TRANSFORMATION.md` — route from transformation cost to derived geometry.
+- `EXPERIMENT_METRIC_001.md` — first transformation-derived metric baseline.
 - `DYNAMICS.md` — state, change, order, causality and memory.
 - `EMERGENCE.md` — hierarchy, self-reference and consciousness hypotheses.
 - `GLOSSARY.md` — controlled vocabulary.
 - `RESEARCH_MAP.md` — mapping between Ω-Math and existing Ω experiments.
-- `EXPERIMENT_PATH_DYNAMICS_001.md` — dynamic counterexample to restricted path-profile sufficiency.
+- `EXPERIMENT_PATH_DYNAMICS_001.md` — formal dynamic counterexample to restricted path-profile sufficiency.
 - `EXPERIMENT_INVARIANT_001.md` — invariant/transformation test.
 - `STATUS.md` — current research state and dependency-ordered open questions.
 
 ## Status
 
-**Ω-Math v0.3 — typed structural core with tested path/composition layer; quantitative structure is next.**
+**Ω-Math v0.3 — typed structural core, tested path/composition layer, and first transformation-derived metric baseline.**
 
 No claim in this repository should be promoted from hypothesis to established fact without explicit evidence.
