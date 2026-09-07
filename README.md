@@ -61,11 +61,11 @@ The Ω-Lab already contains relevant experimental branches:
 - Ω-B: internal dynamics and control experiments;
 - Ω-Lab structural work: connectivity, cycles, stability and transitions.
 
-Ω-0 reported a minimal mechanism `ACT → TRACE → UPDATE` for internally distinguishable order, while explicitly rejecting the stronger claim that physical time has thereby been explained. fileciteturn10file0
+Ω-0 reported a minimal mechanism `ACT → TRACE → UPDATE` for internally distinguishable order, while explicitly rejecting the stronger claim that physical time has thereby been explained.
 
-Ω-MEM-4R found process-dependent predictive memory effects and a critical Thue-Morse counterexample, demonstrating that a proposed memory representation cannot be treated as universally sufficient. fileciteturn11file0
+Ω-MEM-4R found process-dependent predictive memory effects and a critical Thue-Morse counterexample, demonstrating that a proposed memory representation cannot be treated as universally sufficient.
 
-The Ω-Lab research policy requires separation of planned, coded, executed, validated and reproduced results and explicitly preserves negative results and methodological failures. fileciteturn9file0
+The Ω-Lab research policy requires separation of planned, coded, executed, validated and reproduced results and explicitly preserves negative results and methodological failures.
 
 ## Method
 
