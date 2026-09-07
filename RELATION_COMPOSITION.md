@@ -1,148 +1,54 @@
-# Ω-Math — Relation Composition v0.2
+# Ω-Math v0.9 — Relation Composition
 
-## 1. Question
+## Decision
 
-Can two sequential primitive relations be reduced to one primitive relation without losing distinctions that matter to Ω structure or behavior?
+Primitive relation-to-relation collapse is **not required** by the minimal language.
 
 Given
 
 `a —r₁→ b —r₂→ c`,
 
-we seek a candidate operation
+the information-preserving sequential object is the path
 
-`r₂ ⊙ r₁`.
+`P=(r₁,r₂)`.
 
-The operation is not assumed to be ordinary arithmetic.
+Path concatenation is the composition layer:
 
-## 2. Complete primitive cases
+`r₁ ⧺ r₂ → P`.
 
-Because each relation sign belongs to `{−1,+1}`, there are exactly four ordered sign pairs:
+## Sign multiplication
 
-| `r₂` | `r₁` | candidate input |
-|---|---|---|
-| `+1` | `+1` | `(+1,+1)` |
-| `+1` | `−1` | `(+1,−1)` |
-| `−1` | `+1` | `(−1,+1)` |
-| `−1` | `−1` | `(−1,−1)` |
+For relation signs `{−1,+1}`, multiplication is closed and associative:
 
-A complete composition law must assign a result or explicitly reject reduction for every case in its declared domain.
+`(+,+)→+`, `(+,-)→-`, `(-,+)→-`, `(-,-)→+`.
 
-## 3. Candidate A — sign multiplication
+It is a valid derived **summary** of a path's sign sequence. It is not a universal semantic replacement for the path.
 
-`r₂ ⊙ₘ r₁ = r₂ r₁`
+A path can retain intermediate entities, order and multiplicity that sign multiplication discards. Existing counterexamples prevent promotion to a universal primitive relation law.
 
-This gives:
+## Parallel paths
 
-| `r₂` | `r₁` | result |
-|---|---|---|
-| `+1` | `+1` | `+1` |
-| `+1` | `−1` | `−1` |
-| `−1` | `+1` | `−1` |
-| `−1` | `−1` | `+1` |
+Different paths may connect the same endpoints with different sign summaries. The primitive domain contains no third conflict sign. Combining such paths therefore requires an explicit higher-level aggregation/decision rule rather than a hidden primitive collapse.
 
-This candidate is closed and associative because it is multiplication on the two-element sign group.
+## Reversal and identity
 
-However, algebraic closure does not prove semantic adequacy.
+The empty path `ε_e` supplies identity for path concatenation. Path reversal `rev(P)` is a sequence operation only; it does not imply that reversed relations exist. Primitive `REL_ID` and `REL_INV` are therefore unnecessary.
 
-## 4. Counterexample to sufficiency
+## Current status
 
-Consider two length-2 paths with identical endpoints:
+- `PATH CONCATENATION` — **DEFINED**.
+- `EXACT PATH EQUALITY` — **ADMITTED**.
+- `SIGN MULTIPLICATION` — **DERIVED SUMMARY**.
+- `PRIMITIVE RELATION COMPOSITION` — **NON-PRIMITIVE / NOT REQUIRED**.
+- `REL_ID` — **NON-PRIMITIVE**.
+- `REL_INV` — **NON-PRIMITIVE**.
 
-`P₁: A —(+1)→ B —(+1)→ C`
+## Boundary
 
-`P₂: A —(+1)→ D —(+1)→ C`.
+`relation + relation → path` is the canonical sequential composition.
 
-Sign multiplication assigns `+1` to both.
+`path → primitive relation` is an optional explicit abstraction, not a core law.
 
-If the two paths are structurally distinct and both are retained in the Ω-system, the reduction loses path multiplicity and intermediate-entity identity.
+No universal mathematical novelty claim is made; the construction is positioned against established composition, path and graph formalisms.
 
-Therefore sign multiplication is a valid **path-sign summary**, but it is not demonstrated to be a sufficient universal relation-composition operator.
-
-## 5. Parallel-path conflict
-
-Consider:
-
-`P₁: A —(+1)→ B —(+1)→ C`
-
-`P₂: A —(+1)→ D —(−1)→ C`.
-
-Sign multiplication gives:
-
-`P₁ → +1`
-
-`P₂ → −1`.
-
-There is no primitive third sign representing the conflict.
-
-Therefore a reduction that combines both paths into one primitive relation must either:
-
-1. discard one path;
-2. choose a priority rule;
-3. retain a richer object than a primitive relation;
-4. declare the result undefined/conflicting.
-
-Ω-Math currently selects none of these as universal law.
-
-## 6. Candidate B — context-dependent reduction
-
-A reduction may depend on intermediate structure, path multiplicity, states, or direction.
-
-This can preserve more information but ceases to be a function of the two signs alone.
-
-It is therefore a candidate **higher-order composition rule**, not a primitive binary sign operation unless its required context is formally incorporated into the input type.
-
-## 7. Candidate C — structural composition
-
-Instead of forcing
-
-`Path → Relation`,
-
-retain
-
-`Relation ∘ Relation → Path`.
-
-This is already defined by `PATH_ALGEBRA.md` as path concatenation.
-
-This candidate is information-preserving with respect to the ordered path object and does not require an artificial third relation value.
-
-## 8. Associativity
-
-Path concatenation is associative wherever defined.
-
-Sign multiplication is also associative.
-
-But associativity of a reduction does not establish that the reduction preserves the semantics of paths.
-
-The critical test is therefore:
-
-`semantic preservation + associativity`,
-
-not associativity alone.
-
-## 9. Current decision
-
-`PATH COMPOSITION` — **DEFINED**.
-
-`SIGN MULTIPLICATION` — **VALID DERIVED SUMMARY, NOT UNIVERSAL RELATION LAW**.
-
-`PRIMITIVE RELATION REDUCTION` — **OPEN**.
-
-`CONFLICT-COLLAPSING TO A THIRD SIGN` — **REJECTED by the current typed primitive layer**.
-
-## 10. Required next tests
-
-1. Exhaustive length-3 comparison of sign-reduction candidates.
-2. Search for smallest associativity/semantic-preservation counterexamples.
-3. Test relation reduction under reversed paths.
-4. Test whether state-dependent transition behavior can distinguish paths with the same sign product.
-5. Compare primitive reduction against retaining the full path object.
-
-## 11. Conclusion
-
-The first algebraic milestone is complete: all four primitive sign-pair cases are explicit, a closed candidate has been tested, and a concrete information-loss counterexample prevents promoting sign multiplication to the universal Ω relation-composition law.
-
-The language therefore advances without inventing a forced answer:
-
-`relation + relation → path` is defined;
-
-`path → primitive relation` remains open.
+**Status: v0.9 FRONTIER CLOSED**
