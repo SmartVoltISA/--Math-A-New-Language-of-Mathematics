@@ -8,10 +8,11 @@ The foundation is now written into the repository. The language is being treated
 
 ### Defined
 
-- Entity domain: `{0,1}`.
+- Entity domain: `{0,1}` as state values.
 - Relation domain: `{−1,+1}`.
 - Type separation between the two domains.
-- Distinction operator on entity states.
+- Entity identity/state separation `eᵢ=(i,sᵢ)` at the expanded formal layer.
+- Identity, state and observation distinctions as separate operators.
 - Explicit relation domain `D_R`.
 - System state `Ω_t`.
 - Structural transition concept.
@@ -19,7 +20,7 @@ The foundation is now written into the repository. The language is being treated
 ### Not yet derived
 
 - unique relation composition;
-- identity;
+- identity relation as a relation-state primitive;
 - inverse;
 - universal path algebra;
 - metric;
@@ -47,6 +48,22 @@ The Ω research history already contains working concepts for:
 - experimental controls.
 
 Ω-Math should formalize and connect these concepts rather than create duplicate names.
+
+## Recent formal milestone — distinction and collapse
+
+`EQUIVALENCE.md` establishes a derived equivalence layer based on an explicit observation map:
+
+`DIST → EQUIVALENCE → QUOTIENT → COLLAPSE`.
+
+The key result is that identity equality, state equality and observational equivalence are different relations.
+
+A quotient can erase distinctions without changing the underlying Ω-system. Therefore:
+
+`observational information loss ≠ structural change`.
+
+`EXPERIMENT_EQUIV_001.md` provides the minimal four-entity counterexample showing that vertex quotienting alone does not determine what happens to relation multiplicity or relation-sign information.
+
+A complete structural quotient therefore requires explicit rules for entities, relations and paths.
 
 ## Existing empirical anchors
 
@@ -142,15 +159,22 @@ The ability to express a phenomenon in Ω-Math is not evidence that Ω-Math expl
 
 ## Next formal milestone
 
-Produce `ALGEBRA-v0.1` with:
+The immediate sequence is now:
 
 1. complete typed operation table;
-2. candidate composition laws;
-3. associativity tests;
-4. identity/inverse analysis;
-5. path composition tests;
-6. parallel-conflict representation;
-7. counterexamples;
-8. comparison with standard graph algebra and signed-graph algebra.
+2. relation-composition candidates and counterexamples;
+3. path composition and path equivalence;
+4. dynamic behavioral equivalence;
+5. quotient/invariant preservation tests;
+6. structural collapse measures, only if they are derived or explicitly introduced;
+7. comparison with standard graph, signed-graph, quotient and transition-system mathematics.
 
-Only after that should the language be extended toward geometry, dynamics and consciousness.
+Only after these are controlled should the language be extended toward geometry, dynamics and consciousness.
+
+## Physical hypotheses
+
+`H-BH-0` — extreme relational distinguishability collapse may have a physically meaningful correspondence with characteristic black-hole behavior.
+
+Status: `OPEN`.
+
+No physical interpretation is accepted until an Ω quantity is defined independently, mapped to established observables, tested against controls, and used to make predictions not used in its construction.
