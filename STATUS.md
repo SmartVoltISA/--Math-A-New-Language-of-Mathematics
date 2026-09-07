@@ -1,8 +1,10 @@
-# Ω-Math v0.1 — Research Status
+# Ω-Math v0.2 — Research Status
 
 ## Current state
 
-The foundation is now written into the repository. The language is being treated as an object of study, not as a finished theory.
+The foundation is written into the repository and the formal language is being treated as an object of study, not as a finished theory.
+
+The v0.2 structural expansion adds an explicit typed object system, transformation layer, invariant/symmetry layer and path algebra layer.
 
 ## Primitive layer
 
@@ -11,23 +13,50 @@ The foundation is now written into the repository. The language is being treated
 - Entity domain: `{0,1}` as state values.
 - Relation domain: `{−1,+1}`.
 - Type separation between the two domains.
-- Entity identity/state separation `eᵢ=(i,sᵢ)` at the expanded formal layer.
-- Identity, state and observation distinctions as separate operators.
+- Entity identity/state separation `eᵢ=(i,sᵢ)`.
+- Identity, state and observation distinctions.
 - Explicit relation domain `D_R`.
-- System state `Ω_t`.
+- System configuration/state.
 - Structural transition concept.
+- Typed object categories.
+- Path object and path concatenation.
+- Transformation object and composition.
+- Identity transformation.
+- Invariant definition relative to a transformation family.
+- Symmetry definition relative to an equivalence.
 
 ### Not yet derived
 
-- unique relation composition;
+- unique primitive relation composition;
 - identity relation as a relation-state primitive;
-- inverse;
-- universal path algebra;
-- metric;
+- relation inverse;
+- canonical path equivalence;
+- universal sufficient path profile;
+- canonical metric;
 - physical time;
 - probability;
 - energy;
 - physical ontology.
+
+## v0.2 formal expansion
+
+### Transformation
+
+`TRANSFORMATION.md` defines mappings between configurations/states, composition, identity, inverse where applicable, transformation classes, change, symmetry, derived transformation-cost distance and structural loss.
+
+### Type system
+
+`TYPE_SYSTEM.md` makes input/output types explicit and lists forbidden silent coercions. In particular:
+
+`state 0 ≠ relation −1 ≠ relation absence`.
+
+### Invariants and symmetry
+
+`INVARIANTS.md` establishes that every invariant is relative to a named transformation family. Label permutation is the first mandatory representation control.
+
+### Path algebra
+
+`PATH_ALGEBRA.md` separates path concatenation from the still-open question of reducing a path to a primitive relation. It introduces path profiles as a testable candidate descriptor.
 
 ## Existing concepts that must NOT be reinvented
 
@@ -49,53 +78,54 @@ The Ω research history already contains working concepts for:
 
 Ω-Math should formalize and connect these concepts rather than create duplicate names.
 
-## Recent formal milestone — distinction and collapse
+## Behavioral-equivalence findings
 
-`EQUIVALENCE.md` establishes a derived equivalence layer based on an explicit observation map:
+The executed constructions provide two important formal counterexamples:
 
-`DIST → EQUIVALENCE → QUOTIENT → COLLAPSE`.
+1. identical current observations can hide different transition structure;
+2. identical entity-state composition can hide different relational organization and therefore different future trajectories under the same explicit propagation rule.
 
-The key result is that identity equality, state equality and observational equivalence are different relations.
+Therefore:
 
-A quotient can erase distinctions without changing the underlying Ω-system. Therefore:
+`static observational equivalence ≠ behavioral equivalence`.
 
-`observational information loss ≠ structural change`.
+A behavior-preserving quotient must specify which observations, inputs and horizons it preserves.
 
-`EXPERIMENT_EQUIV_001.md` provides the minimal four-entity counterexample showing that vertex quotienting alone does not determine what happens to relation multiplicity or relation-sign information.
+## Structure findings
 
-A complete structural quotient therefore requires explicit rules for entities, relations and paths.
+`TOPOLOGY-003` and `STRUCTURE-004` show that equal entity counts, relation counts, sign counts and selected graph statistics can still hide different path organization and different controlled dynamic responses.
 
-## Existing empirical anchors
+Therefore aggregate graph statistics are not automatically complete state descriptions.
 
-### Ω-0
+## Collapse findings
 
-A reported minimal construction showed that an updating trace can create internally distinguishable order:
+`EQUIV-001` shows that a structural quotient cannot be defined by vertex merging alone. A complete relational quotient needs explicit entity, relation and path mapping rules.
 
-`ACT → TRACE → UPDATE`.
+This gives the current collapse discipline:
 
-This is an anchor for the dynamics/memory layer, not a proof of emergent physical time.
+`observation collapse ≠ system change`
 
-### Ω-MEM-4R
+`vertex quotient ≠ relation quotient ≠ path quotient`.
 
-The corrected replication tested predictive memory representations across multiple generators. It found both supporting cases and a critical counterexample. This is an anchor for the rule that memory sufficiency is process- and task-dependent.
+## Point/boundary findings
 
-### Ω-INF
+Executed results support, within tested models:
 
-The information branch provides an anchor for separating composition from organization.
+`relations → closure → relational separation → candidate core/interface`.
 
-### Ω-B
+The tested closure-only, closure-plus-reconnection, closure-plus-redundancy and first combined-factor probes did **not** establish a single Point-like object. Strong closure can produce fragmentation, while strong combined mechanisms can produce near-global connectivity without a low-conductance dominant boundary.
 
-The internal-dynamics branch provides an anchor for testing emergent structure against null models and controls.
+Therefore the Point remains `OPEN` and must be searched as an intermediate regime satisfying multiple simultaneous criteria rather than as maximum closure or maximum connectivity.
 
 ## Open questions ranked by dependency
 
 ### Q1 — Relation composition
 
-Can sequential relations be composed without importing ordinary arithmetic?
+Can sequential relations be reduced to a relation without losing path information or importing ordinary arithmetic?
 
 ### Q2 — Path algebra
 
-Can paths be compared, reduced or transformed while preserving relational meaning?
+Which path equivalences and reductions preserve the selected structural/behavioral semantics?
 
 ### Q3 — Structural invariants
 
@@ -111,7 +141,7 @@ Can transition rules be expressed entirely in relational terms?
 
 ### Q6 — Memory
 
-Can functional memory be represented as a persistent relational structure?
+Can functional memory be represented as a persistent relational structure with an intervention-tested effect?
 
 ### Q7 — Emergence
 
@@ -159,17 +189,14 @@ The ability to express a phenomenon in Ω-Math is not evidence that Ω-Math expl
 
 ## Next formal milestone
 
-The immediate sequence is now:
-
-1. complete typed operation table;
-2. relation-composition candidates and counterexamples;
-3. path composition and path equivalence;
-4. dynamic behavioral equivalence;
-5. quotient/invariant preservation tests;
-6. structural collapse measures, only if they are derived or explicitly introduced;
-7. comparison with standard graph, signed-graph, quotient and transition-system mathematics.
-
-Only after these are controlled should the language be extended toward geometry, dynamics and consciousness.
+1. Enumerate the four length-2 signed relation cases.
+2. Test candidate relation-level reductions against explicit path semantics.
+3. Test associativity at lengths 3–4.
+4. Construct conflicting parallel-path counterexamples.
+5. Define finite-horizon behavioral equivalence precisely and test nesting.
+6. Test quotient preservation of declared invariants.
+7. Test whether path profiles are sufficient for the selected propagation dynamics.
+8. Only then derive quantitative geometry from transformation cost.
 
 ## Physical hypotheses
 
