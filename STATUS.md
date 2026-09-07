@@ -1,8 +1,8 @@
-# Ω-Math v0.5 — Research Status
+# Ω-Math v0.6 — Research Status
 
 ## Current state
 
-The repository contains a typed relational language with explicit syntax, semantics, operator discipline, reduction rules, transformations, invariants/symmetry, path algebra, behavioral equivalence and a structural-edit geometry.
+The repository contains a typed relational language with explicit syntax, semantics, operator discipline, reduction rules, transformations, invariants/symmetry, path algebra, behavioral equivalence, structural-edit geometry and task-relative sufficient-state construction.
 
 The central discipline remains:
 
@@ -10,20 +10,39 @@ The central discipline remains:
 
 The language deliberately separates mathematical representation from physical interpretation.
 
-## v0.5 mathematical milestone
+## v0.6 mathematical milestone
+
+### M13 — Task-relative sufficient relational state
+
+`SUFFICIENT_RELATIONAL_STATE.md` defines a precise finite-horizon task-relative sufficiency condition:
+
+`Q(x)=Q(y) ⇒ B_h(x,u)=B_h(y,u)`
+
+for every admissible input sequence `u`.
+
+The corresponding behavioral quotient `[x]_h` is the coarsest equivalence that preserves the declared deterministic finite-horizon observation behavior.
+
+A recursive construction is given from observation plus successor behavior under declared inputs.
+
+Status: `DERIVED UNDER DECLARED DETERMINISTIC FINITE-HORIZON MODEL`.
+
+### M14 — Structural reduction boundary
+
+`EXPERIMENT_PATH_PROFILE_004.md` already provides an executed counterexample showing that equal source-distance profiles can produce different trajectories under the same declared dynamics.
+
+This establishes a concrete boundary:
+
+`structural descriptor ≠ task-sufficient state` in general.
+
+The new sufficient-state construction supplies the corresponding positive target: sufficiency is defined by preserved task behavior rather than by the amount of structural information retained.
+
+Status: `COUNTEREXAMPLE + DERIVED TARGET CONSTRUCTION`.
+
+## Existing geometry milestones
 
 ### M9 — Structural relational geometry
 
 `RELATIONAL_GEOMETRY_001.md` removes the artificial fixed relation-slot assumption from the first metric baseline.
-
-A configuration can now change by:
-
-- entity-state flip;
-- relation addition;
-- relation removal;
-- relation sign flip.
-
-A transformation path has additive declared cost, and structural distance is the minimum cost of a path between configurations.
 
 Status: `DERIVED CONSTRUCTION`.
 
@@ -31,13 +50,11 @@ Status: `DERIVED CONSTRUCTION`.
 
 For equal-cardinality finite configurations, minimizing structural edit distance over all entity bijections produces a distance on structural orbits under the declared relabeling group.
 
-Under reversible equal-cost edits, non-negativity, symmetry and triangle inequality follow from the edit algebra and composition.
-
 Status: `DERIVED THEOREM UNDER DECLARED ASSUMPTIONS`.
 
 ### M11 — Exhaustive finite verification
 
-`EXPERIMENT_RELATIONAL_GEOMETRY_001.md` enumerates all 12 configurations of the two-entity/one-relation finite model and exhaustively checks identity, non-negativity, symmetry, triangle inequality and the corresponding two-element relabeling quotient.
+`EXPERIMENT_RELATIONAL_GEOMETRY_001.md` exhaustively checks the two-entity/one-relation finite model.
 
 Status: `EXECUTED / SUPPORTED UNDER DECLARED FINITE MODEL`.
 
@@ -45,59 +62,9 @@ Status: `EXECUTED / SUPPORTED UNDER DECLARED FINITE MODEL`.
 
 `Γ_h(C)` records the spectrum of structural distances from a configuration to configurations that are behaviorally distinguishable within horizon `h`.
 
-This is introduced as a derived observable, not as a universal invariant.
-
 Status: `DEFINED / OPEN FOR GENERAL PROPERTIES`.
 
-## What changed mathematically
-
-The geometry layer is no longer restricted to changing values inside a fixed encoding.
-
-It now admits structural events:
-
-`absence ↔ relation`.
-
-Therefore the geometry can measure the cost of changing relational organization itself.
-
-This is a new Ω-Math construction. It is **not** claimed to be globally novel without a dedicated literature/novelty audit.
-
-## Existing closed milestones
-
-### M1 — Four length-2 signed cases
-
-`(+,+)→+`, `(+,-)→-`, `(-,+)→-`, `(-,-)→+` under the scalar sign-product summary.
-
-Status: `DERIVED`.
-
-### M2 — Sign-product is not universal relation composition
-
-Status: `COUNTEREXAMPLE / REJECTED AS UNIVERSAL LAW`.
-
-### M3 — Path associativity
-
-Status: `DEFINED / DERIVED`.
-
-### M4 — Parallel-path conflict
-
-Status: `OPEN / NO SILENT COLLAPSE`.
-
-### M5 — Finite-horizon behavioral equivalence
-
-Status: `DEFINED / DERIVED`.
-
-### M6 — Invariants and symmetry
-
-Status: `DEFINED / DERIVED METHODOLOGICAL RULE`.
-
-### M7 — Path-profile insufficiency
-
-Status: `COUNTEREXAMPLE`.
-
-### M8 — Fixed-slot transformation metric
-
-Status: `DERIVED BASELINE`.
-
-## Current algebraic decision
+## Algebraic decision
 
 `PATH CONCATENATION`: `DEFINED`.
 
@@ -109,34 +76,40 @@ Status: `DERIVED BASELINE`.
 
 Path information must be retained until sufficiency is demonstrated for the declared task.
 
-## Current geometry decision
+## Geometry decision
 
 `FIXED-SLOT HAMMING`: established baseline.
 
 `STRUCTURAL EDIT DISTANCE`: derived for declared edit systems.
 
-`LABEL-INDEPENDENT QUOTIENT DISTANCE`: derived for finite equal-cardinality configurations under the stated assumptions.
+`LABEL-INDEPENDENT QUOTIENT DISTANCE`: derived for finite equal-cardinality configurations under stated assumptions.
 
 `PHYSICAL SPACE`: not derived.
 
-Next mathematical tests:
+## New reduction boundary
 
-1. unequal entity cardinality;
-2. entity insertion/deletion with incident relations;
-3. directed relations;
-4. asymmetric transformation costs;
-5. quotient distance for behavioral equivalence classes;
-6. well-definedness of quotient geometry;
-7. relation/path conflict geometry;
-8. comparison with graph edit distance, orbit metrics and configuration-space metrics.
+Ω-Math now distinguishes three different questions:
+
+1. **Representation:** what structure is encoded?
+2. **Compression:** what information is discarded?
+3. **Sufficiency:** can the discarded information affect the declared task?
+
+The third question is task-relative and must be tested against the transition and observation rules actually declared.
+
+## Next mathematical tests
+
+1. Exhaustively verify recursive finite-horizon quotient construction on small deterministic transition systems.
+2. Test horizon nesting `≈_{h+1} ⊆ ≈_h`.
+3. Verify coarseness of the behavioral quotient against all task-sufficient partitions in finite models.
+4. Compare the construction with bisimulation and automata minimization.
+5. Extend to nondeterministic and probabilistic transitions without silently changing semantics.
+6. Test quotient geometry after behavioral reduction.
+7. Investigate whether a canonical relation/path algebra can be derived from task-preserving behavior rather than imposed.
+8. Continue unequal-cardinality and entity insertion/deletion geometry tests.
 
 ## Point / boundary status
 
 Executed closure, reconnection, redundancy and combined-factor probes did not establish a unique single Point-like object.
-
-Current evidence supports only:
-
-`relations → closure → relational separation → candidate core/interface`.
 
 The Point remains `OPEN`.
 
@@ -149,7 +122,7 @@ The repository must distinguish:
 - a new theorem derived from Ω definitions;
 - a genuinely new mathematical result after comparison with prior literature.
 
-No global novelty claim is made for M9–M12 yet.
+No global novelty claim is made for M13–M14.
 
 ## Explicitly open
 
@@ -157,7 +130,7 @@ No global novelty claim is made for M9–M12 yet.
 - canonical path equivalence;
 - universal sufficient path profile;
 - unrestricted canonical metric;
-- quotient geometry in the general case;
+- general quotient geometry;
 - physical time;
 - probability;
 - energy;
@@ -180,4 +153,4 @@ No global novelty claim is made for M9–M12 yet.
 
 ## Version
 
-**Ω-Math v0.5** — structural relational geometry derived from typed edit transformations, with finite exhaustive verification and explicit quotient construction.
+**Ω-Math v0.6** — typed relational language extended with a formal task-relative sufficient-state layer and an explicit boundary between structural compression and behavioral sufficiency.
