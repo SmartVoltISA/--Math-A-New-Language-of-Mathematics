@@ -1,132 +1,52 @@
-# Ω-Math v0.4 — Foundation
+# Ω-Math v0.9 — Foundation
 
-## 1. Purpose
+## Purpose
 
-Ω-Math starts from a minimal typed vocabulary separating:
+Ω-Math starts from a minimal typed vocabulary separating an entity from its state, a relation from its state, and relation presence from relation value.
 
-1. an entity from its state;
-2. a relation from its state;
-3. relation presence from relation value.
+## Primitive typed domains
 
-The primitive alphabet is:
+`EntityState = {0,1}`
 
-`{0, 1, −1, +1}`
+`RelationState = {−1,+1}`
 
-but it contains two disjoint typed value domains.
+These are disjoint typed domains. The symbols have no intrinsic physical meaning.
 
-## 2. Entity domain
+## Entity
 
-`EntityState = {0,1}`.
+`e=(id,state)`, with `state∈EntityState`.
 
-An entity is:
+Entity identity is distinct from entity state.
 
-`eᵢ=(idᵢ,sᵢ)` with `sᵢ∈EntityState`.
+## Relation
 
-The symbols do not intrinsically mean physical absence/presence.
+`r=(src,dst,sign)`, with `sign∈RelationState` and `(src,dst)∈D_R`.
 
-## 3. Relation domain
+Relations are directed typed edges. Relation absence is a domain condition, not a third relation value.
 
-`RelationState = {−1,+1}`.
+## Configuration
 
-A relation is:
+`C=(E,D_R,R)` where `E` is the entity set, `D_R` is the explicit domain of present relations, and `R:D_R→RelationState` assigns relation states.
 
-`rᵢⱼ=(i,j,q)` with `q∈RelationState` and `(i,j)∈D_R`.
+## State
 
-The signs have no intrinsic physical meaning. Attraction, opposition, support, inhibition or causation are application-level interpretations and require independent definitions.
+`S=(C,M,X)` where retained variables are explicit. Nothing may be added to state implicitly.
 
-## 4. Type separation
+## Transition and change
 
-`0:EntityState`
+A transition is a declared mapping `T:S×U→S'`. Change is represented by `COMPARE(S,S')→ChangeRecord`; numerical magnitude requires a separate derived definition.
 
-`1:EntityState`
+## Paths
 
-`−1:RelationState`
+A path is an ordered compatible sequence `P=(r₁,...,rₙ)`. Path concatenation `P⧺Q` is the primary sequential composition operation and is associative. Exact path equality is sequence identity. The empty path `ε_e` is the identity for compatible path concatenation.
 
-`+1:RelationState`
+Primitive relation-to-relation collapse, primitive relation identity and primitive relation inverse are not required by the foundation.
 
-Therefore equal-looking numerical symbols are not interchangeable across types.
-
-## 5. Distinction
-
-For entity states:
-
-`D(a,b)=0` if `a=b`;
-
-`D(a,b)=1` if `a≠b`.
-
-This is a declared comparison operator, not ordinary addition.
-
-## 6. Relation domain and absence
-
-`D_R ⊆ I×I` is the explicit domain of present/modelled relations.
-
-If `(i,j)∉D_R`, the relation is absent/undefined in the model. It is not automatically `0`, `−1` or `+1`.
-
-## 7. Elementary Ω expression
-
-`eᵢ —q→ eⱼ`
-
-with `q∈{−1,+1}`.
-
-## 8. Configuration
-
-`C=(E,D_R,R)` where:
-
-`E` is the entity set;
-
-`D_R` is the relation domain;
-
-`R:D_R→RelationState` assigns relation states.
-
-## 9. State
-
-`S=(C,M,X)` where `M` and `X` are optional explicitly retained variables.
-
-Nothing may be added to state implicitly.
-
-## 10. Transition
-
-A transition is a declared mapping:
-
-`T:S×U→S'`
-
-where `U` is optional external input.
-
-Transition semantics are model-dependent and are not primitive physical laws.
-
-## 11. Change
-
-Change is a comparison:
-
-`COMPARE(S,S')→ChangeRecord`.
-
-The record may contain entity-state changes, relation-state changes, relation births/removals and structural reconfiguration.
-
-A numerical magnitude requires a separate derived definition.
-
-## 12. Paths
-
-A path is an ordered compatible sequence of relations:
-
-`P=(r₁,...,rₙ)`.
-
-Path order, endpoints, intermediate entities and signs are retained.
-
-Concatenation is:
-
-`P⧺Q`
-
-when endpoints are compatible.
-
-Path concatenation is associative. This does not define a primitive relation reduction.
-
-## 13. Higher-level entities
+## Higher-level entities
 
 A stable substructure may be mapped to a higher-level entity only through an explicit coarse-graining/identification map and validation criterion.
 
-This is the entry point for emergence; it is not an automatic consequence of stability.
-
-## 14. Minimal principles
+## Minimal principles
 
 **P1 — Typed distinction.** Entity and relation states are different types.
 
@@ -142,20 +62,8 @@ This is the entry point for emergence; it is not an automatic consequence of sta
 
 **P7 — Emergence requires identification.** A macro-object needs an explicit map and validation criterion.
 
-## 15. Research constraint
+## Scope
 
-No familiar mathematical object is imported as fundamental merely because it is convenient.
+The foundation is the minimal typed relational base. Higher layers are defined and tested separately. v0.9 language closure does not claim universal mathematical completeness or a physical ontology.
 
-For every proposed object ask:
-
-`Can it be derived from the typed Ω primitives?`
-
-If yes, derive it.
-
-If no, either add the smallest necessary primitive with justification or record the limitation.
-
-## Status
-
-`DEFINED / FOUNDATION`
-
-The foundation is sufficient for the current v0.4 language layer. It is not a claim that the four primitive values constitute the ontology of nature.
+**Status: DEFINED / FOUNDATION / v0.9 SYNCHRONIZED**
