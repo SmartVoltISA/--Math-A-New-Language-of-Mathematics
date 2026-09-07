@@ -1,102 +1,42 @@
-# Ω-Math v0.4 — Reduction and Information-Preservation Rules
+# Ω-Math v0.9 — Reduction and Information-Preservation Rules
 
-## Purpose
-
-This document makes structural reduction explicit. Ω-Math must not silently replace a rich object with a smaller description and then treat the result as equivalent.
-
-## 1. Reduction
-
-A reduction is a map:
-
-`Q:X→Y`
-
-where `Y` contains less or differently organized information than `X`.
-
-Examples:
-
-- path → sign-product;
-- configuration → aggregate graph statistics;
-- state → observation;
-- system → quotient;
-- transformation system → scalar distance.
-
-## 2. Task-relative sufficiency
-
-Let `F:X→Z` be the task, behavior, prediction or observation of interest.
-
-`Q` is sufficient for `F` when:
+A reduction `Q:X→Y` is safe only relative to a declared task, behavior or observation `F` when:
 
 `Q(x)=Q(y) ⇒ F(x)=F(y)`.
 
-If this fails, there exist `x,y` that the reduction identifies while the task distinguishes them.
+This is equivalent to requiring the task to factor through the reduction: `F=F̄∘Q`.
 
-## 3. Behavior-preserving quotient
+## Core rules
 
-For a transition system, a quotient `Q` is behavior-preserving for horizon `h` when equivalent representatives generate identical declared observations through `h` under the declared input/intervention class.
+1. Entity identity, state, relation presence and relation value remain distinct.
+2. Paths are not silently replaced by scalar summaries.
+3. Aggregate graph statistics are not complete structural descriptions without a sufficiency proof.
+4. Observation equality does not imply identity or future behavioral equivalence.
+5. A quotient is valid only for the declared task/behavior it preserves.
+6. A witness `x≠y`, `Q(x)=Q(y)`, `F(x)≠F(y)` proves information loss for that task.
+7. Promotion from summary to equivalence-preserving requires declared task, counterexample search and proof or exhaustive verification on the stated domain.
 
-The claim is always parameterized by:
+## Path reduction
 
-`observation + transition rule + inputs/interventions + horizon`.
+`Σ(P)=∏ sign(r)` is a closed derived sign summary. It is not a universal information-preserving replacement for the ordered path object. Existing counterexamples demonstrate loss of intermediate organization and path multiplicity.
 
-## 4. Path reduction
+## Behavioral quotient
 
-The scalar map
+For finite horizon `h`, a quotient is behavior-preserving when equivalent representatives have identical declared observations under the declared dynamics and admissible inputs/interventions through horizon `h`. Infinite-horizon equivalence is derived by:
 
-`Σ(P)=∏ sign(r)`
+`s≈∞s' ⇔ ∀h∈ℕ₀, s≈ₕs'`.
 
-is valid as a summary algebra.
+For nondeterministic systems, the task semantics must specify whether traces, branching structure, existential reachability, universal safety, or another predicate is preserved. Arbitrary branch collapse is forbidden.
 
-It is not behavior-preserving in general. `EXPERIMENT_PATH_DYNAMICS_001.md` gives a deterministic counterexample with equal endpoints, length and signs but different intermediate organization.
+## Quotient geometry
 
-## 5. Aggregate graph reduction
+A quotient-induced distance is not automatically a pseudometric for an arbitrary equivalence relation. The candidate
 
-Counts, degree sequences, component counts or other aggregates may be useful measurements. Equality of such measurements does not imply structural or behavioral equivalence unless sufficiency is proved for the task.
+`d_Q([x],[y])=inf{d(x',y'):x'~x,y'~y}`
 
-## 6. Observation reduction
+requires explicit compatibility conditions before pseudometric/metric status is claimed. See `QUOTIENT_GEOMETRY_CONDITIONS.md`.
 
-If `O(x)=O(y)`, the correct conclusion is:
-
-`x ≈_O y`.
-
-It is not:
-
-`x=y`.
-
-## 7. Quotient safety condition
-
-A quotient is safe for a declared property `F` when `F` factors through the quotient:
-
-`F = F̄ ∘ Q`.
-
-If such an `F̄` does not exist, the quotient is not sufficient for `F`.
-
-## 8. Information-loss witness
-
-A reduction is proven lossy for a task by constructing:
-
-`x ≠ y`
-
-such that
-
-`Q(x)=Q(y)`
-
-but
-
-`F(x)≠F(y)`.
-
-This is the preferred minimal counterexample pattern.
-
-## 9. Reduction promotion rule
-
-A reduction may be promoted from `summary` to `equivalence-preserving` only after:
-
-1. the task is declared;
-2. the information retained by the reduction is declared;
-3. counterexample search is performed;
-4. a sufficiency proof or exhaustive finite verification is available for the stated domain;
-5. controls against representation artifacts are passed.
-
-## 10. Core principle
+## Principle
 
 **Never confuse compression with equivalence.**
 
@@ -110,4 +50,4 @@ A reduction may be promoted from `summary` to `equivalence-preserving` only afte
 
 ## Status
 
-`DEFINED / CORE METHODOLOGICAL RULE`
+`DEFINED / CORE METHODOLOGICAL RULE / v0.9 SYNCHRONIZED`
