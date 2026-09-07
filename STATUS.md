@@ -1,68 +1,60 @@
-# Ω-Math v0.6 — Research Status
+# Ω-Math v0.7 — Research Status
 
 ## Current state
 
-The repository contains a typed relational language with explicit syntax, semantics, operator discipline, reduction rules, transformations, invariants/symmetry, path algebra, behavioral equivalence, structural-edit geometry and task-relative sufficient-state construction.
+The repository contains a typed relational language with explicit syntax, semantics, operator discipline, reduction rules, transformations, invariants/symmetry, path algebra, behavioral equivalence, structural-edit geometry, task-relative sufficient-state construction, and a declared nondeterministic transition layer.
 
 The central discipline remains:
 
 `define → derive → execute → verify → compare → falsify → record`.
 
-The language deliberately separates mathematical representation from physical interpretation.
+## v0.7 mathematical milestone
 
-## v0.6 mathematical milestone
+### M15 — Nondeterministic dynamics
 
-### M13 — Task-relative sufficient relational state
+`NONDETERMINISTIC_DYNAMICS.md` extends the transition layer from a function
 
-`SUFFICIENT_RELATIONAL_STATE.md` defines a precise finite-horizon task-relative sufficiency condition:
+`T:S×U→S`
 
-`Q(x)=Q(y) ⇒ B_h(x,u)=B_h(y,u)`
+to a successor-set relation
 
-for every admissible input sequence `u`.
+`N:S×U→𝒫(S)`.
 
-The corresponding behavioral quotient `[x]_h` is the coarsest equivalence that preserves the declared deterministic finite-horizon observation behavior.
+The language now explicitly represents branching futures rather than silently selecting one successor.
 
-A recursive construction is given from observation plus successor behavior under declared inputs.
+Three concepts are kept separate:
 
-Status: `DERIVED UNDER DECLARED DETERMINISTIC FINITE-HORIZON MODEL`.
+`possible ≠ probable`
 
-### M14 — Structural reduction boundary
+`universal preservation ≠ existential preservation`
 
-`EXPERIMENT_PATH_PROFILE_004.md` already provides an executed counterexample showing that equal source-distance profiles can produce different trajectories under the same declared dynamics.
+`branching semantics ≠ deterministic selection`.
 
-This establishes a concrete boundary:
+### M16 — Branch-collapse counterexample
 
-`structural descriptor ≠ task-sufficient state` in general.
+`EXPERIMENT_NONDETERMINISTIC_001.md` gives a finite executed construction where two systems have the same current observation and the same one-step observable successor set, but differ at the next horizon because one branch remains executable and the other is blocked.
 
-The new sufficient-state construction supplies the corresponding positive target: sufficiency is defined by preserved task behavior rather than by the amount of structural information retained.
-
-Status: `COUNTEREXAMPLE + DERIVED TARGET CONSTRUCTION`.
-
-## Existing geometry milestones
-
-### M9 — Structural relational geometry
-
-`RELATIONAL_GEOMETRY_001.md` removes the artificial fixed relation-slot assumption from the first metric baseline.
-
-Status: `DERIVED CONSTRUCTION`.
-
-### M10 — Quotient / label-independent geometry
-
-For equal-cardinality finite configurations, minimizing structural edit distance over all entity bijections produces a distance on structural orbits under the declared relabeling group.
-
-Status: `DERIVED THEOREM UNDER DECLARED ASSUMPTIONS`.
-
-### M11 — Exhaustive finite verification
-
-`EXPERIMENT_RELATIONAL_GEOMETRY_001.md` exhaustively checks the two-entity/one-relation finite model.
+Therefore a one-step summary cannot be promoted to a general two-step sufficient representation.
 
 Status: `EXECUTED / SUPPORTED UNDER DECLARED FINITE MODEL`.
 
-### M12 — Geometry signature
+## Existing milestones
 
-`Γ_h(C)` records the spectrum of structural distances from a configuration to configurations that are behaviorally distinguishable within horizon `h`.
+### M13 — Task-relative sufficient relational state
 
-Status: `DEFINED / OPEN FOR GENERAL PROPERTIES`.
+A candidate reduction `Q` is sufficient for finite-horizon behavior when
+
+`Q(x)=Q(y) ⇒ B_h(x,u)=B_h(y,u)`
+
+for every admissible input sequence.
+
+### M14 — Structural reduction boundary
+
+Equal source-distance profiles can yield different future trajectories under the same declared dynamics. Structural descriptors therefore require task-specific sufficiency tests.
+
+### M9–M12 — Relational geometry
+
+Structural edit distance, label-independent quotient distance under stated assumptions, exhaustive small-model verification and the geometry signature `Γ_h(C)` remain established/defined at their documented levels.
 
 ## Algebraic decision
 
@@ -74,55 +66,37 @@ Status: `DEFINED / OPEN FOR GENERAL PROPERTIES`.
 
 `PRIMITIVE RELATION REDUCTION`: `OPEN`.
 
-Path information must be retained until sufficiency is demonstrated for the declared task.
+The language does not collapse an ordered relation sequence merely because a scalar summary exists.
 
-## Geometry decision
+## Dynamics decision
 
-`FIXED-SLOT HAMMING`: established baseline.
+`DETERMINISTIC TRANSITION`: `DEFINED`.
 
-`STRUCTURAL EDIT DISTANCE`: derived for declared edit systems.
+`NONDETERMINISTIC TRANSITION`: `DEFINED` as a successor-set relation.
 
-`LABEL-INDEPENDENT QUOTIENT DISTANCE`: derived for finite equal-cardinality configurations under stated assumptions.
+`BRANCHING BEHAVIOR`: `DEFINED` for finite horizons.
 
-`PHYSICAL SPACE`: not derived.
+`PROBABILISTIC TRANSITION`: `OPEN` — no probabilities are assigned by nondeterminism alone.
 
-## New reduction boundary
+`INFINITE-HORIZON SEMANTICS`: `OPEN`.
 
-Ω-Math now distinguishes three different questions:
+`FAIRNESS / LIVENESS`: `OPEN`.
 
-1. **Representation:** what structure is encoded?
-2. **Compression:** what information is discarded?
-3. **Sufficiency:** can the discarded information affect the declared task?
+## Reduction principle
 
-The third question is task-relative and must be tested against the transition and observation rules actually declared.
+A reduction is not accepted because it looks structurally rich. It must preserve the exact behavior selected by the declared task.
+
+For branching systems the preservation condition is evaluated on the declared branching behavior object or task predicate.
 
 ## Next mathematical tests
 
-1. Exhaustively verify recursive finite-horizon quotient construction on small deterministic transition systems.
-2. Test horizon nesting `≈_{h+1} ⊆ ≈_h`.
-3. Verify coarseness of the behavioral quotient against all task-sufficient partitions in finite models.
-4. Compare the construction with bisimulation and automata minimization.
-5. Extend to nondeterministic and probabilistic transitions without silently changing semantics.
-6. Test quotient geometry after behavioral reduction.
-7. Investigate whether a canonical relation/path algebra can be derived from task-preserving behavior rather than imposed.
-8. Continue unequal-cardinality and entity insertion/deletion geometry tests.
-
-## Point / boundary status
-
-Executed closure, reconnection, redundancy and combined-factor probes did not establish a unique single Point-like object.
-
-The Point remains `OPEN`.
-
-## Novelty discipline
-
-The repository must distinguish:
-
-- independent reconstruction of known mathematics;
-- a new definition inside Ω-Math;
-- a new theorem derived from Ω definitions;
-- a genuinely new mathematical result after comparison with prior literature.
-
-No global novelty claim is made for M13–M14.
+1. Exhaustively enumerate small nondeterministic transition systems and verify the recursive branching quotient.
+2. Separate universal-safety and existential-reachability quotients.
+3. Test whether different branching representations are equivalent under different tasks.
+4. Add probability only as an explicit typed extension and compare it with nondeterministic semantics.
+5. Test quotient geometry after behavioral reduction.
+6. Continue unequal-cardinality and insertion/deletion geometry.
+7. Investigate whether relation composition can be derived from transition behavior without imposing a primitive binary sign law.
 
 ## Explicitly open
 
@@ -137,7 +111,13 @@ No global novelty claim is made for M13–M14.
 - physical ontology;
 - task-independent emergence criterion;
 - self-model and causal self-reference;
-- physical bridge and independent empirical predictions.
+- independent physical predictions.
+
+## Novelty discipline
+
+The nondeterministic layer is treated as an Ω-Math formalization/integration, not as a claim of inventing nondeterministic transition systems or behavioral equivalence.
+
+Any stronger novelty claim requires explicit comparison with established transition-system, automata, bisimulation and probabilistic formalisms.
 
 ## Critical methodological rule
 
@@ -149,8 +129,10 @@ No global novelty claim is made for M13–M14.
 
 `compressed ≠ equivalent`
 
+`possible ≠ probable`
+
 `emergent candidate ≠ emergence proven`
 
 ## Version
 
-**Ω-Math v0.6** — typed relational language extended with a formal task-relative sufficient-state layer and an explicit boundary between structural compression and behavioral sufficiency.
+**Ω-Math v0.7** — typed relational language extended with explicit nondeterministic dynamics and branching-preserving reduction discipline.
