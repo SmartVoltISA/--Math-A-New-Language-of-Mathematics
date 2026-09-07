@@ -13,85 +13,101 @@ This repository is a formal research program. It does not assume that nature is 
 
 The same numerical symbols must not be confused across types:
 
-`Entity value ∈ {0, 1}`
+`EntityState ∈ {0,1}`
 
-`Relation value ∈ {−1, +1}`
+`RelationState ∈ {−1,+1}`
 
-Therefore `0 ≠ −1` and `1 ≠ +1` as mathematical objects of this language: they belong to different typed domains.
+Therefore `0 ≠ −1` and `1 ≠ +1` as typed mathematical objects. Relation absence is a domain condition, not a third relation value.
 
 ## Minimal object
 
-An elementary Ω-relation is written as:
+An elementary Ω-relation is:
 
 `eᵢ —rᵢⱼ→ eⱼ`
 
-where `eᵢ, eⱼ ∈ {0,1}` and `rᵢⱼ ∈ {−1,+1}`.
+where the endpoints are entities and `rᵢⱼ ∈ {−1,+1}`.
 
-A finite system is:
+A finite configuration is:
 
-`Ω = (E, R, Dᴿ)`
+`C = (E,D_R,R)`
 
-where `E` is the set of entity states, `Dᴿ ⊆ E × E` is the domain on which relations are present, and `R` assigns `−1` or `+1` to each present relation.
+where `D_R` is the explicit domain of present relations and `R:D_R→{−1,+1}`.
 
-**Absence of a relation is not automatically a third relation value.** This keeps absence of information separate from an observed negative or positive relation.
+A state may additionally contain explicitly retained variables:
+
+`S=(C,M,X)`.
 
 ## Research layers
 
 1. **Foundation** — entities, relations, distinction, typing.
-2. **Algebra** — legal typed operations and relation composition.
-3. **Structure** — paths, cycles, connectivity, boundaries, invariants.
-4. **Transformation** — changes of configurations, symmetry, quotient and structural loss.
-5. **Quantification** — transformation costs and derived distance/geometry.
-6. **Dynamics** — state, transition, change, order, causality.
-7. **Memory** — retained state that can causally affect future behavior.
-8. **Emergence** — stable higher-level structures arising from lower-level relations.
-9. **Self-reference** — systems that represent and act upon their own state.
-10. **Consciousness research** — an explicit hypothesis layer built on the previous levels, never assumed as a primitive.
+2. **Language** — syntax, semantics and operator discipline.
+3. **Algebra** — legal typed operations and relation composition.
+4. **Structure** — paths, cycles, connectivity, boundaries and invariants.
+5. **Transformation** — changes, symmetry, quotient and structural loss.
+6. **Quantification** — transformation costs and derived distance/geometry.
+7. **Dynamics** — transition, order and causality.
+8. **Memory** — retained state with demonstrated functional effect.
+9. **Emergence** — validated higher-level organization.
+10. **Self-reference / consciousness** — explicit hypothesis layers, never primitives.
 
 ## Working chain
 
 `distinction → relation → configuration → structure → path → transformation → invariant → equivalence → quotient → metric candidate → dynamics → memory → self-model → feedback → emergence`
 
-This chain is a research decomposition, not a theorem.
+This is a research decomposition, not a theorem.
+
+## Language specification
+
+The current canonical language documents are:
+
+- `LANGUAGE_SPEC.md` — syntax, types, signatures and extension rules.
+- `SEMANTICS.md` — semantic rules and forbidden implicit meanings.
+- `TYPE_SYSTEM.md` — typed object system.
+- `OPERATOR_TABLE.md` — canonical operator inventory.
+- `CANONICAL_EXAMPLES.md` — minimal reference expressions.
+- `GLOSSARY.md` — controlled vocabulary.
+- `REDUCTION_RULES.md` — information-preserving reduction discipline.
+
+A new operator cannot become part of the core merely because it is convenient: it must have a declared signature, semantics, status, counterexample search and comparison with existing mathematics.
 
 ## Current mathematical decision
 
-Path concatenation is defined as the primary sequential operation. The sign-product on `{−1,+1}` is also defined as a valid closed summary algebra:
+Path concatenation is the primary sequential operation:
+
+`P ⧺ Q`.
+
+The sign-product on `{−1,+1}` is a closed derived summary:
 
 `(+,+)→+`
 `(+,-)→-`
 `(-,+)→-`
 `(-,-)→+`
 
-However, a formal counterexample shows that reducing a path to its sign-product can erase intermediate organization and change predicted future behavior under an explicit transition rule.
+But a formal deterministic counterexample shows that sign-product can erase intermediate organization that changes future behavior.
 
 Therefore:
 
 `PATH CONCATENATION ≠ SIGN-PRODUCT REDUCTION`.
 
-The sign-product is a **summary**, not a universal information-preserving definition of relation composition. Primitive relation reduction remains open.
+The sign-product is a **summary**, not a universal information-preserving definition of primitive relation composition.
+
+## Reduction principle
+
+For a task `F` and reduction `Q`, behavior/task sufficiency requires:
+
+`Q(x)=Q(y) ⇒ F(x)=F(y)`.
+
+If this implication fails, the reduction is information-losing for that task. This rule is central to Ω-Math: **compression is not equivalence**.
 
 ## Transformation-derived geometry
 
-A first baseline has now been derived: if primitive transformations flip relation signs at unit cost, the minimum transformation cost is a genuine metric on the fixed finite relation-sign space. It is the discrete Hamming/hypercube geometry of that chosen representation.
+For admissible transformations `𝒯(S,S')` with declared cost `c`, define the candidate distance:
 
-This is a baseline, not a physical-space derivation. The general Ω metric remains open until costs, transformations, symmetries and quotient compatibility are tested without artificial fixed-slot assumptions.
+`d_c(S,S') = inf{c(T):T∈𝒯(S,S')}`.
 
-## Existing Ω research integrated into this language
+A metric is accepted only when its axioms follow for the declared domain and transformation family. The first fixed-slot sign-flip construction gives the discrete Hamming/hypercube metric of that representation.
 
-The Ω-Lab already contains relevant experimental branches:
-
-- Ω-0: minimal reconstruction of internal order and functional memory;
-- Ω-MEM: functional and predictive memory;
-- Ω-INF: composition versus organization;
-- Ω-B: internal dynamics and control experiments;
-- Ω-Lab structural work: connectivity, cycles, stability and transitions.
-
-The behavioral-equivalence experiments show that equal current observations can hide different transition structure, and that equal entity-state composition can hide different relational organization with different future trajectories under an explicit propagation rule.
-
-The topology/structure experiments further show that equal counts, degree sequence and selected aggregate graph statistics can hide different path organization.
-
-Point/boundary experiments support limited relational core/interface formation in tested models but do not establish a unique Point-like object.
+This is a mathematical baseline, not a derivation of physical space.
 
 ## Method
 
@@ -101,85 +117,76 @@ Every serious claim must state its status:
 
 - **Definition** — introduced by the language.
 - **Derivation** — follows from definitions and accepted rules.
-- **Observation** — obtained from an executed experiment.
-- **Hypothesis** — proposed explanation requiring tests.
-- **Theorem** — formally proved inside the specified system.
-- **Empirical law** — repeatedly supported by independent observations under stated conditions.
+- **Executed** — obtained from an explicit finite construction/computation.
+- **Supported** — survives specified controls.
+- **Hypothesis** — proposed but unresolved.
+- **Theorem** — formally proved.
+- **Counterexample** — demonstrates failure of a universal claim.
+- **Rejected** — no longer accepted under documented evidence.
 
-## Important rule
+## Important rules
 
-Ω-Math must not become a new notation for old mathematics by assumption. We first define typed objects and their legal compositions, then investigate which familiar mathematical structures emerge from them.
+Ω-Math must not become a new notation for old mathematics by assumption.
 
-Ordinary arithmetic must not be used to silently identify entity values with relation values.
+Do not silently identify:
 
-## v0.3 formal core
+- entity state with relation state;
+- absence with a relation value;
+- path with a scalar;
+- observation with identity;
+- stability with emergence;
+- correlation with causality;
+- connectivity with physical space;
+- transformation irreversibility with physical irreversibility.
 
-### Typed objects
+## Existing Ω research integrated into this language
 
-`TYPE_SYSTEM.md` defines the object types, legal compositions and forbidden silent coercions.
+The repository incorporates earlier Ω work on internal order, functional/predictive memory, composition versus organization, internal dynamics, connectivity, cycles, stability, transitions and Point/boundary experiments.
 
-### Paths and composition
+Those experiments remain evidence about the tested models, not automatic evidence about nature.
 
-`PATH_ALGEBRA.md` and `RELATION_COMPOSITION.md` define path concatenation and distinguish it from primitive relation reduction.
+## Current open problems
 
-`RESULT_RELATION_COMPOSITION_001.md` records the four signed cases, algebraic properties of the scalar summary, and the information-loss counterexamples.
-
-### Transformations
-
-`TRANSFORMATION.md` defines transformations, composition, identity, inverse where applicable, symmetry, change, structural loss and candidate transformation-cost distance.
-
-### Invariants
-
-`INVARIANTS.md` defines invariance relative to an explicitly named transformation family and establishes label permutation as a mandatory representation control.
-
-### Behavioral equivalence
-
-`BEHAVIORAL_EQUIVALENCE.md` defines finite-horizon behavioral equivalence relative to observations, inputs/interventions, transition rules and horizon. `EXPERIMENT_PATH_DYNAMICS_001.md` demonstrates why restricted path summaries cannot be assumed behavior-sufficient.
-
-### Quantitative structure
-
-`GEOMETRY_FROM_TRANSFORMATION.md` defines transformation-derived distance and its metric conditions. `EXPERIMENT_METRIC_001.md` gives the first explicit metric baseline.
-
-## Current open problem
-
-The relation-composition milestone is closed at the level that can be justified:
-
-- path composition is defined;
-- sign-product is derived as a scalar summary;
-- sign-product is rejected as a universal information-preserving relation law;
-- primitive relation reduction remains open.
-
-The next central problem is **general transformation geometry**: allow relation addition/removal and entity-state changes, define principled costs, test symmetry and quotient compatibility, and determine whether a stable geometry can emerge without importing physical space by assumption.
-
-## Long-term question
-
-Can the language provide a common formal framework for describing physical, biological, cognitive and social systems while preserving falsifiability and comparison with established mathematics and science?
-
-If it cannot, the failure is a valid result.
+- canonical primitive relation composition;
+- canonical path equivalence;
+- universal sufficient path profile;
+- unrestricted transformation metric;
+- quotient-induced geometry;
+- physical time;
+- probability;
+- energy;
+- physical ontology;
+- task-independent emergence criterion;
+- causal self-model;
+- physical bridge and independent predictions.
 
 ## Repository structure
 
-- `FOUNDATION.md` — primitive ontology and typed syntax.
-- `ALGEBRA.md` — operations, composition and candidate algebraic laws.
-- `TYPE_SYSTEM.md` — typed object system and legal/illegal coercions.
-- `PATH_ALGEBRA.md` — paths, path composition and path profiles.
-- `RELATION_COMPOSITION.md` — relation-composition candidates and decisions.
-- `RESULT_RELATION_COMPOSITION_001.md` — current composition result.
-- `STRUCTURE.md` — graphs, paths, cycles, boundaries and structural quantities.
-- `TRANSFORMATION.md` — transformations, symmetry, quotient-related change and derived distance.
-- `INVARIANTS.md` — invariants and symmetry framework.
-- `GEOMETRY_FROM_TRANSFORMATION.md` — route from transformation cost to derived geometry.
-- `EXPERIMENT_METRIC_001.md` — first transformation-derived metric baseline.
-- `DYNAMICS.md` — state, change, order, causality and memory.
-- `EMERGENCE.md` — hierarchy, self-reference and consciousness hypotheses.
-- `GLOSSARY.md` — controlled vocabulary.
-- `RESEARCH_MAP.md` — mapping between Ω-Math and existing Ω experiments.
-- `EXPERIMENT_PATH_DYNAMICS_001.md` — formal dynamic counterexample to restricted path-profile sufficiency.
-- `EXPERIMENT_INVARIANT_001.md` — invariant/transformation test.
-- `STATUS.md` — current research state and dependency-ordered open questions.
+- `FOUNDATION.md`
+- `LANGUAGE_SPEC.md`
+- `SEMANTICS.md`
+- `TYPE_SYSTEM.md`
+- `OPERATOR_TABLE.md`
+- `CANONICAL_EXAMPLES.md`
+- `ALGEBRA.md`
+- `PATH_ALGEBRA.md`
+- `RELATION_COMPOSITION.md`
+- `REDUCTION_RULES.md`
+- `STRUCTURE.md`
+- `TRANSFORMATION.md`
+- `INVARIANTS.md`
+- `GEOMETRY_FROM_TRANSFORMATION.md`
+- `DYNAMICS.md`
+- `EMERGENCE.md`
+- `BEHAVIORAL_EQUIVALENCE.md`
+- `GLOSSARY.md`
+- `RESEARCH_MAP.md`
+- experiment/result documents
+- `STATUS.md`
+- `LICENSE.md`
 
 ## Status
 
-**Ω-Math v0.3 — typed structural core, tested path/composition layer, and first transformation-derived metric baseline.**
+**Ω-Math v0.4 — typed relational language with explicit semantics, reduction discipline, tested path/composition layer and transformation-derived metric baseline.**
 
-No claim in this repository should be promoted from hypothesis to established fact without explicit evidence.
+No claim should be promoted from hypothesis to established fact without explicit evidence.
