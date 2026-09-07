@@ -1,85 +1,98 @@
 # Ω-Math — Behavioral Equivalence v0.2
 
-## 1. Motivation
+## 1. Purpose
 
-The existing constructions show that equal current observations and equal aggregate graph statistics can hide different future behavior. Equivalence must therefore be indexed by what is observed and by the dynamics being preserved.
+Static observation can hide differences that become visible only after a transition. Ω-Math therefore distinguishes observational equivalence from equivalence of future behavior.
 
-## 2. Horizon-dependent equivalence
+## 2. Finite-horizon behavioral equivalence
 
-Let `O` be an observation map and `U` an admissible input sequence. Define `≈ᵦ,h` by equality of the selected observations for all tested steps through horizon `h` under the declared input protocol.
+Let `O` be an observation map and `T` a deterministic transition rule under a declared input sequence `U₀,U₁,...`.
 
-At horizon zero:
+For horizon `h ≥ 0`, define:
 
-`x ≈ᵦ,0 y` iff `O(x)=O(y)`.
+`x ≈ᵦ,h y`
 
-For deterministic dynamics, a recursive definition is:
+iff the observation sequences generated from `x` and `y` are equal through horizon `h` under the same declared inputs:
 
-`x ≈ᵦ,h+1 y`
+`O(T^k(x;U)) = O(T^k(y;U))` for every `0 ≤ k ≤ h`.
 
-iff
+For `h=0`, this reduces to current observational equivalence:
 
-`O(x)=O(y)`
+`x ≈ᵦ,0 y ⇔ O(x)=O(y)`.
 
-and
+## 3. Horizon nesting
 
-`T(x,u) ≈ᵦ,h T(y,u)`
-
-for every admissible input `u` in the declared test set.
-
-This is a finite-horizon behavioral criterion, not a universal law for all possible systems.
-
-## 3. Nesting
-
-Under the recursive definition:
+By construction,
 
 `≈ᵦ,h+1 ⊆ ≈ᵦ,h`.
 
-A longer observation horizon can reveal distinctions that a shorter horizon cannot see. It cannot make two already distinguishable objects equivalent under the same observation protocol.
+Increasing the observation horizon cannot turn an already distinguishable pair into an equivalent pair. It can only preserve equivalence or reveal a distinction.
 
-For nondeterministic systems the definition must be replaced by an explicitly chosen matching relation over possible successors or distributions.
+This is a formal property of the deterministic finite-horizon definition, not an empirical law.
 
-## 4. Behavior-preserving quotient
+## 4. Behavioral quotient compatibility
 
-A quotient by an equivalence `≈` is behavior-preserving for a declared transition system only if equivalent states have compatible successor behavior under the declared inputs.
+A quotient `Q` is behavior-preserving for horizon `h` only if equivalent representatives generate the same declared observations through that horizon under the specified inputs.
 
-A quotient that merges states with incompatible successors is not behavior-preserving for that task.
+Therefore a quotient based only on current observation may fail to be behavior-preserving.
 
-## 5. Relation to existing experiments
+The executed constructions in `EXPERIMENT_BEHAVIORAL_EQUIV_001.md` and `EXPERIMENT_BEHAVIORAL_EQUIV_002.md` provide minimal examples of this failure.
 
-`BEHAVIORAL-EQUIV-001` provides the minimal counterexample:
+## 5. Relational systems
 
-`A≈ₒB` now,
+For an Ω-system, the state may contain:
 
-but
+- entity states;
+- relation organization;
+- retained memory;
+- other explicitly declared variables.
 
-`T(A)≉ₒT(B)`.
+Two systems with equal entity-state multisets can therefore belong to different behavioral classes when their relation organization differs.
 
-`BEHAVIORAL-EQUIV-002` shows that identical entity-state composition can hide different relational organization and therefore different trajectories under an explicit propagation rule.
+`same composition ≠ same organization ≠ same behavior`.
 
-`STRUCTURE-004` shows that even matched degree sequence, component count and cycle rank can hide path-level differences that become dynamically observable.
+## 6. Inputs and nondeterminism
 
-## 6. Behavioral collapse criterion
+The definition above is deterministic and uses a fixed input sequence.
 
-A collapse is acceptable only relative to a declared preservation target:
+For nondeterministic systems, behavioral equivalence must explicitly choose its semantics, for example:
 
-`Q : S → S/≈`.
+- equality of all possible future observations;
+- existence of matching futures;
+- probability-distribution equivalence, if probability is independently introduced.
 
-The target must state:
+Ω-Math does not silently choose among these alternatives.
 
-- observation map;
-- admissible inputs/interventions;
-- time/horizon convention;
-- deterministic or nondeterministic semantics;
-- behavior that must be preserved.
+## 7. Relation to memory
 
-Without these, the phrase `behavior-preserving collapse` is incomplete.
+A representation is behaviorally sufficient for a specified task and horizon when replacing the full state by that representation preserves the selected future observations.
 
-## 7. Status
+Thus memory sufficiency is relative to:
 
-`DEFINED: finite-horizon deterministic criterion`.
+`task + observation + transition rule + input class + horizon`.
 
-`SUPPORTED BY CONSTRUCTIONS: static equivalence can fail dynamically`.
+No universal memory quantity follows from behavioral equivalence alone.
 
-`OPEN: canonical infinite-horizon equivalence`.
+## 8. Path-level consequence
 
-`OPEN: nondeterministic/probabilistic behavioral equivalence`.
+If two paths have the same scalar sign product but different intermediate organization, they are equivalent under that summary only if the selected dynamics cannot distinguish the intermediate organization.
+
+Therefore:
+
+`equal path summary ≠ behavioral equivalence`.
+
+This is the key test connecting `RELATION_COMPOSITION.md`, `PATH_ALGEBRA.md` and the behavioral layer.
+
+## 9. Required tests
+
+1. Verify finite-horizon nesting computationally on exhaustive finite transition systems.
+2. Find minimal systems where `≈ᵦ,h` holds but `≈ᵦ,h+1` fails.
+3. Test path pairs with equal sign products and different ordered signs.
+4. Test topology pairs with equal aggregate graph statistics.
+5. Test which quotients preserve a declared observation/transition family.
+
+## 10. Status
+
+`DEFINED / TESTABLE`
+
+Finite-horizon behavioral equivalence is a definition. Its usefulness and sufficiency for particular Ω models remain empirical/formal questions.
