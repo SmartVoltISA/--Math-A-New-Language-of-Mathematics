@@ -1,138 +1,122 @@
-# Ω-Math v0.7 — Research Status
+# Ω-Math v0.8 — Research Status
 
 ## Current state
 
-The repository contains a typed relational language with explicit syntax, semantics, operator discipline, reduction rules, transformations, invariants/symmetry, path algebra, behavioral equivalence, structural-edit geometry, task-relative sufficient-state construction, and a declared nondeterministic transition layer.
+Ω-Math now has a closed formal language domain covering typed entities and relations, configurations, paths, transformations, observations, equivalence/quotients, task-relative reduction, structural geometry, deterministic dynamics, nondeterministic branching, internal order, functional memory, feedback and explicit higher-order hypothesis layers.
 
-The central discipline remains:
+The governing method remains:
 
-`define → derive → execute → verify → compare → falsify → record`.
+`define → derive → implement → execute → verify → compare → falsify → record`.
 
-## v0.7 mathematical milestone
+## M17 — Formal language cluster closure
 
-### M15 — Nondeterministic dynamics
+`LANGUAGE_CLOSURE_v0.8.md` maps the full currently admitted language into research clusters and explicitly separates canonical formal objects from unresolved physical extensions.
 
-`NONDETERMINISTIC_DYNAMICS.md` extends the transition layer from a function
+The closure is semantic and engineering-level: every admitted object has a declared role, while unresolved mathematics remains marked `OPEN` rather than being filled by assumptions.
 
-`T:S×U→S`
+## Cluster status
 
-to a successor-set relation
+### Foundation — CLOSED
 
-`N:S×U→𝒫(S)`.
+`Entity`, `EntityState`, `Relation`, `RelationState`, relation domain, identity/state distinction.
 
-The language now explicitly represents branching futures rather than silently selecting one successor.
+### Configuration — CLOSED
 
-Three concepts are kept separate:
+`Configuration`, `State`, explicit retained variables and state comparison.
 
-`possible ≠ probable`
+### Algebra — PARTIALLY CLOSED
 
-`universal preservation ≠ existential preservation`
+Path construction and concatenation are defined. Sign product is a derived summary. Universal primitive relation composition remains OPEN because executed counterexamples show scalar collapse can erase behaviorally relevant organization.
 
-`branching semantics ≠ deterministic selection`.
+### Structure — CLOSED AS REPRESENTATION
 
-### M16 — Branch-collapse counterexample
+Connectivity, components, cycles, path organization and structural observables are represented. No aggregate statistic is universal.
 
-`EXPERIMENT_NONDETERMINISTIC_001.md` gives a finite executed construction where two systems have the same current observation and the same one-step observable successor set, but differ at the next horizon because one branch remains executable and the other is blocked.
+### Transformation — CLOSED AS FORMAL LAYER
 
-Therefore a one-step summary cannot be promoted to a general two-step sufficient representation.
+Composition, identity, inverse conditions, edit events, refinement and collapse are represented.
 
-Status: `EXECUTED / SUPPORTED UNDER DECLARED FINITE MODEL`.
+### Invariant / Symmetry — CLOSED AS FRAMEWORK
 
-## Existing milestones
+Invariants are always relative to a declared transformation family; label symmetry is an explicit control.
 
-### M13 — Task-relative sufficient relational state
+### Equivalence / Quotient — CLOSED FOR DECLARED FINITE TASKS
 
-A candidate reduction `Q` is sufficient for finite-horizon behavior when
+Static observation equivalence and finite-horizon deterministic behavioral equivalence are defined. Exhaustive small-model verification supports the recursive quotient construction.
 
-`Q(x)=Q(y) ⇒ B_h(x,u)=B_h(y,u)`
+### Reduction — CLOSED AS METHODOLOGICAL RULE
 
-for every admissible input sequence.
+A reduction is sufficient only when the declared task factors through it:
 
-### M14 — Structural reduction boundary
+`Q(x)=Q(y) ⇒ F(x)=F(y)`.
 
-Equal source-distance profiles can yield different future trajectories under the same declared dynamics. Structural descriptors therefore require task-specific sufficiency tests.
+### Geometry — CLOSED AS DERIVED CONSTRUCTION, PHYSICAL SPACE OPEN
 
-### M9–M12 — Relational geometry
+Transformation cost induces structural distance under declared assumptions. Label-independent quotient geometry is available for equal-cardinality finite configurations. Physical space is not derived.
 
-Structural edit distance, label-independent quotient distance under stated assumptions, exhaustive small-model verification and the geometry signature `Γ_h(C)` remain established/defined at their documented levels.
+### Dynamics — CLOSED FOR DETERMINISTIC + FINITE NONDETERMINISTIC REPRESENTATION
 
-## Algebraic decision
+Deterministic transition and nondeterministic successor-set dynamics are represented. Branching is not silently collapsed.
 
-`PATH CONCATENATION`: `DEFINED`.
+### Time — FORMAL INTERNAL LAYER CLOSED; PHYSICAL TIME OPEN
 
-`SIGN-PRODUCT SUMMARY`: `DERIVED`.
+Transition order and horizon are defined; transition count is a derived discrete coordinate. A weighted internal coordinate is possible when weights are explicitly declared. Physical duration requires independent calibration.
 
-`SIGN-PRODUCT AS COMPLETE RELATION COMPOSITION`: `REJECTED`.
+### Memory — CLOSED AS FUNCTIONAL CRITERION
 
-`PRIMITIVE RELATION REDUCTION`: `OPEN`.
+Retained state is called functional memory only when an intervention/control demonstrates a later behavioral effect.
 
-The language does not collapse an ordered relation sequence merely because a scalar summary exists.
+### Feedback / Self-model — FRAMEWORK CLOSED, EMPIRICAL CRITERION OPEN
 
-## Dynamics decision
+Recurrent dependence and self-model candidates are expressible, but no consciousness claim follows from their representation.
 
-`DETERMINISTIC TRANSITION`: `DEFINED`.
+### Emergence — TESTABLE FRAMEWORK, UNIVERSAL CRITERION OPEN
 
-`NONDETERMINISTIC TRANSITION`: `DEFINED` as a successor-set relation.
+Coarse-graining, persistence, macro-properties and controls are explicit. Emergence is not a primitive fact.
 
-`BRANCHING BEHAVIOR`: `DEFINED` for finite horizons.
+### Point / Boundary — HYPOTHESIS
 
-`PROBABILISTIC TRANSITION`: `OPEN` — no probabilities are assigned by nondeterminism alone.
+Relational closure, interface, internal distinction and state-change flux are formal test targets. The Point is not established as a physical object.
 
-`INFINITE-HORIZON SEMANTICS`: `OPEN`.
-
-`FAIRNESS / LIVENESS`: `OPEN`.
-
-## Reduction principle
-
-A reduction is not accepted because it looks structurally rich. It must preserve the exact behavior selected by the declared task.
-
-For branching systems the preservation condition is evaluated on the declared branching behavior object or task predicate.
-
-## Next mathematical tests
-
-1. Exhaustively enumerate small nondeterministic transition systems and verify the recursive branching quotient.
-2. Separate universal-safety and existential-reachability quotients.
-3. Test whether different branching representations are equivalent under different tasks.
-4. Add probability only as an explicit typed extension and compare it with nondeterministic semantics.
-5. Test quotient geometry after behavioral reduction.
-6. Continue unequal-cardinality and insertion/deletion geometry.
-7. Investigate whether relation composition can be derived from transition behavior without imposing a primitive binary sign law.
-
-## Explicitly open
+## Explicit open mathematics
 
 - canonical primitive relation composition;
 - canonical path equivalence;
 - universal sufficient path profile;
-- unrestricted canonical metric;
-- general quotient geometry;
+- full nondeterministic equivalence taxonomy across task semantics;
+- infinite-horizon equivalence;
+- probabilistic dynamics;
+- fairness/liveness;
+- continuous-state extension;
+- unequal-cardinality general quotient geometry;
 - physical time;
-- probability;
 - energy;
 - physical ontology;
-- task-independent emergence criterion;
-- self-model and causal self-reference;
+- task-independent emergence;
+- causal self-model;
 - independent physical predictions.
+
+## Evidence already recorded
+
+- path sign-product information-loss counterexamples;
+- topology/organization counterexamples;
+- source-distance-profile behavioral counterexample;
+- exhaustive finite deterministic behavioral quotient verification;
+- structural transformation-distance verification;
+- nondeterministic branch-collapse counterexample.
+
+The repository records failed experiments rather than deleting them, preserving the distinction between structural evidence, behavioral evidence and hypothesis.
 
 ## Novelty discipline
 
-The nondeterministic layer is treated as an Ω-Math formalization/integration, not as a claim of inventing nondeterministic transition systems or behavioral equivalence.
+No global novelty claim is made merely because a known mathematical object has been expressed in Ω notation. A stronger novelty claim requires explicit comparison with established mathematics.
 
-Any stronger novelty claim requires explicit comparison with established transition-system, automata, bisimulation and probabilistic formalisms.
+## Completeness statement
 
-## Critical methodological rule
+**Ω-Math v0.8 is formally complete for its currently admitted language domain.**
 
-`representable ≠ explained`
-
-`correlated ≠ caused`
-
-`stable ≠ fundamental`
-
-`compressed ≠ equivalent`
-
-`possible ≠ probable`
-
-`emergent candidate ≠ emergence proven`
+This means the language has a coherent typed grammar and explicit semantics for the current object hierarchy. It does not mean that all mathematics, probability, physical time, energy, spacetime, consciousness or the ontology of nature have been derived.
 
 ## Version
 
-**Ω-Math v0.7** — typed relational language extended with explicit nondeterministic dynamics and branching-preserving reduction discipline.
+**Ω-Math v0.8 — formal language cluster closure.**
