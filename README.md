@@ -53,6 +53,23 @@ where `E` is the set of entity states, `Dᴿ ⊆ E × E` is the domain on which 
 
 This chain is a research decomposition, not a theorem.
 
+## Current mathematical decision
+
+Path concatenation is defined as the primary sequential operation. The sign-product on `{−1,+1}` is also defined as a valid closed summary algebra:
+
+`(+,+)→+`
+`(+,-)→-`
+`(-,+)→-`
+`(-,-)→+`
+
+However, experiments show that reducing a path to its sign-product can erase intermediate organization and change predicted future behavior under explicit transition rules.
+
+Therefore:
+
+`PATH CONCATENATION ≠ SIGN-PRODUCT REDUCTION`.
+
+The sign-product is a **summary**, not a universal information-preserving definition of relation composition. Primitive relation reduction remains open.
+
 ## Existing Ω research integrated into this language
 
 The Ω-Lab already contains relevant experimental branches:
@@ -88,15 +105,17 @@ Every serious claim must state its status:
 
 Ordinary arithmetic must not be used to silently identify entity values with relation values.
 
-## v0.2 formal core
+## v0.3 formal core
 
 ### Typed objects
 
 `TYPE_SYSTEM.md` defines the object types, legal compositions and forbidden silent coercions.
 
-### Paths
+### Paths and composition
 
-`PATH_ALGEBRA.md` defines path concatenation separately from the still-open problem of reducing a path to a primitive relation. This prevents path structure from being replaced by an unjustified sign arithmetic.
+`PATH_ALGEBRA.md` and `RELATION_COMPOSITION.md` define path concatenation and distinguish it from primitive relation reduction.
+
+`RESULT_RELATION_COMPOSITION_001.md` records the four signed cases, algebraic properties of the scalar summary, and the information-loss counterexamples.
 
 ### Transformations
 
@@ -106,24 +125,20 @@ Ordinary arithmetic must not be used to silently identify entity values with rel
 
 `INVARIANTS.md` defines invariance relative to an explicitly named transformation family and establishes label permutation as a mandatory representation control.
 
+### Behavioral equivalence
+
+`BEHAVIORAL_EQUIVALENCE.md` defines finite-horizon behavioral equivalence relative to observations, inputs/interventions, transition rules and horizon. `EXPERIMENT_PATH_DYNAMICS_001.md` demonstrates why restricted path summaries cannot be assumed behavior-sufficient.
+
 ## Current open problem
 
-The next central algebraic question remains relation composition.
+The relation-composition milestone is now closed at the level that can be justified:
 
-For example, given:
+- path composition is defined;
+- sign-product is derived as a scalar summary;
+- sign-product is rejected as a universal information-preserving relation law;
+- primitive relation reduction remains open.
 
-`A —(+1)→ B —(+1)→ C`
-
-what, if anything, is the relation from `A` to `C`?
-
-Likewise:
-
-`(+1) ∘ (+1)`
-`(+1) ∘ (−1)`
-`(−1) ∘ (+1)`
-`(−1) ∘ (−1)`
-
-must not be assigned values merely because ordinary arithmetic suggests an answer. Path concatenation is already defined; primitive relation reduction remains an experimental question.
+The next central problem is **quantitative structure derived from transformations**: whether a meaningful distance/geometry can emerge from admissible transformation costs without being inserted as an ordinary geometric primitive.
 
 ## Long-term question
 
@@ -137,6 +152,8 @@ If it cannot, the failure is a valid result.
 - `ALGEBRA.md` — operations, composition and candidate algebraic laws.
 - `TYPE_SYSTEM.md` — typed object system and legal/illegal coercions.
 - `PATH_ALGEBRA.md` — paths, path composition and path profiles.
+- `RELATION_COMPOSITION.md` — relation-composition candidates and decisions.
+- `RESULT_RELATION_COMPOSITION_001.md` — current composition result.
 - `STRUCTURE.md` — graphs, paths, cycles, boundaries and structural quantities.
 - `TRANSFORMATION.md` — transformations, symmetry, quotient-related change and derived distance.
 - `INVARIANTS.md` — invariants and symmetry framework.
@@ -144,10 +161,12 @@ If it cannot, the failure is a valid result.
 - `EMERGENCE.md` — hierarchy, self-reference and consciousness hypotheses.
 - `GLOSSARY.md` — controlled vocabulary.
 - `RESEARCH_MAP.md` — mapping between Ω-Math and existing Ω experiments.
+- `EXPERIMENT_PATH_DYNAMICS_001.md` — dynamic counterexample to restricted path-profile sufficiency.
+- `EXPERIMENT_INVARIANT_001.md` — invariant/transformation test.
 - `STATUS.md` — current research state and dependency-ordered open questions.
 
 ## Status
 
-**Ω-Math v0.2 — typed structural core under active research.**
+**Ω-Math v0.3 — typed structural core with tested path/composition layer; quantitative structure is next.**
 
 No claim in this repository should be promoted from hypothesis to established fact without explicit evidence.
