@@ -1,238 +1,161 @@
-# Ω-Math v0.1 — Foundation
+# Ω-Math v0.4 — Foundation
 
 ## 1. Purpose
 
-Ω-Math starts from the smallest proposed typed vocabulary capable of separating two things that are often mixed in ordinary descriptions:
+Ω-Math starts from a minimal typed vocabulary separating:
 
-1. an entity and its state;
-2. a relation and its state.
+1. an entity from its state;
+2. a relation from its state;
+3. relation presence from relation value.
 
-The primitive alphabet is therefore:
+The primitive alphabet is:
 
 `{0, 1, −1, +1}`
 
-but it is not one undifferentiated set. It contains two typed domains.
+but it contains two disjoint typed value domains.
 
 ## 2. Entity domain
 
-`E_val = {0, 1}`
+`EntityState = {0,1}`.
 
-An entity value describes whether the entity is in state 0 or state 1 within the chosen model.
+An entity is:
 
-The symbols do not yet mean physical absence and physical presence. Their meaning is model-dependent and must be defined for each application.
+`eᵢ=(idᵢ,sᵢ)` with `sᵢ∈EntityState`.
 
-Write:
-
-`eᵢ ∈ E_val`
+The symbols do not intrinsically mean physical absence/presence.
 
 ## 3. Relation domain
 
-`R_val = {−1, +1}`
+`RelationState = {−1,+1}`.
 
-A relation value describes one of two relation states.
+A relation is:
 
-At v0.1 the semantic labels are deliberately neutral:
+`rᵢⱼ=(i,j,q)` with `q∈RelationState` and `(i,j)∈D_R`.
 
-`−1 = relation state A`
-
-`+1 = relation state B`
-
-Words such as attraction, opposition, support, inhibition, agreement or causation are application-level interpretations and cannot be assumed from the sign alone.
-
-Write:
-
-`rᵢⱼ ∈ R_val`
+The signs have no intrinsic physical meaning. Attraction, opposition, support, inhibition or causation are application-level interpretations and require independent definitions.
 
 ## 4. Type separation
 
-The symbols can look numerically similar, but their type is part of the object.
+`0:EntityState`
 
-`0 : Entity`
-`1 : Entity`
-`−1 : Relation`
-`+1 : Relation`
+`1:EntityState`
 
-Therefore:
+`−1:RelationState`
 
-`0 ≠ −1`
-`1 ≠ +1`
+`+1:RelationState`
 
-in the typed language.
+Therefore equal-looking numerical symbols are not interchangeable across types.
 
-This is not a numerical inequality claim. It is a type distinction.
+## 5. Distinction
 
-## 5. Distinguishability
+For entity states:
 
-For entity values define a binary distinction operator:
+`D(a,b)=0` if `a=b`;
 
-`D(a,b) = 0` if `a = b`
-`D(a,b) = 1` if `a ≠ b`
+`D(a,b)=1` if `a≠b`.
 
-Truth table:
+This is a declared comparison operator, not ordinary addition.
 
-`D(0,0) = 0`
-`D(1,1) = 0`
-`D(0,1) = 1`
-`D(1,0) = 1`
+## 6. Relation domain and absence
 
-Here `1` means that a distinction is present. It does not necessarily mean a count of one object.
+`D_R ⊆ I×I` is the explicit domain of present/modelled relations.
 
-The distinction operator is therefore an observation of difference, not ordinary addition.
+If `(i,j)∉D_R`, the relation is absent/undefined in the model. It is not automatically `0`, `−1` or `+1`.
 
-## 6. Relation domain
+## 7. Elementary Ω expression
 
-Not every ordered pair must have a relation.
+`eᵢ —q→ eⱼ`
 
-Let:
+with `q∈{−1,+1}`.
 
-`D_R ⊆ I × I`
+## 8. Configuration
 
-be the domain of present relations between entity indices.
+`C=(E,D_R,R)` where:
 
-For every `(i,j) ∈ D_R`:
+`E` is the entity set;
 
-`rᵢⱼ ∈ {−1,+1}`
+`D_R` is the relation domain;
 
-If `(i,j) ∉ D_R`, the relation is **undefined/not present in the model**.
-
-It is not automatically `0`.
-
-This prevents absence of information from being silently converted into a third physical relation state.
-
-## 7. Elementary Ω-expression
-
-The smallest relational expression is:
-
-`eᵢ —rᵢⱼ→ eⱼ`
-
-or as a tuple:
-
-`Bᵢⱼ = (eᵢ, rᵢⱼ, eⱼ)`
-
-This is the basic typed unit of the language.
-
-## 8. Finite Ω-system
-
-A finite system is represented as:
-
-`Ω = (E, R, D_R)`
-
-where:
-
-`E = (e₁,...,eₙ)`
-`eᵢ ∈ {0,1}`
-`D_R ⊆ I × I`
-`R : D_R → {−1,+1}`
-
-The system is therefore more than a list of numbers. It contains entities, relation-domain information and relation states.
+`R:D_R→RelationState` assigns relation states.
 
 ## 9. State
 
-A system state at step `t` is:
+`S=(C,M,X)` where `M` and `X` are optional explicitly retained variables.
 
-`Ω_t = (E_t, R_t, D_R,t)`
+Nothing may be added to state implicitly.
 
-A transition is:
+## 10. Transition
 
-`Ω_t → Ω_t+1`
+A transition is a declared mapping:
 
-The transition rule is written:
+`T:S×U→S'`
 
-`Ω_t+1 = T(Ω_t, U_t)`
+where `U` is optional external input.
 
-where `U_t` is optional external input.
+Transition semantics are model-dependent and are not primitive physical laws.
 
-The transition operator `T` is not primitive yet. Different classes of systems require different transition laws.
+## 11. Change
 
-## 10. Change
+Change is a comparison:
 
-Do not interpret the symbol `−` in the word change as ordinary subtraction.
+`COMPARE(S,S')→ChangeRecord`.
 
-Define structural change as a comparison:
+The record may contain entity-state changes, relation-state changes, relation births/removals and structural reconfiguration.
 
-`ΔΩ_t = Compare(Ω_t, Ω_t+1)`
+A numerical magnitude requires a separate derived definition.
 
-The output can record:
+## 12. Paths
 
-- entity-state changes;
-- relation-state changes;
-- relation births;
-- relation removals;
-- structural reconfiguration.
+A path is an ordered compatible sequence of relations:
 
-A future formal version may define a quantitative change measure, but v0.1 does not assume one.
+`P=(r₁,...,rₙ)`.
 
-## 11. Higher-level entity
+Path order, endpoints, intermediate entities and signs are retained.
 
-A stable substructure may be represented as a higher-level entity.
+Concatenation is:
 
-Let:
+`P⧺Q`
 
-`ω ⊆ Ω`
+when endpoints are compatible.
 
-be a substructure satisfying a chosen stability criterion.
+Path concatenation is associative. This does not define a primitive relation reduction.
 
-A coarse-graining map may then be defined:
+## 13. Higher-level entities
 
-`C(Ω) = Ω'`
+A stable substructure may be mapped to a higher-level entity only through an explicit coarse-graining/identification map and validation criterion.
 
-where one or more substructures in `Ω` become entities in `Ω'`.
+This is the entry point for emergence; it is not an automatic consequence of stability.
 
-This is the formal entry point for emergence.
+## 14. Minimal principles
 
-It is a hypothesis that stable higher-level entities can be derived this way; it is not assumed to hold for every system.
+**P1 — Typed distinction.** Entity and relation states are different types.
 
-## 12. Minimal principles
+**P2 — Relation requires a domain.** Presence is separate from sign.
 
-### Principle P1 — Typed distinction
+**P3 — Structure is relational.** Entity-state multisets alone do not determine relational organization.
 
-Entity states and relation states are different mathematical types.
+**P4 — Change is comparison.** No primitive subtraction is assumed.
 
-### Principle P2 — Relation requires a domain
+**P5 — Paths retain order.** A path is not silently replaced by a scalar.
 
-A relation value is assigned only where a relation is present or explicitly modeled.
+**P6 — Reduction requires sufficiency.** A compressed representation is not equivalent unless it preserves the declared task/behavior.
 
-### Principle P3 — Structure is relational
+**P7 — Emergence requires identification.** A macro-object needs an explicit map and validation criterion.
 
-A system's structure depends on the configuration of its relations, not only on the multiset of entity values.
-
-### Principle P4 — Change is comparison
-
-A change is determined by comparing system states, not by assuming an external numerical difference operator.
-
-### Principle P5 — Emergence requires a criterion
-
-A higher-level entity must be identified by an explicit structural rule; visual or semantic intuition is insufficient.
-
-## 13. What remains undefined
-
-The following are deliberately open:
-
-- composition of relation states;
-- identity relation;
-- inverse relation;
-- path equivalence;
-- relation conservation;
-- metric/distance;
-- probability;
-- energy-like quantities;
-- physical interpretation;
-- consciousness.
-
-These must be derived, defined or rejected in later versions.
-
-## 14. Research constraint
+## 15. Research constraint
 
 No familiar mathematical object is imported as fundamental merely because it is convenient.
 
-Instead ask:
+For every proposed object ask:
 
-`Can this object be defined from the typed Ω primitives?`
+`Can it be derived from the typed Ω primitives?`
 
 If yes, derive it.
 
-If not, add the smallest necessary primitive and document why.
+If no, either add the smallest necessary primitive with justification or record the limitation.
 
-## 15. Current status
+## Status
 
-This document defines the foundation only. It does not claim that the four symbols constitute the ontology of nature.
+`DEFINED / FOUNDATION`
+
+The foundation is sufficient for the current v0.4 language layer. It is not a claim that the four primitive values constitute the ontology of nature.
