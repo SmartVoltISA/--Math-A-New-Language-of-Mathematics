@@ -12,6 +12,8 @@ This file defines which documents are authoritative for the current v0.9 languag
 - `REDUCTION_RULES.md`
 - `ALGEBRA.md`
 - `BEHAVIORAL_EQUIVALENCE.md`
+- `EQUIVALENCE_v0.9.md`
+- `PATH_ALGEBRA_v0.9.md`
 - `FRONTIER_CLOSURE_v0.9.md`
 - `STATUS_v0.9.md`
 - `QUOTIENT_GEOMETRY_CONDITIONS.md`
@@ -22,11 +24,11 @@ This file defines which documents are authoritative for the current v0.9 languag
 
 ### `PATH_ALGEBRA.md`
 
-The conceptual material remains useful, but its v0.2 wording predates the v0.9 empty-path identity. Until synchronized, use `LANGUAGE_SPEC.md`, `ALGEBRA.md` and `OPERATOR_TABLE.md` for the current path semantics.
+The conceptual material remains useful, but its v0.2 wording predates the v0.9 empty-path identity. Use `PATH_ALGEBRA_v0.9.md` for current path semantics.
 
 ### `EQUIVALENCE.md`
 
-This is a v0.1 research record. It contains useful distinction/quotient material and historical physical hypotheses, but it is not the current canonical equivalence specification. Use `BEHAVIORAL_EQUIVALENCE.md`, `LANGUAGE_SPEC.md` and `REDUCTION_RULES.md` for v0.9 semantics.
+This is a v0.1 research record. It contains useful distinction/quotient material and historical physical hypotheses, but it is not the current canonical equivalence specification. Use `EQUIVALENCE_v0.9.md` for current equivalence semantics.
 
 ### v0.8 closure records
 
