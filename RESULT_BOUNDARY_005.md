@@ -2,80 +2,130 @@
 
 ## Executed test
 
-A finite relational system was simulated with 60 entities and 180 undirected relations. Relations were repeatedly rewired for 100 steps. A closure rule preferentially replaced an edge with a two-hop candidate having many common neighbors. This increases local relational closure without introducing geometry.
+Two computational constructions were tested without geometric coordinates.
 
-Six independent seeds were used for each condition.
+### Test A — closure-biased rewiring
 
-The null condition used random rewiring rather than closure-biased rewiring.
+A finite relational system was repeatedly rewired so that local relational closure increased.
 
-## Result
+The earlier controlled run showed stronger community separation than random rewiring, but maximal closure fragmented the system rather than producing one dominant object.
 
-Initial state was identical in distribution for all conditions.
+### Test B — directed inward relational dynamics
 
-At step 100:
+A directed system of 80 entities was evolved for 400 rounds. At each update, relation targets preferentially moved toward locally related/reachable entities, with a controlled random component. Seven closure settings were tested from `p=0.40` to `0.95`, with 15 independent runs per setting.
 
-| condition | communities | largest community | internal-edge fraction of largest | cut-edge fraction | boundary nodes | conductance |
-|---|---:|---:|---:|---:|---:|---:|
-| random null | 6.50 | 16.0 | 0.154 | 0.235 | 36.0 | 0.438 |
-| closure p=0.75 | 14.17 | 26.0 | 0.301 | 0.334 | 31.83 | 0.376 |
-| closure p=1.0 | 24.17 | 20.67 | 0.347 | 0.365 | 27.67 | 0.350 |
+The largest strongly connected component (SCC) was measured as the candidate internally closed core. Incoming and outgoing relations across the SCC interface were measured separately.
 
-## Interpretation
+## Test B aggregate result
 
-The closure rule produced stronger community separation than the random null under the chosen measurement. The largest detected community retained a larger fraction of its edges internally, while conductance decreased.
+| closure p | largest SCC / N | incoming-to-SCC edge fraction | outgoing-from-SCC edge fraction |
+|---:|---:|---:|---:|
+| 0.40 | 0.315 | 0.186 | 0.013 |
+| 0.50 | 0.381 | 0.221 | 0.009 |
+| 0.60 | 0.384 | 0.234 | 0.006 |
+| 0.70 | 0.470 | 0.251 | 0.009 |
+| 0.80 | 0.404 | 0.265 | 0.007 |
+| 0.90 | 0.353 | 0.224 | 0.020 |
+| 0.95 | 0.384 | 0.254 | 0.018 |
 
-Therefore the experiment supports the narrower statement:
+The peak mean core fraction occurred near `p=0.70`, but the effect was not monotonic and variability remained substantial.
 
-`relational closure can generate a persistent separation between relational regimes without predefined geometry.`
+## Main result
 
-It does NOT yet establish the Point.
+The directed dynamics generated a strongly connected internal core together with a persistent interface to entities outside that core.
 
-## Critical limitation
+This gives a stronger structural form of the earlier result:
 
-The strongest closure condition fragmented the system into many communities rather than producing one dominant internally closed object. Therefore:
+`relational closure -> internally coherent core + interface`
 
-`closure -> boundary`
+The core was defined relationally through strong connectivity, not by geometry.
 
-has preliminary support in this model, but:
+## What this does and does not establish
+
+### Supported, limited
+
+A relational rule can create an internally coherent region without predefined distance, radius, area or spatial coordinates.
+
+The observed core can retain multiple distinct entities; therefore the Point hypothesis does not require:
+
+`e_i = e_j`.
+
+Instead, the candidate transition is:
+
+`external relational differentiation -> internal closure`.
+
+### Not supported
+
+The tests do not show that increasing closure inevitably produces a single Point. Strong closure can instead produce fragmentation into several structures.
+
+Therefore:
 
 `closure -> single Point`
 
-is not demonstrated.
+remains OPEN.
 
-Also, the raw fraction of cut edges did not decrease. What decreased was normalized conductance. Thus the correct result is increased modular separation, not demonstrated absolute isolation.
+### Not yet tested
 
-## Two-direction assessment
+The desired outward channel was not reproduced as a robust effect. Outgoing core-to-exterior coupling remained small and did not show a clear monotonic relation to closure.
 
-### Inward direction
+Energy is not an Ω-Math primitive, so no claim about energy escape is made.
 
-Supported in the limited model: internal organization increased substantially relative to the null.
+## Important consequence
 
-### Outward direction
+The candidate Point should not be defined as maximum closure.
 
-A non-zero interface remained. The system did not become perfectly isolated. No energy claim was made because energy is not yet an Ω-Math primitive.
+The simulations instead suggest searching for a critical regime where three properties coexist:
 
-## Information assessment
+1. one dominant internally coherent structure;
+2. a persistent, narrow interface;
+3. a non-zero external channel.
 
-No physical information quantity was introduced. The experiment only demonstrates that externally detectable relational organization can become coarser while internal organization remains differentiated.
+This is a stronger and more falsifiable target than simply maximizing closure.
 
-## Falsification status
+## Information
 
-The boundary hypothesis is not falsified by this experiment, but it is not proven. The Point-specific prediction remains open.
+No physical information or entropy was inserted into the model. Internal identity/state distinctions can remain while external relational description becomes coarser.
 
-## Next required test
+Thus:
 
-Modify the dynamics so that closure competes with fragmentation and test whether there exists a stable regime with:
+`internal distinguishability != external distinguishability`.
 
-1. one dominant internally closed component;
-2. a narrow but non-zero boundary interface;
-3. persistent external coupling;
-4. preserved internal distinguishability;
-5. robustness under perturbation.
+## Null/control status
 
-Only that regime can be considered a candidate Ω-Point.
+The first closure-vs-random experiment contained a random-rewiring null and showed increased modular separation under the closure rule. The second directed construction did not yet include a fully matched null ensemble with identical degree statistics.
+
+Therefore causal attribution remains limited.
+
+## Current conclusion
+
+The combined tests support:
+
+`relations -> closure -> relational separation -> candidate interface`
+
+They do not yet establish:
+
+`candidate interface -> Point`
+
+and they do not establish any physical identification with a black hole.
+
+## Next test
+
+Run a parameter sweep with an explicit competition between:
+
+`internal closure`
+
+and
+
+`fragmentation`
+
+while independently preserving a small external coupling channel. Search for a stable critical window rather than the maximum-closure endpoint. Test robustness against matched degree-preserving and label-permutation nulls.
 
 ## Status
 
-`SUPPORTED (LIMITED)` for emergent relational separation.
+`SUPPORTED (LIMITED)` — emergent relational separation/core-interface formation.
 
-`OPEN` for the Point.
+`OPEN` — unique Ω-Point.
+
+`OPEN` — outward energy/information channel.
+
+`OPEN` — physical interpretation.
