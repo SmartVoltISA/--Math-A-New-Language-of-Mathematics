@@ -1,10 +1,8 @@
-# Ω-Math v0.6 — Language Specification
+# Ω-Math v0.9 — Language Specification
 
 ## Purpose
 
-This document defines the canonical Ω-Math language layer: primitive domains, typed objects, expressions, derived operators, task-relative reduction, and rules for admitting extensions.
-
-Ω-Math is a typed formal research language. Physical interpretation is never implicit.
+This document defines the canonical Ω-Math language layer: primitive domains, typed objects, expressions, derived operators, task-relative reduction and extension rules. Physical interpretation is never implicit.
 
 ## 1. Primitive domains
 
@@ -12,240 +10,104 @@ This document defines the canonical Ω-Math language layer: primitive domains, t
 
 `RelationState = {−1,+1}`
 
-The domains are disjoint by type.
+The domains are disjoint by type. Relation absence is a domain condition, not a third relation value.
 
 ## 2. Primitive objects
 
-An entity is:
+`e=(id,s)`, `s∈EntityState`.
 
-`e = (id, s)` where `s ∈ EntityState`.
+`r=(src,dst,q)`, `q∈RelationState`, `(src,dst)∈D_R`.
 
-A relation is:
+`C=(E,D_R,R)` with `R:D_R→RelationState`.
 
-`r = (src, dst, q)` where `q ∈ RelationState` and `(src,dst) ∈ D_R`.
-
-A relation is directed because `(src,dst)` and `(dst,src)` are distinct ordered pairs unless an explicit symmetry identifies them.
-
-A configuration is:
-
-`C = (E,D_R,R)`
-
-with entity set `E`, relation domain `D_R`, and relation assignment `R:D_R→RelationState`.
-
-A state is:
-
-`S = (C,M,X)`
-
-where `M` and `X` are optional explicitly declared retained variables. They must never be added silently.
+`S=(C,M,X)` with explicitly declared retained variables.
 
 ## 3. Core expression classes
 
-### Relation
-
-`e_i —q→ e_j`
-
 ### Path
 
-`P = (r_1,r_2,...,r_n)` with compatible endpoints.
+`P=(r₁,...,rₙ)` with compatible endpoints. Path order and intermediate structure are retained.
 
 ### Path concatenation
 
-If the endpoint of `P` equals the start of `Q`:
+`P⧺Q` is the ordered concatenation when endpoints are compatible. It is associative. The empty path `ε_e` is the identity for compatible path concatenation.
 
-`P ⧺ Q`
+### Exact path equality
 
-is the ordered concatenated path.
+`P=Q ⇔ |P|=|Q| ∧ ∀i, r_i=q_i`.
 
-Path concatenation is associative:
+This is representation identity only; it is not structural, behavioral, homotopy or sign equivalence.
 
-`(P ⧺ Q) ⧺ R = P ⧺ (Q ⧺ R)`.
+### Observation and transformation
 
-No scalar replacement is implied.
-
-### Observation
-
-`O:S→Y` where `Y` is explicitly declared.
-
-### Transformation
-
-`T:S×U→S'` with a declared input domain, output type and admissibility condition.
-
-### Transition system
-
-A declared deterministic system is
-
-`𝒟=(S,U,T,O)`.
+`O:S→Y` and a declared transformation/transition relation or function over typed states. Deterministic systems use `T:S×U→S'`; nondeterministic systems use `N:S×U→𝒫(S)`.
 
 ## 4. Canonical operators
 
-| Operator | Input | Output | Status |
-|---|---|---|---|
-| `DIST` | Entity, Entity | Distinction | defined |
-| `INCIDENT` | Relation, Entity | Incidence record | defined |
-| `PATH` | compatible Relation sequence | Path | defined |
-| `CYCLE` | Path | Cycle record | defined conditionally |
-| `CONCAT` | compatible Paths | Path | defined |
-| `SIGN` | Path | Relation-sign sequence / summary | defined derived view |
-| `COMPARE` | State, State | Change record | defined |
-| `TRANSFORM` | State + rule/input | State | defined framework |
-| `OBSERVE` | State | Observation | defined |
-| `EQUIV` | States + declared task | Equivalence relation candidate | defined |
-| `QUOTIENT` | Equivalence relation | Quotient state space | defined |
-| `INVARIANT` | Object family + transformation family | Invariant candidate | defined framework |
-| `BEHAVIOR` | State + declared task | Behavior trace | defined |
-| `COST` | Transformation | Nonnegative cost | defined framework |
-| `DISTANCE` | States + admissible transformations | Extended distance candidate | derived |
-| `SYMMETRY` | Configuration + relabeling | Orbit/action record | defined framework |
+See `OPERATOR_TABLE.md` for the synchronized inventory. Core operators include `DIST`, `INCIDENT`, `PATH`, `PATH_EQ`, `CYCLE`, `CONCAT`, `SIGN`, `COMPARE`, `TRANSFORM`, `OBSERVE`, `EQUIV`, `QUOTIENT`, `INVARIANT`, `BEHAVIOR`, `COST`, `DISTANCE`, `SYMMETRY`, `RETAIN`, `ORDER`, `HORIZON`, `BRANCH`, `REACH`, `MODEL`, `FEEDBACK`, and `COARSE`.
 
-Reserved until separately admitted: `REL_COMPOSE`, `REL_ID`, `REL_INV`, `PATH_EQ`, `CAUSE`, `PROB`, `ENERGY`, `TIME_PHYSICAL`.
+Primitive `REL_COMPOSE`, `REL_ID`, and `REL_INV` are not required by the minimal core.
 
-## 5. Derived operators
+## 5. Derived semantics
 
 ### Sign summary
 
-For a finite path with signs `q_1,...,q_n`:
-
-`Σ(P) = ∏ q_i`.
-
-This is a scalar summary only.
+`Σ(P)=∏ sign(r_i)` is a closed derived summary. It does not replace the path object universally.
 
 ### Finite-horizon behavior
 
-For input sequence `u=(u_0,...,u_{h-1})`:
-
-`B_h(s,u)=(O(T^0_u(s)),...,O(T^h_u(s)))`.
+For declared dynamics, observation map and admissible inputs/interventions, `B_h` records the selected finite future behavior.
 
 ### Behavioral equivalence
 
-`s ≈_h s'` iff
+`s≈ₕs'` when the declared behavior/observation criterion agrees through horizon `h` for all admissible inputs under the selected semantics.
 
-`B_h(s,u)=B_h(s',u)`
+### Infinite horizon
 
-for every admissible input sequence `u` of length `h`.
+`s≈∞s' ⇔ ∀h∈ℕ₀, s≈ₕs'`.
 
-### Sufficient relational state
+Thus `≈∞ = ⋂ₕ≈ₕ`; no new primitive is required.
 
-For task `𝒟=(S,U,T,O)` and horizon `h`, define
+### Sufficient reduction
 
-`SR_𝒟,h(s)=[s]_h`
-
-where `[s]_h` is the behavioral-equivalence class of `s`.
-
-A candidate reduction `Q:S→Z` is sufficient when
-
-`Q(s)=Q(s') ⇒ B_h(s,u)=B_h(s',u)`
-
-for every admissible `u`.
+`Q(x)=Q(y) ⇒ F(x)=F(y)` is the task-relative sufficiency condition. If it fails, the reduction is information-losing for that task.
 
 ### Transformation distance
 
-For admissible transformations `𝒯(x,y)` and cost `c`:
+`d_c(x,y)=inf{c(T):T∈𝒯(x,y)}` is a candidate derived distance. Metric status requires proof/verification for the selected transformation family.
 
-`d_c(x,y)=inf{c(T):T∈𝒯(x,y)}`.
+## 6. Nondeterminism
 
-Whether this is a metric is a theorem to be established for the selected transformation family.
+`N:S×U→𝒫(S)` retains the successor set. Equivalence must explicitly declare whether it preserves traces, branching, existential reachability, universal safety or another task. Fairness and liveness are explicit predicates over infinite runs.
 
-## 6. Recursive behavioral construction
+## 7. Quotient geometry
 
-Base:
+For an equivalence `~`,
 
-`Q_0(s)=O(s)`.
+`d_Q([x],[y])=inf{d(x',y'):x'~x,y'~y}`
 
-For deterministic finite systems, a finite-horizon refinement can be represented recursively by current observation and successor classes under every declared input:
+is a quotient-distance candidate. It is not automatically a pseudometric for an arbitrary equivalence relation. Pseudometric/metric status requires explicit compatibility and, for metric status, separation conditions. See `QUOTIENT_GEOMETRY_CONDITIONS.md`.
 
-`Q_{h+1}(s)=(O(s), {(u,Q_h(T(s,u))) : u∈U})`.
+## 8. Causality and external bridges
 
-The collection type must be declared when input order or multiplicity matters.
+Causal claims require explicit intervention semantics, e.g. `I:S×A→S`; temporal succession alone is not causal proof.
 
-The construction is an Ω-Math formulation of task-preserving behavioral refinement. No global novelty claim is attached to it.
+Probability requires an independently declared kernel such as `K:S×U→Dist(S)`.
 
-## 7. Reduction rule
+Physical time requires an empirical duration map. Physical energy is not identified with generic transformation cost.
 
-A reduction `Q:X→Y` is admissible for task `F` only if its retained representation is sufficient for the declared output/behavior.
+## 9. Forbidden implicit meanings
 
-Strong finite-horizon condition:
+Entity state ≠ relation state; absence ≠ relation value; `−1` ≠ subtraction; `+1` ≠ addition; path ≠ scalar; cycle ≠ causality; connectivity ≠ physical space; observation equality ≠ identity; structural similarity ≠ behavioral equivalence; transition order ≠ physical duration; transformation cost ≠ physical energy.
 
-`Q(x)=Q(y) ⇒ F(x)=F(y)`.
+## 10. Extension/admission rule
 
-If the implication fails, `Q` is information-losing for `F` and cannot be called behavior-preserving for that task.
-
-Compression must therefore remain distinct from equivalence.
-
-## 8. Forbidden implicit meanings
-
-The language does not allow these identifications without an explicit rule:
-
-`0 = absence of relation`
-
-`−1 = subtraction`
-
-`+1 = addition`
-
-`path = sign sum`
-
-`cycle = causality`
-
-`connectivity = physical distance`
-
-`change = arithmetic subtraction`
-
-`observation equality = identity`
-
-`stable pattern = emergence proven`
-
-`structural similarity = behavioral equivalence`
-
-`finite-horizon equivalence = infinite-horizon equivalence`
-
-## 9. Extension/admission rule
-
-A new primitive may be added only when:
-
-1. existing primitives cannot express the required object without contradiction or uncontrolled ambiguity;
-2. the missing capability is demonstrated by a counterexample or formal impossibility result;
-3. the new primitive has a declared type and semantics;
-4. competing existing mathematical constructions are recorded;
-5. tests are defined before promotion;
-6. the proposed primitive is not merely a convenient alias for an existing derived construction.
-
-## 10. Status levels
-
-`DEFINED` — syntax/semantic rule introduced by the language.
-
-`DERIVED` — follows from existing rules.
-
-`EXECUTED` — tested by explicit finite computation/construction.
-
-`SUPPORTED` — survives specified controls.
-
-`HYPOTHESIS` — proposed but unresolved.
-
-`THEOREM` — formally proved under stated assumptions.
-
-`COUNTEREXAMPLE` — demonstrates failure of a universal claim.
-
-`REJECTED` — no longer accepted under documented evidence.
-
-`OPEN` — unresolved.
+A new primitive requires a demonstrated need, declared type/semantics, comparison with existing mathematics, counterexample/failure analysis and tests before promotion.
 
 ## 11. Completeness boundary
 
-Ω-Math is now a coherent typed language for:
+Ω-Math v0.9 is formally complete as a minimal typed relational language for its declared domain. This does not mean universal mathematical completeness or a completed physical theory.
 
-`entity → relation → configuration → state → path → transformation → observation → behavior → equivalence → quotient → reduction → cost → structural geometry`.
+Open research remains in unrestricted path abstractions, general quotient geometry, probability, physical time/energy, physical ontology, task-independent emergence, causal self-model and independent physical predictions.
 
-This is language completeness for the currently admitted domain, not universal mathematical completeness.
-
-Still open as mathematical extensions or physical bridges:
-
-- primitive relation composition;
-- canonical path equivalence;
-- unrestricted metric;
-- general quotient geometry;
-- probability;
-- physical time;
-- energy;
-- physical ontology;
-- task-independent emergence criterion;
-- causal self-model;
-- independent physical predictions.
+**Status: CANONICAL / v0.9 SYNCHRONIZED**
