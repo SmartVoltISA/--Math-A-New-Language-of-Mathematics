@@ -1,50 +1,67 @@
-# Ω-Math v0.4 — Research Status
+# Ω-Math v0.5 — Research Status
 
 ## Current state
 
-The repository now contains a typed relational language with explicit syntax, semantics, operator discipline, reduction rules, transformations, invariants/symmetry, path algebra, behavioral equivalence and a first transformation-derived metric baseline.
+The repository contains a typed relational language with explicit syntax, semantics, operator discipline, reduction rules, transformations, invariants/symmetry, path algebra, behavioral equivalence and a structural-edit geometry.
 
-The central discipline is:
+The central discipline remains:
 
 `define → derive → execute → verify → compare → falsify → record`.
 
 The language deliberately separates mathematical representation from physical interpretation.
 
-## v0.4 language milestones
+## v0.5 mathematical milestone
 
-### L1 — Canonical type system
+### M9 — Structural relational geometry
 
-Entity state, relation state, relation absence, identity and configuration are explicitly typed.
+`RELATIONAL_GEOMETRY_001.md` removes the artificial fixed relation-slot assumption from the first metric baseline.
 
-Status: `DEFINED`.
+A configuration can now change by:
 
-### L2 — Canonical operator inventory
+- entity-state flip;
+- relation addition;
+- relation removal;
+- relation sign flip.
 
-`OPERATOR_TABLE.md` fixes the signatures and status of current operators and reserves unresolved operators from silent use.
+A transformation path has additive declared cost, and structural distance is the minimum cost of a path between configurations.
 
-Status: `DEFINED`.
+Status: `DERIVED CONSTRUCTION`.
 
-### L3 — Semantic discipline
+### M10 — Quotient / label-independent geometry
 
-`SEMANTICS.md` records direction, absence, path, transformation, observation, equivalence, quotient, causality, memory and emergence semantics.
+For equal-cardinality finite configurations, minimizing structural edit distance over all entity bijections produces a distance on structural orbits under the declared relabeling group.
 
-Status: `DEFINED`.
+Under reversible equal-cost edits, non-negativity, symmetry and triangle inequality follow from the edit algebra and composition.
 
-### L4 — Reduction discipline
+Status: `DERIVED THEOREM UNDER DECLARED ASSUMPTIONS`.
 
-`REDUCTION_RULES.md` formalizes task-relative sufficiency and gives the canonical counterexample pattern:
+### M11 — Exhaustive finite verification
 
-`Q(x)=Q(y)` while `F(x)≠F(y)`.
+`EXPERIMENT_RELATIONAL_GEOMETRY_001.md` enumerates all 12 configurations of the two-entity/one-relation finite model and exhaustively checks identity, non-negativity, symmetry, triangle inequality and the corresponding two-element relabeling quotient.
 
-Status: `DEFINED / DERIVED METHODOLOGICAL RULE`.
+Status: `EXECUTED / SUPPORTED UNDER DECLARED FINITE MODEL`.
 
-### L5 — Canonical reference examples
+### M12 — Geometry signature
 
-`CANONICAL_EXAMPLES.md` fixes minimal interpretations of entities, relations, paths, transformations, observations and reductions.
+`Γ_h(C)` records the spectrum of structural distances from a configuration to configurations that are behaviorally distinguishable within horizon `h`.
 
-Status: `DEFINED`.
+This is introduced as a derived observable, not as a universal invariant.
 
-## Closed mathematical milestones
+Status: `DEFINED / OPEN FOR GENERAL PROPERTIES`.
+
+## What changed mathematically
+
+The geometry layer is no longer restricted to changing values inside a fixed encoding.
+
+It now admits structural events:
+
+`absence ↔ relation`.
+
+Therefore the geometry can measure the cost of changing relational organization itself.
+
+This is a new Ω-Math construction. It is **not** claimed to be globally novel without a dedicated literature/novelty audit.
+
+## Existing closed milestones
 
 ### M1 — Four length-2 signed cases
 
@@ -54,49 +71,31 @@ Status: `DERIVED`.
 
 ### M2 — Sign-product is not universal relation composition
 
-The scalar sign-product is closed and useful as a summary, but path information can affect behavior.
-
 Status: `COUNTEREXAMPLE / REJECTED AS UNIVERSAL LAW`.
 
 ### M3 — Path associativity
-
-Path concatenation is associative. Scalar sign-product is associative. Neither result licenses erasure of intermediate path structure.
 
 Status: `DEFINED / DERIVED`.
 
 ### M4 — Parallel-path conflict
 
-Conflicting or multiple parallel paths cannot be silently collapsed to one primitive relation state.
-
 Status: `OPEN / NO SILENT COLLAPSE`.
 
 ### M5 — Finite-horizon behavioral equivalence
-
-`x ≈ᵦ,h y` is defined by equality of declared observations through horizon `h` under the same declared inputs for deterministic systems.
-
-`≈ᵦ,h+1 ⊆ ≈ᵦ,h` follows directly from the definition.
 
 Status: `DEFINED / DERIVED`.
 
 ### M6 — Invariants and symmetry
 
-An invariant is always relative to a declared transformation family. Label permutation is a mandatory representation control unless labels are part of the modeled object.
-
 Status: `DEFINED / DERIVED METHODOLOGICAL RULE`.
 
 ### M7 — Path-profile insufficiency
 
-`EXPERIMENT_PATH_DYNAMICS_001.md` gives a deterministic counterexample where equal endpoints, length and sign summary hide different intermediate organization and future behavior.
-
 Status: `COUNTEREXAMPLE`.
 
-### M8 — Transformation-derived metric baseline
-
-A fixed relation-slot representation with unit-cost sign flips induces the Hamming/hypercube metric.
+### M8 — Fixed-slot transformation metric
 
 Status: `DERIVED BASELINE`.
-
-This is not a unique Ω metric and not physical space.
 
 ## Current algebraic decision
 
@@ -104,7 +103,7 @@ This is not a unique Ω metric and not physical space.
 
 `SIGN-PRODUCT SUMMARY`: `DERIVED`.
 
-`SIGN-PRODUCT AS COMPLETE RELATION COMPOSITION`: `REJECTED` as a universal information-preserving law.
+`SIGN-PRODUCT AS COMPLETE RELATION COMPOSITION`: `REJECTED`.
 
 `PRIMITIVE RELATION REDUCTION`: `OPEN`.
 
@@ -112,43 +111,45 @@ Path information must be retained until sufficiency is demonstrated for the decl
 
 ## Current geometry decision
 
-Transformation-derived distance is a valid mathematical construction when the admissible transformations and costs are declared. The next task is to remove artificial fixed-slot assumptions.
+`FIXED-SLOT HAMMING`: established baseline.
 
-Required tests:
+`STRUCTURAL EDIT DISTANCE`: derived for declared edit systems.
 
-1. relation addition/removal;
-2. entity-state changes;
-3. principled nonnegative costs;
-4. label-permutation invariance;
-5. reversible versus irreversible transformations;
-6. directed versus symmetric distance;
-7. quotient-induced distance and well-definedness;
-8. comparison with standard graph/edit/configuration metrics.
+`LABEL-INDEPENDENT QUOTIENT DISTANCE`: derived for finite equal-cardinality configurations under the stated assumptions.
+
+`PHYSICAL SPACE`: not derived.
+
+Next mathematical tests:
+
+1. unequal entity cardinality;
+2. entity insertion/deletion with incident relations;
+3. directed relations;
+4. asymmetric transformation costs;
+5. quotient distance for behavioral equivalence classes;
+6. well-definedness of quotient geometry;
+7. relation/path conflict geometry;
+8. comparison with graph edit distance, orbit metrics and configuration-space metrics.
 
 ## Point / boundary status
 
 Executed closure, reconnection, redundancy and combined-factor probes did not establish a unique single Point-like object.
 
-The current evidence supports only:
+Current evidence supports only:
 
 `relations → closure → relational separation → candidate core/interface`.
 
-The Point remains `OPEN` and must be treated as a multi-criterion intermediate regime rather than maximum closure or maximum connectivity.
+The Point remains `OPEN`.
 
-## Research-map position
+## Novelty discipline
 
-The formalism now has enough structure for direct technical comparison with existing mathematics rather than only philosophical comparison.
+The repository must distinguish:
 
-Primary comparison targets:
+- independent reconstruction of known mathematics;
+- a new definition inside Ω-Math;
+- a new theorem derived from Ω definitions;
+- a genuinely new mathematical result after comparison with prior literature.
 
-- category/compositional systems;
-- graph transformation/rewrite systems;
-- type/equivalence systems;
-- transition-system behavioral equivalence;
-- coarse-graining and causal emergence;
-- relational/pregeometric approaches.
-
-The purpose is to identify both independent reconstruction and genuine mathematical novelty. Similarity is not claimed as novelty.
+No global novelty claim is made for M9–M12 yet.
 
 ## Explicitly open
 
@@ -156,7 +157,7 @@ The purpose is to identify both independent reconstruction and genuine mathemati
 - canonical path equivalence;
 - universal sufficient path profile;
 - unrestricted canonical metric;
-- quotient geometry;
+- quotient geometry in the general case;
 - physical time;
 - probability;
 - energy;
@@ -164,22 +165,6 @@ The purpose is to identify both independent reconstruction and genuine mathemati
 - task-independent emergence criterion;
 - self-model and causal self-reference;
 - physical bridge and independent empirical predictions.
-
-## Confidence labels
-
-`DEFINED` = language rule introduced explicitly.
-
-`DERIVED` = follows formally from current rules.
-
-`EXECUTED` = evaluated by an explicit finite construction/computation.
-
-`SUPPORTED` = survives specified controls.
-
-`COUNTEREXAMPLE` = evidence against a universal claim.
-
-`REJECTED` = claim no longer retained under documented evidence.
-
-`OPEN` = unresolved.
 
 ## Critical methodological rule
 
@@ -193,14 +178,6 @@ The purpose is to identify both independent reconstruction and genuine mathemati
 
 `emergent candidate ≠ emergence proven`
 
-## Physical hypothesis
-
-`H-BH-0` — extreme relational distinguishability collapse may have a physically meaningful correspondence with characteristic black-hole behavior.
-
-Status: `OPEN`.
-
-No physical interpretation is accepted until an Ω quantity is independently defined, mapped to established observables, tested against controls and used to make predictions not used in its construction.
-
 ## Version
 
-**Ω-Math v0.4** — typed relational language, explicit semantics and reduction discipline, tested composition/path layer, and first transformation-derived metric baseline.
+**Ω-Math v0.5** — structural relational geometry derived from typed edit transformations, with finite exhaustive verification and explicit quotient construction.
