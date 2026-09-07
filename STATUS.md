@@ -2,7 +2,7 @@
 
 ## Current state
 
-The repository now contains a typed structural core plus an explicit transformation layer and tested path/composition semantics.
+The repository contains a typed structural core, explicit transformations, invariants/symmetry rules, path algebra, behavioral equivalence, and a first transformation-derived metric baseline.
 
 The current result is deliberately conservative: the signed relation algebra works as a **summary algebra**, while paths remain first-class objects whenever order, intermediate structure, multiplicity or conflict matters.
 
@@ -73,9 +73,19 @@ Status: `DEFINED / DERIVED METHODOLOGICAL RULE`.
 
 ### M7 — Path-profile sufficiency
 
-A restricted profile containing endpoint, length and sign sequence/product is not universally sufficient for future behavior. PATH-DYNAMICS-001 gives a deterministic counterexample in which intermediate organization changes the trajectory while the restricted profile remains identical.
+A restricted profile containing endpoint, length and sign sequence/product is not universally sufficient for future behavior. PATH-DYNAMICS-001 gives a formal deterministic counterexample in which intermediate organization changes the trajectory while the restricted profile remains identical.
 
 Status: `COUNTEREXAMPLE`.
+
+### M8 — Transformation-derived metric baseline
+
+With a fixed finite relation-slot representation, a primitive sign-flip transformation of unit cost induces a distance equal to the minimum number of flips. The resulting function satisfies non-negativity, identity of indiscernibles, symmetry and triangle inequality.
+
+The result is the discrete Hamming/hypercube geometry of the chosen representation.
+
+Status: `DERIVED BASELINE`.
+
+This demonstrates that quantitative geometry can arise from a transformation/cost system, but does not establish a unique or physical Ω metric.
 
 ## Relation composition decision
 
@@ -115,26 +125,27 @@ Closure-only, closure-plus-reconnection, closure-plus-redundancy and combined-fa
 
 Therefore the Point remains `OPEN` and must be tested as an intermediate regime satisfying multiple simultaneous criteria.
 
-## Next layer — quantitative structure
+## Next layer — general transformation geometry
 
-The current dependency barrier has been reached. The next layer can now investigate quantities that are **derived from transformations** rather than inserted as primitives.
+The fixed-slot metric is only a baseline. The next tests must remove its artificial restrictions:
 
-Priority order:
+1. allow relation addition/removal;
+2. allow entity-state changes;
+3. define costs without smuggling in physical energy;
+4. test label-permutation invariance;
+5. test reversible versus irreversible transformations;
+6. compare directed and symmetric distances;
+7. test quotient-induced distances and well-definedness;
+8. compare with standard graph metrics only after the Ω quantity is defined.
 
-1. define admissible transformation costs;
-2. derive task-relative transformation distance;
-3. test non-negativity, identity of indiscernibles, symmetry and triangle inequality where applicable;
-4. identify when directed/asymmetric cost is necessary;
-5. test metric invariance under declared symmetries;
-6. compare derived quantities with standard graph distance only as an external comparison, not as an assumed definition;
-7. investigate whether geometry can emerge as a stable quotient of transformation structure.
+A successful metric is still only a mathematical structure. A physical interpretation requires an independent bridge and prediction.
 
 ## What remains explicitly open
 
 - canonical primitive relation composition;
 - canonical path equivalence;
 - universal sufficient path profile;
-- canonical metric;
+- canonical metric for unrestricted transformations;
 - physical time;
 - probability;
 - energy;
