@@ -20,6 +20,7 @@ This file defines which documents are authoritative for the current v0.9 languag
 - `QUOTIENT_GEOMETRY_CONDITIONS.md`
 - `V09_MATH_AUDIT_001.md`
 - `V09_MATH_AUDIT_002.md`
+- `V09_MATH_AUDIT_003.md`
 
 ## Canonical dynamics/research layer
 
