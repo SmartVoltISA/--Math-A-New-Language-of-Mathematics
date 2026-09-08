@@ -24,13 +24,13 @@ REL-EXP-002 studies recovery of relation structure in a 40-element continuous-li
 - Time-shuffled ROC-AUC: 0.5418
 - Time-shuffled Average Precision: 0.1123
 
-The reported result supports feasibility of relation recovery in the tested continuous-like dynamical model, while showing imperfect recovery and a substantial degradation under temporal shuffling.
+The reported result supports feasibility of relation recovery in the tested continuous-like dynamical model, while showing imperfect recovery and degradation under temporal shuffling.
 
 ## Ω-Math representable boundary
 
 The source relation structure can be represented qualitatively as a directed relational graph once its orientation is explicitly declared. The numerical estimator output itself is not imported as Ω-Math primitive semantics.
 
-A minimal qualitative encoding has the form:
+A minimal qualitative conformance encoding is:
 
 ```text
 entity x0 0
@@ -40,7 +40,7 @@ path P = x0->x1
 sign P
 ```
 
-This encoding tests only typed relation/path representation and execution parity. It is not a reconstruction of the 40-element field or its regression estimator.
+This tests only typed relation/path representation and execution parity. It is not a reconstruction of the 40-element field or its regression estimator.
 
 ## Research record
 
@@ -59,12 +59,7 @@ This encoding tests only typed relation/path representation and execution parity
   "seed": null,
   "source_version": "RELATION-LAB@4c46de33d8a65be21dbc53c7eae8d5e8398386da",
   "status": "SUPPORT",
-  "result": {
-    "bridge_scope": "PARTIAL",
-    "omega_math_reproduction": false,
-    "source_conclusion": "supports feasibility within the tested continuous-like dynamical model",
-    "limitation": "estimator is not a general relation detector"
-  }
+  "result": {"bridge_scope": "PARTIAL", "omega_math_reproduction": false}
 }
 ```
 
@@ -76,16 +71,7 @@ This encoding tests only typed relation/path representation and execution parity
 
 ## Boundary check
 
-The bridge deliberately does **not** add:
-
-- physical time;
-- physical space;
-- probability;
-- physical energy;
-- causality;
-- continuous relation magnitude;
-- regression semantics;
-- statistical estimator semantics.
+The bridge deliberately does not add physical time, physical space, probability, physical energy, causality, continuous relation magnitude, regression semantics, or statistical estimator semantics.
 
 ## Scientific value
 
