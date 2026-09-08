@@ -51,6 +51,9 @@ Single navigation point for the canonical Ω-Math v0.9 language core, research m
 - `EXPERIMENT_POINT_006.md`
 - `EXPERIMENT_POINT_009.md`
 - `EXPERIMENT_LIGHT_BRIDGE_001.md`
+- `EXPERIMENT_LIGHT_BRIDGE_002.md`
+- `EXPERIMENT_LIGHT_BRIDGE_003.md`
+- `EXPERIMENT_LIGHT_BRIDGE_004.md`
 
 ## Historical / superseded
 
