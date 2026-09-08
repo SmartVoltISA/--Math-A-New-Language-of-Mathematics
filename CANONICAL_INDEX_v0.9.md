@@ -6,6 +6,7 @@ This file defines which documents are authoritative for the current v0.9 languag
 
 - `README.md`
 - `FOUNDATION.md`
+- `TYPE_SYSTEM.md`
 - `LANGUAGE_SPEC.md`
 - `SEMANTICS.md`
 - `OPERATOR_TABLE.md`
@@ -20,18 +21,32 @@ This file defines which documents are authoritative for the current v0.9 languag
 - `V09_MATH_AUDIT_001.md`
 - `V09_MATH_AUDIT_002.md`
 
+## Canonical dynamics/research layer
+
+- `DYNAMICS.md`
+- `EMERGENCE.md`
+- `GLOSSARY.md`
+- `TIME_INTERNAL_ORDER.md`
+
+These documents are synchronized with v0.9 terminology and define research-layer semantics and vocabulary. They do not promote physical hypotheses into the minimal core.
+
 ## Canonical verification records
 
 - `EXPERIMENT_BEHAVIORAL_QUOTIENT_001.md`
+- `EXPERIMENT_BEHAVIORAL_EQUIV_002.md`
 - `EXPERIMENT_NONDETERMINISTIC_001.md`
 - `EXPERIMENT_PATH_PROFILE_003.md`
 - `EXPERIMENT_PATH_PROFILE_004.md`
+- `EXPERIMENT_PATH_DYNAMICS_001.md`
 - `EXPERIMENT_STRUCTURE_004.md`
 - `EXPERIMENT_RELATIONAL_GEOMETRY_001.md`
 - `EXPERIMENT_METRIC_001.md`
 - `EXPERIMENT_INVARIANT_001.md`
 - `ALGEBRA_DYNAMICS_VERIFICATION_001.md`
+- `EXPERIMENT_RELATION_COMPOSITION_001.md`
 - `EXPERIMENT_TOPOLOGY_003.md`
+- `EXPERIMENT_POINT_006.md`
+- `EXPERIMENT_POINT_008.md`
 - `EXPERIMENT_POINT_009.md`
 - `EXPERIMENT_GEOMETRY_SIGN_001.md`
 
@@ -39,15 +54,15 @@ This file defines which documents are authoritative for the current v0.9 languag
 
 ### `PATH_ALGEBRA.md`
 
-The conceptual material remains useful, but its v0.2 wording predates the v0.9 empty-path identity. Use `PATH_ALGEBRA_v0.9.md` for current path semantics.
+The conceptual material remains useful, but its older wording predates the v0.9 empty-path identity. Use `PATH_ALGEBRA_v0.9.md` for current path semantics.
 
 ### `EQUIVALENCE.md`
 
-This is a v0.1 research record. It contains useful distinction/quotient material and historical physical hypotheses, but it is not the current canonical equivalence specification. Use `EQUIVALENCE_v0.9.md` for current equivalence semantics.
+This is a historical research record. Use `EQUIVALENCE_v0.9.md` for current equivalence semantics.
 
 ### v0.8 closure records
 
-`LANGUAGE_CLOSURE_v0.8.md` and `V08_COMPLETION_INDEX.md` are historical closure records. They remain part of the research history and are superseded for current language status by v0.9 records.
+`LANGUAGE_CLOSURE_v0.8.md` and `V08_COMPLETION_INDEX.md` remain part of research history and are superseded for current language status by v0.9 records.
 
 ## Reading rule
 
@@ -55,6 +70,16 @@ When a legacy document and a v0.9 canonical document differ, the v0.9 canonical 
 
 ## Mathematical discipline
 
-A document being canonical does not make every statement inside it a theorem. Each claim retains its status: definition, derivation, finite verification, counterexample, supported result, hypothesis, open problem or external bridge.
+A document being canonical does not make every statement inside it a theorem. Each claim retains its status: definition, derivation, theorem, finite verification, counterexample, supported result, hypothesis, open problem or external bridge.
 
-**Status: CANONICAL INDEX / v0.9**
+A compact descriptor may replace a richer representation only after task-specific sufficiency is established:
+
+`Q(x)=Q(y) ⇒ F(x)=F(y)`.
+
+## Current boundary
+
+The minimal language is closed at v0.9. Research continues above it through dynamics, memory, geometry, emergence and empirical bridges.
+
+`complete language ≠ complete mathematics ≠ complete physics`.
+
+**Status: CANONICAL INDEX / v0.9 / SYNCHRONIZED**
