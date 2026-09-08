@@ -5,11 +5,12 @@ def test_nonreciprocal_relations_are_not_reversed_implicitly():
     a = Entity("A", 0)
     b = Entity("B", 1)
     forward = Relation(a.id, b.id, 1, "rAB")
-    reverse = Path((forward,)).reverse()
+    path = Path((forward,))
 
     assert forward.src == a.id
     assert forward.dst == b.id
-    assert reverse.relations == ()
+    assert path.relations == (forward,)
+    assert not hasattr(path, "reverse")
 
 
 def test_explicit_reverse_relation_remains_distinct():
