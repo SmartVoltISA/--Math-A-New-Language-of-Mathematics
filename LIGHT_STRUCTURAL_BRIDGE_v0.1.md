@@ -80,11 +80,7 @@ meaning that the declared model permits local comparison/evolution between `x` a
 
 No universal physical meaning is assigned to `Loc_C`.
 
-Test requirement:
-
-`same Ω core + different declared locality structure`
-
-must be sufficient to represent domains with different propagation constraints without changing the primitive type system.
+The executed finite test `EXPERIMENT_LIGHT_BRIDGE_003.md` verifies that ordinary graph connectivity alone does not determine finite-horizon propagation neighborhoods. Thus locality must be declared when transition semantics depend on it.
 
 ## 6. Connection / curvature test
 
@@ -100,12 +96,9 @@ The Ω question is not whether we can rename these as relation and difference. T
 
 that produces a path-dependent residual/invariant analogous in role to curvature.
 
-Required falsification test:
+The executed algebraic boundary test `EXPERIMENT_LIGHT_BRIDGE_004.md` shows that the existing scalar sign product cannot distinguish different ordered loop organizations with the same sign multiset and product.
 
-- construct two local comparison assignments with identical pointwise summaries;
-- compare transport around a closed path;
-- determine whether path-order / loop information produces a nonzero residual;
-- verify that the residual cannot be recovered from a lower-order scalar summary alone.
+This does **not** mean that Ω loses the loop information: the ordered path itself is retained. It means that no universal curvature-like reduction has yet been derived from the current scalar relation algebra.
 
 If this requires importing vector spaces, differential forms, or gauge groups as unexplained primitives, the universal Ω claim is weakened rather than strengthened.
 
@@ -209,5 +202,7 @@ LIGHT currently gives Ω-Math **three strong structural candidates**:
 1. **admissibility constraints** over relations/transitions;
 2. **declared locality** distinct from mere connectivity;
 3. **path/loop residual structure** as a possible route toward connection/curvature.
+
+The finite tests now support the first two as semantic distinctions and establish an algebraic boundary for the third. The v0.9 primitive core remains unchanged.
 
 It does **not** yet justify adding `CONNECTION`, `CURVATURE`, `FIELD`, `PHOTON`, `ENERGY`, or `CAUSALITY` as primitive Ω types.
