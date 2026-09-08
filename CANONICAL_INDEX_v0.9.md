@@ -20,6 +20,21 @@ This file defines which documents are authoritative for the current v0.9 languag
 - `V09_MATH_AUDIT_001.md`
 - `V09_MATH_AUDIT_002.md`
 
+## Canonical verification records
+
+- `EXPERIMENT_BEHAVIORAL_QUOTIENT_001.md`
+- `EXPERIMENT_NONDETERMINISTIC_001.md`
+- `EXPERIMENT_PATH_PROFILE_003.md`
+- `EXPERIMENT_PATH_PROFILE_004.md`
+- `EXPERIMENT_STRUCTURE_004.md`
+- `EXPERIMENT_RELATIONAL_GEOMETRY_001.md`
+- `EXPERIMENT_METRIC_001.md`
+- `EXPERIMENT_INVARIANT_001.md`
+- `ALGEBRA_DYNAMICS_VERIFICATION_001.md`
+- `EXPERIMENT_TOPOLOGY_003.md`
+- `EXPERIMENT_POINT_009.md`
+- `EXPERIMENT_GEOMETRY_SIGN_001.md`
+
 ## Historical / legacy documents requiring care
 
 ### `PATH_ALGEBRA.md`
