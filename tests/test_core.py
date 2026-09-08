@@ -69,7 +69,7 @@ def test_parser_reference_surface():
     relation C A +1 rCA
     path P = A->B->C
     path Q = A->B->C
-    path E = epsilon(B)
+    path E = epsilon(C)
     concat R = P + E
     incident B rAB
     cycle P
