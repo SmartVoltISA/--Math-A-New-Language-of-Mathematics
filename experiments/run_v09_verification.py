@@ -1,6 +1,6 @@
 """Run finite executable verification records for Ω-Math v0.9.
 
-This runner intentionally mirrors the frozen finite claims of experiments 010-012.
+This runner mirrors the frozen finite claims of experiments 010-012.
 It prints PASS/FAIL records and exits non-zero on failure.
 """
 from itertools import product
@@ -42,7 +42,6 @@ def experiment_012():
     assert len(functions) == 256
     identical = 0
     interventionally_distinct = 0
-    interventions = [(1, 0), (0, 1)]
     for f1 in functions:
         m1 = dict(zip(states, f1))
         for f2 in functions:
@@ -50,10 +49,18 @@ def experiment_012():
             for s in states:
                 t1 = (s, m1[s], m1[m1[s]])
                 t2 = (s, m2[s], m2[m2[s]])
-                if t1 == t2:
-                    identical += 1
-                    if any(m1[i] != m2[i] for i in interventions):
-                        interventionally_distinct += 1
+                if t1 != t2:
+                    continue
+                identical += 1
+                x, y = s
+                different_after_intervention = False
+                for v in (0, 1):
+                    if m1[(v, y)] != m2[(v, y)]:
+                        different_after_intervention = True
+                    if m1[(x, v)] != m2[(x, v)]:
+                        different_after_intervention = True
+                if different_after_intervention:
+                    interventionally_distinct += 1
     assert identical == 28672
     assert interventionally_distinct == 25344
 
