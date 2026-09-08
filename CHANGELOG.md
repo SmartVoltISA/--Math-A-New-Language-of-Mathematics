@@ -31,4 +31,9 @@
 - Added `EXPERIMENT_TRANSPORT_QUOTIENT_008.md`: quotient-compatible transport factors through the reduction, but quotienting can erase nontrivial loop residuals; existing task-relative sufficiency machinery is sufficient to express this information-loss boundary.
 
 ### Boundary
+- Added `EXPERIMENT_LOCALITY_ADMISSIBILITY_BOUNDARY_010.md` with an executed finite verification.
+- Result: locality, admissibility, and boundary restrictions can be represented as declared semantic predicates/domain restrictions over existing Ω objects; no new primitive type is justified.
+- Strengthened the separation: relation existence, locality, admissibility, and boundary crossing are distinct predicates/constraints and must not be silently identified.
+- `EXPERIMENT_POINT_009.md` remains preregistered and untouched because its causal-interface phrase is not operationally defined.
+
 The v0.9 core remains closed. External-domain evidence may motivate a versioned extension only after formal definition, counterexample testing, sufficiency analysis, and cross-domain verification.
