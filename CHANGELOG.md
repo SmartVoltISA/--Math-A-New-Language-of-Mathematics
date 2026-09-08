@@ -17,7 +17,9 @@
 ### LIGHT bridge
 - Added `LIGHT_STRUCTURAL_BRIDGE_v0.1.md` to compare Ω-Math with the electromagnetic/QFT structure in `SmartVoltISA/LIGHT-`.
 - Added `EXPERIMENT_LIGHT_BRIDGE_001.md` as an analytical test of admissibility, locality, and loop-residual candidates.
-- Result: no missing primitive type has been demonstrated. Admissibility and locality can be represented as semantic predicates; curvature-like loop residual remains open.
+- Added `EXPERIMENT_LIGHT_BRIDGE_003.md` with an executed finite locality/propagation verification.
+- Added `EXPERIMENT_LIGHT_BRIDGE_004.md` with an executed algebraic boundary test for loop residuals.
+- Result: connectivity alone is insufficient to determine locality-dependent propagation; the scalar sign product is insufficient to represent ordered loop structure; no missing primitive type has been demonstrated.
 
 ### Boundary
 The v0.9 core remains closed. External-domain evidence may motivate a versioned extension only after formal definition, counterexample testing, sufficiency analysis, and cross-domain verification.
