@@ -1,0 +1,19 @@
+# Ω-Math v1.0 research-layer example
+# The syntax below uses only the current reference surface.
+# Research metadata is documented externally by V1.0_RESEARCH_PROTOCOL.md.
+
+entity A 0
+entity B 1
+entity C 0
+
+relation A B +1 rAB
+relation B C -1 rBC
+relation C A +1 rCA
+
+path P = A->B->C
+path Q = A->B->C
+
+path_eq P Q
+sign P
+cycle P
+dist A B
