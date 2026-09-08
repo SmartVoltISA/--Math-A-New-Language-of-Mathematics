@@ -1,4 +1,4 @@
-# Ω-Math v0.4 — Canonical Examples
+# Ω-Math v0.9 — Canonical Examples
 
 These examples are deliberately small. They define the intended reading of the language without assigning physical meanings to the signs.
 
@@ -56,7 +56,17 @@ Both have sign-product `+1`.
 
 They are not thereby the same path, same relation or same behavior.
 
-## 6. Parallel paths
+## 6. Empty path
+
+For an entity `e`, `ε_e` is the empty path at `e`.
+
+When concatenation is defined:
+
+`ε_e ⧺ P = P` and `P ⧺ ε_f = P`.
+
+This is a path-level identity. It does not introduce a primitive relation identity.
+
+## 7. Parallel paths
 
 If both
 
@@ -68,7 +78,7 @@ and
 
 are modeled as distinct relational instances, the language does not silently replace them with a third primitive sign. Multiplicity and conflict require an explicit richer representation or reduction rule.
 
-## 7. Transformation
+## 8. Transformation
 
 Let `T_flip` change one relation sign and leave all other declared components unchanged.
 
@@ -78,7 +88,7 @@ Then:
 
 If the transformation has unit cost, repeated flips produce a transformation-cost distance on the fixed relation-slot representation.
 
-## 8. Observation versus identity
+## 9. Observation versus identity
 
 Let
 
@@ -93,7 +103,7 @@ but not necessarily
 
 `A=B`.
 
-## 9. Behavioral distinction
+## 10. Behavioral distinction
 
 Two states can satisfy
 
@@ -105,7 +115,7 @@ while
 
 Then they are observationally equivalent at horizon `0` but not behaviorally equivalent at horizon `1`.
 
-## 10. Reduction witness
+## 11. Reduction witness
 
 If
 
@@ -121,4 +131,4 @@ This is the canonical Ω pattern for rejecting an unjustified structural collaps
 
 ## Status
 
-`DEFINED / REFERENCE EXAMPLES`
+`CANONICAL / v0.9 / REFERENCE EXAMPLES`
