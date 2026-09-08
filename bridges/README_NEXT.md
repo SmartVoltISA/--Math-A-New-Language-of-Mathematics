@@ -1,1 +1,0 @@
-REL-EXP-002 is bridged as a partial external result. The next falsification target is non-reciprocal geometry.
