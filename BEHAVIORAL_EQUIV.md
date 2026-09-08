@@ -1,53 +1,11 @@
-# Ω-Math v0.9 — Behavioral Equivalence
+# Ω-Math v0.9 — Behavioral Equivalence (Non-Canonical Pointer)
 
-## Purpose
+> **Historical / non-canonical pointer.** The canonical v0.9 document is `BEHAVIORAL_EQUIVALENCE.md`.
 
-Static observational equivalence is insufficient for dynamic systems. Behavioral equivalence is a derived, task- and dynamics-relative construction; it is not a primitive.
+This file is retained for compatibility with earlier references. It is not a second canonical definition.
 
-## Finite horizon
+For the synchronized v0.9 definition, use [`BEHAVIORAL_EQUIVALENCE.md`](BEHAVIORAL_EQUIVALENCE.md), which defines finite-horizon behavioral equivalence, horizon nesting, infinite-horizon derivation, behavioral quotients, nondeterministic semantics, memory sufficiency, and the limits of observation-only quotienting.
 
-For deterministic dynamics with observation map `O`, admissible inputs/interventions and horizon `h`, define `s≈ₕs'` when the declared observation trajectories agree through the chosen horizon under the declared semantics.
+No independent semantics should be added to this file. Future changes to behavioral equivalence belong in the canonical document and must be versioned there.
 
-A canonical quotient is then the set of equivalence classes `[s]_h` induced by `≈ₕ`.
-
-The relation is task-relative: changing the observation, dynamics, admissible inputs or horizon can change the equivalence classes.
-
-## Infinite horizon
-
-Define:
-
-`s≈∞s' ⇔ ∀h∈ℕ₀, s≈ₕs'`.
-
-Therefore:
-
-`≈∞ = ⋂ₕ≈ₕ`.
-
-Infinite-horizon equivalence is derived from the finite-horizon family rather than introduced as a new primitive.
-
-## Nondeterminism
-
-For `N:S×U→𝒫(S)`, immediate successor sets are first-class. A behavioral equivalence must declare what is preserved: traces/outputs, full branching structure, existential reachability, universal safety, or another task predicate. No arbitrary branch selection is valid as a universal reduction.
-
-Infinite-run fairness and liveness are explicit semantic predicates and are not silently built into equivalence.
-
-## Static counterexample
-
-Two entities can have equal current observation while their transition rules produce different future observations. Hence:
-
-`same now ≠ same behavior`.
-
-This remains a foundational counterexample against observation-only quotienting.
-
-## Relation to established mathematics
-
-The construction is closely related to established behavioral equivalence and bisimulation ideas. Ω-Math makes the task, horizon and retained semantics explicit and does not claim those general concepts as novel.
-
-## Status
-
-- static observational equivalence versus behavior — **FORMALLY DISTINGUISHED**;
-- finite-horizon behavioral equivalence — **DEFINED / VERIFIED ON DECLARED FINITE MODELS**;
-- infinite-horizon equivalence — **DERIVED**;
-- nondeterministic equivalence — **TASK-SEMANTIC MODULE**;
-- probabilistic equivalence — **OUTSIDE MINIMAL CORE**.
-
-**Status: v0.9 SYNCHRONIZED**
+**Status: HISTORICAL POINTER / NON-CANONICAL / v0.9**
