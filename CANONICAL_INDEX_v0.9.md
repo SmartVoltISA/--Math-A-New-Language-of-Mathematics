@@ -60,6 +60,8 @@ Single navigation point for the canonical Ω-Math v0.9 language core, research m
 - `EXPERIMENT_TRANSPORT_REDUCTION_007.md`
 - `EXPERIMENT_TRANSPORT_QUOTIENT_008.md`
 - `EXPERIMENT_LOCALITY_ADMISSIBILITY_BOUNDARY_010.md`
+- `EXPERIMENT_INTERACTION_REDUCTION_011.md`
+- `EXPERIMENT_CAUSAL_INTERVENTION_012.md`
 
 ## Historical / superseded
 
