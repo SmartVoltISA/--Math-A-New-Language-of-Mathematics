@@ -1,172 +1,129 @@
-# Ω-Math v0.1 — Dynamics, Order and Memory
+# Ω-Math v0.9 — Dynamics, Memory and Feedback
 
-## 1. State
+## 1. State and transition
 
-A system state is:
+A system state is a configuration together with explicitly retained variables:
 
-`Ω_t = (E_t, R_t, D_R,t)`
+`S=(C,M,X)`.
 
-A transition is:
+A deterministic transition is:
 
-`Ω_t → Ω_t+1`
+`S' = T(S,U)`
 
-or more explicitly:
+where `U` is an optional declared input.
 
-`Ω_t+1 = T(Ω_t, U_t)`
+For nondeterministic dynamics:
 
-where `U_t` is external input when present.
+`N:S×U→𝒫(S)`.
 
-## 2. Internal order
+The successor set is first-class; arbitrary branch selection is not permitted as a semantic shortcut.
 
-A sequence of states can be represented without assuming that the model's first primitive is a physical clock:
+## 2. Internal order and horizon
 
-`Ω₀ → Ω₁ → Ω₂ → ...`
+A realized trajectory has an ordered sequence:
 
-The order is carried by the transition relation.
+`S₀→S₁→...→Sₙ`.
 
-Ω-0 already tested a minimal construction in which an updating trace created an internally distinguishable before/after state. The reported mechanism was:
+The transition index `τ(S_k)=k` gives internal order. A finite horizon `h∈ℕ₀` counts admissible transitions and is not physical duration.
 
-`ACT → TRACE → UPDATE`
-
-The result was deliberately limited to formal internal order and was not interpreted as a proof that physical time is emergent. fileciteturn10file0
+Physical time requires an independent empirical bridge.
 
 ## 3. Functional memory
 
 A stored record is not automatically memory.
 
-Operational definition:
+Functional memory requires retained state that persists and produces a demonstrated later effect under a controlled comparison/intervention.
 
-`memory = retained state that can causally affect a later system behavior or comparison`
+A minimal model may use:
 
-This distinguishes:
-
-`recording ≠ memory`
+`M_{t+1}=U_M(M_t,S_t,X_t)`
 
 and
 
-`persistent state + causal influence → candidate functional memory`.
+`S_{t+1}=T(S_t,M_t,X_t)`.
 
-## 4. Memory update
+The research question is not maximum capacity but the smallest retained state sufficient to alter the declared future behavior.
 
-Let `M_t` be internal memory.
+## 4. Predictive state
 
-A minimal memory system has:
+For a specified prediction task, a representation is sufficient only if it preserves the required conditional behavior under the stated process/distribution.
 
-`M_t+1 = U_M(M_t, Ω_t, X_t)`
+A probabilistic expression such as
 
-and future behavior:
+`P(Y|history)=P(Y|Q(history))`
 
-`Ω_t+1 = T(Ω_t, M_t, X_t)`.
+requires an independently declared probabilistic model; probability is not primitive in Ω-Math.
 
-If changing `M_t` changes later behavior under controlled intervention, the memory has demonstrated causal function.
+## 5. Behavioral equivalence
 
-## 5. Minimality
+Finite-horizon behavioral equivalence is task-relative. For deterministic systems it compares future observation trajectories under all declared input sequences up to the horizon.
 
-The goal is not to maximize memory capacity.
+The verified finite construction shows recursive behavioral signatures agree with direct exhaustive comparison on the tested finite deterministic domain.
 
-The question is:
+For nondeterministic systems, equivalence must explicitly choose semantics such as trace/output, branching-sensitive, existential reachability or universal safety.
 
-> What is the smallest retained state that changes future behavior in a reproducible way?
+## 6. Causality
 
-This connects directly to Ω-MEM research.
+Temporal succession is not causality.
 
-## 6. Predictive state
+A causal claim requires explicit intervention/counterfactual semantics. A possible intervention operator is:
 
-A memory representation is sufficient for a task if states with the same representation have the same relevant conditional prediction under the tested process.
+`I:S×A→S`.
 
-For a process `X_t`, a candidate sufficient state `S_t` aims to satisfy:
+No causal interpretation is inferred merely from a transition sequence.
 
-`P(X_t+1 | history) = P(X_t+1 | S_t)`
+## 7. Feedback
 
-for the prediction task and distribution under study.
+A graph cycle is not automatically a causal feedback loop.
 
-This is a task-relative statement, not a universal claim that one memory representation is sufficient for every process.
+A feedback claim requires direction, transition semantics and evidence that a later state influences subsequent dynamics that return to an earlier process or variable.
 
-Ω-MEM-4R provides a useful warning: three of four tested structured processes favored the matched representation over random controls at representative equal capacity, but Thue-Morse was a critical counterexample. fileciteturn11file0
+## 8. Self-model
 
-## 7. Causality
+Let `H_t` be an internal representation of system state. A self-model candidate requires:
 
-Ω-Math must distinguish temporal succession from causal influence.
+`H_t=F(S_t)`
 
-`A before B` does not by itself imply:
+and functional use in subsequent dynamics:
 
-`A causes B`.
-
-A candidate causal relation requires an intervention or another explicit identification criterion.
-
-For an intervention `do(A=a)`, a causal effect can be operationalized as a difference in the distribution of a later observable `Y`:
-
-`P(Y | do(A=a₁)) ≠ P(Y | do(A=a₂))`.
-
-This notation is borrowed as a comparison tool; causal semantics are not a primitive of Ω-Math v0.1.
-
-## 8. Feedback
-
-A feedback loop exists when a later state can influence a future state that eventually affects the earlier process class again.
-
-Minimal schematic form:
-
-`A → B → ... → A'`
-
-A cycle in a graph is not automatically a causal feedback loop. Direction, transition rules and intervention evidence are required.
-
-## 9. Self-model
-
-Let the physical/system state be `Ω_t` and an internal representation be `H_t`.
-
-A self-model candidate satisfies:
-
-`H_t = F(Ω_t)`
-
-and the represented state participates in subsequent transition:
-
-`Ω_t+1 = T(Ω_t, H_t, U_t)`.
-
-The system then contains a representation of itself that has functional consequences.
+`S_{t+1}=T(S_t,H_t,U_t)`.
 
 This is a formal candidate, not a definition of consciousness.
 
-## 10. Consciousness research layer
+## 9. Emergence
 
-A consciousness hypothesis can be tested only after lower-level properties are operationalized.
+A macro-structure is an emergence candidate only when coarse-graining/identification is explicit and a higher-level property or behavior is demonstrated with persistence/prediction criteria and controls.
 
-Candidate ingredients:
+`description ≠ explanation`.
 
-`distinguishability`
-`persistent memory`
-`integrated state`
-`self-model`
-`feedback`
-`counterfactual sensitivity`
+## 10. Geometry and dynamics
 
-A proposed consciousness metric must predict behavior or internal observables better than appropriate controls.
+Geometry is not assumed to determine behavior. Experiments in the repository show that unsigned topology/geometry can be identical while relation signs change behavior under sign-sensitive dynamics.
 
-The language does not assume that any particular metric is consciousness.
+Likewise, compact path summaries can erase intermediate organization relevant to dynamics.
 
-## 11. Time research
+Therefore:
 
-A candidate internal time variable may be derived from ordered state transitions:
+`same descriptor ⇒ same behavior`
 
-`Ω₀ → Ω₁ → ... → Ωₙ`.
+must be demonstrated for the declared task before the descriptor can replace the full state.
 
-A stronger hypothesis would claim that a useful temporal coordinate can be reconstructed from structural change alone.
+## 11. Research rule
 
-That stronger claim requires experiments against systems where an external clock is available.
-
-## 12. Dynamics research rule
-
-Never infer:
+Do not infer:
 
 `sequence → causality`
 
-or
-
 `memory → consciousness`
-
-or
 
 `feedback → life`
 
-without intermediate evidence.
+`stable pattern → universal emergence`
 
-Each arrow is a separate research problem.
+`geometry → complete state`.
+
+Each arrow is a separate testable claim.
+
+## Status
+
+`CANONICAL / v0.9 SYNCHRONIZED`
