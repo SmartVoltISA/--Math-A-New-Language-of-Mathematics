@@ -18,13 +18,17 @@ and a finite observation map
 
 `O:S→Y`.
 
-For horizon `h`, define
+For a horizon `h` and an input sequence `u⃗=(u₀,...,u_{h−1})∈U^h`, define the observed trajectory
 
-`B_h(s,u)=(O(T^0_u(s)),...,O(T^h_u(s)))`.
+`B_h(s,u⃗)=(O(s), O(T(s,u₀)), O(T(T(s,u₀),u₁)), ..., O(T^{u⃗}(s)))`.
+
+Here `T^{u⃗}(s)` denotes the state reached by applying the input sequence in order. For `h=0`, `B_0(s,())=(O(s))`.
 
 Define direct behavioral equivalence:
 
-`s≈_h s'` iff all input sequences of length `h` produce identical observation trajectories.
+`s≈_h s'` iff for every input sequence `u⃗∈U^h`,
+
+`B_h(s,u⃗)=B_h(s',u⃗)`.
 
 Define the recursive signature:
 
@@ -80,7 +84,7 @@ These are mathematical results about the declared finite deterministic transitio
 
 The test validates the proposed stopping rule for reduction:
 
-`Q(s)=Q(s') ⇒ B_h(s,u)=B_h(s',u)`.
+`Q(s)=Q(s') ⇒ B_h(s,u⃗)=B_h(s',u⃗)` for every declared input sequence `u⃗`.
 
 A structural descriptor is not promoted merely because it is compact or descriptive. It must pass the behavioral sufficiency test for the declared task.
 
