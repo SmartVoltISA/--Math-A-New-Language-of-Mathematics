@@ -4,12 +4,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "omega-math"
-version = "0.9.0"
-description = "Reference interpreter for the Ω-Math v0.9 typed relational language"
+version = "1.0.0.dev0"
+description = "Reference interpreter for the Ω-Math typed relational language"
 requires-python = ">=3.10"
 
 [project.scripts]
 omega-math = "omega_math.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["omega_math*"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
