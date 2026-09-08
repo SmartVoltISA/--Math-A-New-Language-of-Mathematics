@@ -20,33 +20,43 @@ The existing derived path summary is the sign product:
 
 Path concatenation preserves the ordered relation sequence, while the sign product compresses it to one commutative value.
 
-## Test
+## Test construction
 
-Consider two closed four-step sign sequences:
+Use one directed four-cycle:
+
+`A→B→C→D→A`.
+
+Assign two different sign configurations to the same four ordered edges:
 
 `L1 = (+1,+1,−1,−1)`
 
 `L2 = (+1,−1,+1,−1)`.
 
-Both have:
+Both configurations therefore have:
 
-- length 4;
-- two `+1` and two `−1` relations;
+- the same four entities;
+- the same four directed edges;
+- the same closed-loop topology;
+- two `+1` and two `−1` relation states;
 - sign product `+1`.
 
-Yet they differ in ordered local organization.
+Yet the ordered sign organization around the loop differs.
 
 Because multiplication in `{−1,+1}` is commutative,
 
 `Σ(L1)=Σ(L2)=+1`.
 
-Therefore the existing scalar sign algebra cannot distinguish these loop organizations.
+## Result
+
+The existing scalar sign algebra cannot distinguish these two loop assignments.
+
+A task that inspects ordered edge organization can distinguish them, while the scalar summary `Σ` cannot. Hence the sign product is not a sufficient representation for such a loop-sensitive task.
 
 ## Stronger boundary
 
-A curvature-like quantity in LIGHT is not merely a sign count/product. It depends on how local field values/connection data vary and combine around the loop. The Ω v0.9 core currently retains the ordered path itself, so the information has not been destroyed at the representation level; what is missing is a universally defined operator that maps that ordered local structure to a nontrivial residual.
+A curvature-like quantity in LIGHT is not merely a sign count/product. It depends on how local field/connection data vary and combine around a loop. The Ω v0.9 core currently retains the ordered path itself, so the information has not been destroyed at the representation level; what is missing is a universally defined operator that maps that ordered local structure to a nontrivial residual.
 
-Thus the current situation is:
+Thus:
 
 `ordered loop representation: available`
 
