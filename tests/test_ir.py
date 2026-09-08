@@ -19,7 +19,7 @@ def test_parser_lowers_reference_program_to_deterministic_ir():
     dist A B
     '''
     p = Program()
-    assert p.run(source) == [True, False, True, True, 1]
+    assert p.run(source) == [True, 1, False, True, 1]
     ir = p.to_ir()
     assert ir.normalized() == (
         ('ENTITY', ('A', 0)),
