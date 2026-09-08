@@ -16,11 +16,9 @@ def step_reach(edges, enabled, horizon):
 def test_experiment_010_locality_admissibility_boundary():
     edges = {(0, 1), (1, 2), (2, 3), (0, 3)}
     local = {(0, 1), (1, 2), (2, 3)}
-    broad = edges
     assert step_reach(edges, local, 1) == {0, 1}
-    assert step_reach(edges, broad, 1) == {0, 1, 3}
-    restricted = edges - {(1, 2)}
-    assert step_reach(edges, restricted, 3) == {0, 1, 3}
+    assert step_reach(edges, edges, 1) == {0, 1, 3}
+    assert step_reach(edges, edges - {(1, 2)}, 3) == {0, 1, 3}
 
 
 def test_experiment_011_exhaustive_mask_composition():
@@ -45,35 +43,34 @@ def test_experiment_012_directional_intervention_counterexample():
     def mx(state):
         x, _ = state
         return (x, x)
-
     def my(state):
         _, y = state
         return (y, y)
-
     baseline = (0, 0)
     assert mx(baseline) == my(baseline) == baseline
-    set_x1 = (1, 0)
-    assert mx(set_x1) != my(set_x1)
+    assert mx((1, 0)) != my((1, 0))
+    assert mx((0, 1)) != my((0, 1))
 
 
 def test_experiment_012_exhaustive_baseline_case_count():
     states = list(product((0, 1), repeat=2))
     functions = list(product(states, repeat=4))
-    assert len(states) == 4
-    assert len(functions) == 256
+    assert len(states) == 4 and len(functions) == 256
     identical = 0
     interventionally_distinct = 0
-    interventions = [(1, 0), (0, 1)]
     for f1 in functions:
         m1 = dict(zip(states, f1))
         for f2 in functions:
             m2 = dict(zip(states, f2))
             for s in states:
-                trajectory1 = (s, m1[s], m1[m1[s]])
-                trajectory2 = (s, m2[s], m2[m2[s]])
-                if trajectory1 == trajectory2:
-                    identical += 1
-                    if any(m1[i] != m2[i] for i in interventions):
-                        interventionally_distinct += 1
+                t1 = (s, m1[s], m1[m1[s]])
+                t2 = (s, m2[s], m2[m2[s]])
+                if t1 != t2:
+                    continue
+                identical += 1
+                x, y = s
+                different = any(m1[(v, y)] != m2[(v, y)] or m1[(x, v)] != m2[(x, v)] for v in (0, 1))
+                if different:
+                    interventionally_distinct += 1
     assert identical == 28672
     assert interventionally_distinct == 25344
