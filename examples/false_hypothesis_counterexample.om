@@ -1,0 +1,8 @@
+# Deliberately false claim for the v1.0 research pipeline.
+# The encoded structure contains A -> B with sign -1.
+# A criterion expecting +1 must classify the observation as COUNTEREXAMPLE.
+entity A 0
+entity B 1
+relation A B -1 rAB
+path P = A->B
+sign P
