@@ -22,5 +22,11 @@
 - Added `EXPERIMENT_LIGHT_BRIDGE_005.md` with an executed finite transport/holonomy boundary test.
 - Result: connectivity alone is insufficient to determine locality-dependent propagation; the scalar sign product is insufficient to represent ordered loop structure; a richer transport/composition law is sufficient in a finite external model, but is not derived from Ω v0.9 primitives.
 
+### Transport minimality
+- Added `EXPERIMENT_TRANSPORT_MINIMALITY_006.md` to test whether bijective edge transports are actually required for nontrivial loop residuals.
+- Result: arbitrary composable typed functions with identity and associative composition are sufficient; bijectivity is stronger than necessary for residual generation.
+- Separated minimal residual generation from the stronger frame-change/gauge-conjugation requirement, where invertible local frame maps are required.
+- Added `TRANSPORT_LAYER_v0.1.md` as a proposed research layer above Ω v0.9; it is not part of the canonical primitive core.
+
 ### Boundary
 The v0.9 core remains closed. External-domain evidence may motivate a versioned extension only after formal definition, counterexample testing, sufficiency analysis, and cross-domain verification.
