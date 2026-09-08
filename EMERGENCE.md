@@ -1,142 +1,84 @@
-# Ω-Math v0.1 — Emergence, Self-Reference and Consciousness
+# Ω-Math v0.9 — Emergence and Self-Reference
 
-## 1. Why emergence belongs in the language
+## 1. Purpose
 
-If a stable organization of low-level relations can behave as one distinguishable unit, then the language can represent a transition from one descriptive level to another.
+Emergence is treated as a testable change of descriptive level, not as a primitive fact.
 
-`micro relations → stable structure → macro entity`
+Candidate pattern:
 
-This is the candidate Ω mechanism of emergence.
+`micro relations → stable structure → macro description`.
 
-## 2. Structural emergence
+The ability of Ω-Math to describe a macro-pattern is not evidence that the pattern is physically emergent.
 
-Let `S` be a substructure of `Ω`.
+## 2. Structural emergence candidate
 
-Define a recognition map:
+Let `S` be a lower-level substructure of a declared system.
 
-`Q(S) = identity label`
+A higher-level identification map `Q(S)` is admissible only when its criterion is explicit.
 
-only when an explicit criterion identifies `S`.
+Persistence must also be explicit, for example through a declared similarity measure over time. Thresholds and tolerances belong to the experiment, not hidden inside the definition.
 
-Define persistence:
+## 3. Behavioral emergence
 
-`P(S) = similarity(S_t, S_t+k)`.
+A stronger emergence claim asks whether the macro representation preserves or improves a declared prediction or intervention task relative to the lower-level representation.
 
-A candidate emergent entity requires a threshold or statistical criterion for both identity and persistence.
+The relevant test is task-relative:
 
-The exact thresholds are application-specific and must not be hidden inside the definition.
+`Q(x)=Q(y) ⇒ F(x)=F(y)`
 
-## 3. Causal emergence
+for the behavior that the macro description claims to preserve.
 
-A stronger form occurs when treating a stable structure as a higher-level state preserves or improves prediction/intervention performance.
+A compact description that fails this test is not behaviorally sufficient for that task.
 
-Compare:
+## 4. Hierarchical coarse-graining
 
-`micro model: Ω_t → Ω_t+1`
+Repeated explicit coarse-graining may define:
 
-with:
+`Ω⁰ → Ω¹ → Ω² → ...`.
 
-`macro model: M_t → M_t+1`.
-
-The macro representation is useful only if the coarse-graining preserves the relevant behavior for the task.
-
-This makes emergence testable rather than purely philosophical.
-
-## 4. Hierarchy
-
-Repeated coarse-graining can create levels:
-
-`Ω⁰ → Ω¹ → Ω² → ...`
-
-where each `Ωᵏ+1` represents stable structures in `Ωᵏ` as higher-level entities.
-
-A hierarchy is valid only if the mapping between levels is explicit.
+Each level requires an explicit map from the preceding level. No universal hierarchy is assumed.
 
 ## 5. Self-reference
 
-Let `H_t` be an internal representation of system state.
+Let `H_t` be an internal representation generated from system state:
 
-Self-reference candidate:
+`H_t=F(S_t)`.
 
-`H_t = F(Ω_t)`
+If that representation functionally participates in subsequent transition,
 
-and
+`S_{t+1}=T(S_t,H_t,U_t)`,
 
-`Ω_t+1 = T(Ω_t, H_t, U_t)`.
+then a self-model candidate exists in the declared model.
 
-The system therefore acts partly on a representation generated from itself.
+This does not establish consciousness.
 
-This creates a closed informational loop:
+## 6. Consciousness research boundary
 
-`Ω → model(Ω) → action → Ω'`.
+A consciousness hypothesis is a separate empirical layer. Candidate ingredients such as persistent memory, integrated distinctions, self-model and recurrent feedback must each be operationalized and compared with matched controls.
 
-## 6. Reflexive distinction
+No Ω symbol or structural pattern is intrinsically assigned the meaning “consciousness”.
 
-A minimal self-model requires at least two distinguishable states of representation.
+## 7. Required controls
 
-The system must be able to distinguish:
+A serious emergence/self-reference experiment should distinguish at minimum:
 
-`self-model state A`
-
-from
-
-`self-model state B`.
-
-The primitive distinction operator from FOUNDATION is therefore reused rather than adding a special consciousness symbol.
-
-## 7. Consciousness hypothesis
-
-Ω-Math does not define consciousness as a primitive.
-
-Research hypothesis H-C0:
-
-> Consciousness-like function may emerge in systems that maintain persistent internally integrated distinctions, model relevant aspects of their own state, and use that model in recurrent feedback to alter future state transitions.
-
-This hypothesis is intentionally weaker than claims such as “all feedback systems are conscious” or “graphs are consciousness.”
-
-## 8. Required tests for H-C0
-
-A serious test must compare at least:
-
-1. no persistent state;
-2. persistent state without self-model;
-3. self-model without recurrent causal use;
+1. no persistence;
+2. persistence without self-model;
+3. self-model without recurrent functional use;
 4. recurrent self-model with controlled intervention;
 5. matched non-self-referential controls.
 
-Measurements should include prediction, adaptation, recovery, counterfactual sensitivity and robustness under perturbation.
+Measures must be tied to a declared task: prediction, adaptation, recovery, counterfactual response, robustness or another measurable outcome.
 
-## 9. What would count against the hypothesis
+## 8. Universe and physical ontology
 
-The hypothesis must be considered weakened or rejected if:
-
-- the proposed effect disappears under controls;
-- equivalent performance occurs without the proposed mechanism;
-- the effect is caused by an unrecognized implementation artifact;
-- the model cannot generalize outside the training/configuration regime;
-- the proposed consciousness marker is not distinguishable from simpler mechanisms.
-
-## 10. Human consciousness
-
-Human consciousness is an empirical target, not something established by the Ω formalism.
-
-A future human-neuroscience bridge would have to map measurable neural dynamics onto Ω structures and compare them with established neuroscience.
-
-The mapping must preserve falsifiability and cannot be declared correct merely because the language can describe the data.
-
-## 11. Universe hypothesis
-
-A separate hypothesis may investigate whether familiar structures can be derived in the order:
+A separate research hypothesis may investigate whether structures can be derived in a chain such as:
 
 `relations → stable structure → geometry → dynamics → observers`.
 
-This is a research program, not a cosmological conclusion.
+This is not a cosmological conclusion. Physical interpretation requires independent observables and empirical comparison.
 
-The critical test is whether the derived structures reproduce independent observations more economically or more accurately than existing formulations, without hidden assumptions.
-
-## 12. The central safeguard
-
-Ω-Math must never use its own ability to describe a phenomenon as evidence that it explains the phenomenon.
+## 9. Central safeguards
 
 `description ≠ explanation`
 
@@ -144,4 +86,8 @@ The critical test is whether the derived structures reproduce independent observ
 
 `correlation ≠ causation`
 
-`emergence candidate ≠ demonstrated emergence`
+`emergence candidate ≠ demonstrated emergence`.
+
+## Status
+
+`CANONICAL / v0.9 SYNCHRONIZED`
