@@ -98,9 +98,9 @@ that produces a path-dependent residual/invariant analogous in role to curvature
 
 The executed algebraic boundary test `EXPERIMENT_LIGHT_BRIDGE_004.md` shows that the existing scalar sign product cannot distinguish different ordered loop organizations with the same sign multiset and product.
 
-This does **not** mean that Ω loses the loop information: the ordered path itself is retained. It means that no universal curvature-like reduction has yet been derived from the current scalar relation algebra.
+The follow-up finite transport test `EXPERIMENT_LIGHT_BRIDGE_005.md` gives the next boundary: when each edge carries a declared transport map on a local state space, ordered composition around a closed loop can produce nontrivial holonomy. The identity/non-identity property survives local frame changes by conjugation in the tested finite model.
 
-If this requires importing vector spaces, differential forms, or gauge groups as unexplained primitives, the universal Ω claim is weakened rather than strengthened.
+This does **not** derive a physical gauge connection. It identifies the mathematical ingredient absent from the scalar Ω relation algebra: a composable transport law with richer state action.
 
 ## 7. Propagation and causality
 
@@ -153,7 +153,8 @@ The strongest currently defensible abstract chain is:
 `→ declared locality`
 `→ admissibility constraint`
 `→ ordered path / transformation`
-`→ loop/path residual candidate`
+`→ transport/composition layer (candidate external extension)`
+`→ loop/holonomy residual`
 `→ dynamics`
 `→ propagation`
 `→ boundary interaction`
@@ -161,7 +162,7 @@ The strongest currently defensible abstract chain is:
 
 with:
 
-`connection` and `curvature` remaining derived/typed research candidates rather than primitives.
+`connection` and `curvature` remaining physical/typed research interpretations rather than primitives.
 
 ## 12. Required experiments
 
@@ -185,6 +186,10 @@ Test whether a boundary plus admissibility rule is sufficient to represent refle
 
 Repeat LΩ-01–04 on at least one non-physical domain (e.g. lattice or network dynamics). Reject any abstraction that only works after inserting LIGHT-specific machinery.
 
+### LΩ-06 — Transport minimality
+
+Determine the weakest external mathematical structure needed for nontrivial loop residuals. At minimum, test whether a set of local states plus composable state transformations is sufficient; record whether associativity, identity, reversibility, and frame-change covariance are required by the chosen residual.
+
 ## Decision rule
 
 No new Ω primitive is accepted unless a construction:
@@ -197,12 +202,13 @@ No new Ω primitive is accepted unless a construction:
 
 ## Conclusion
 
-LIGHT currently gives Ω-Math **three strong structural candidates**:
+LIGHT currently gives Ω-Math **four strong structural boundaries**:
 
 1. **admissibility constraints** over relations/transitions;
 2. **declared locality** distinct from mere connectivity;
-3. **path/loop residual structure** as a possible route toward connection/curvature.
+3. **ordered loop structure** beyond scalar relation summaries;
+4. **transport/composition** as the minimal candidate mathematical layer capable of producing nontrivial loop holonomy in a finite model.
 
-The finite tests now support the first two as semantic distinctions and establish an algebraic boundary for the third. The v0.9 primitive core remains unchanged.
+The fourth is an external extension candidate, not a new Ω primitive. The v0.9 primitive core remains unchanged.
 
 It does **not** yet justify adding `CONNECTION`, `CURVATURE`, `FIELD`, `PHOTON`, `ENERGY`, or `CAUSALITY` as primitive Ω types.
