@@ -72,7 +72,7 @@ is a quotient-distance candidate in the general case. Triangle inequality and se
 
 Executed results remain scoped to their declared finite model, observation map, dynamics and horizon. A counterexample rejects only the tested sufficiency claim; it does not justify a universal negative claim about every richer representation.
 
-Preregis​tered protocols must declare domain guards before execution. Undefined normalization is not silently interpreted as zero.
+Preregistered protocols must declare domain guards before execution. Undefined normalization is not silently interpreted as zero.
 
 Physical interpretations are not inferred from graph activity, transformation cost, transition order, recurrence, or stable macro-patterns.
 
