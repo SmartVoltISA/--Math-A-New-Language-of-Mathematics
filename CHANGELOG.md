@@ -1,84 +1,23 @@
-# Ω-Math Changelog
+# CHANGELOG
 
-## v0.9 — Frontier closure and synchronization
+## v0.9
 
-### Closed / derived
+### Core closure
+- Closed the minimal typed relational language for the declared v0.9 domain.
+- Separated entity state `{0,1}` from relation state `{−1,+1}`.
+- Canonicalized path algebra, empty path identity, reversal, and exact path equality.
+- Formalized finite- and infinite-horizon behavioral equivalence and task-specific nondeterministic semantics.
+- Corrected quotient-geometry conditions: quotient distance is not automatically a pseudometric for an arbitrary equivalence relation.
+- Kept probability, causal intervention, physical time, physical energy, and physical ontology as external bridges rather than hidden primitives.
 
-- exact path equality admitted at the representation level;
-- empty-path identity for path concatenation;
-- infinite-horizon behavioral equivalence derived from all finite horizons;
-- nondeterministic successor-set semantics made explicit;
-- task-parameterized branching, reachability, safety and trace semantics;
-- fairness/liveness treated as explicit infinite-run predicates;
-- continuous-state sets allowed only with explicitly declared additional structure;
-- causal intervention semantics separated from temporal succession;
-- primitive relation composition, relation identity and relation inverse retained as non-primitives.
+### Synchronization
+- Synchronized `SEMANTICS.md`, `GLOSSARY.md`, `DYNAMICS.md`, `EMERGENCE.md`, `TYPE_SYSTEM.md`, and canonical examples with v0.9.
+- Added `CANONICAL_INDEX_v0.9.md` as the navigation layer for canonical and historical material.
 
-### Corrected
+### LIGHT bridge
+- Added `LIGHT_STRUCTURAL_BRIDGE_v0.1.md` to compare Ω-Math with the electromagnetic/QFT structure in `SmartVoltISA/LIGHT-`.
+- Added `EXPERIMENT_LIGHT_BRIDGE_001.md` as an analytical test of admissibility, locality, and loop-residual candidates.
+- Result: no missing primitive type has been demonstrated. Admissibility and locality can be represented as semantic predicates; curvature-like loop residual remains open.
 
-- quotient-induced distance is now treated as a candidate construction unless compatibility conditions establish pseudometric/metric properties;
-- physical time, physical energy and probability are explicitly separated from minimal-language primitives.
-
-### Documentation
-
-- README synchronized to v0.9;
-- canonical operator table synchronized to v0.9;
-- synchronization audit added;
-- quotient geometry conditions added.
-
-## v0.8 — Language closure
-
-- closed the declared language-engineering clusters;
-- formalized deterministic and nondeterministic dynamics boundaries;
-- formalized internal order versus physical time;
-- consolidated memory, feedback, self-model, emergence and Point/boundary boundaries;
-- preserved finite verification evidence and explicit open mathematics.
-
-## v0.4 — Language consolidation
-
-- `LANGUAGE_SPEC.md` — canonical syntax and semantic signatures.
-- `SEMANTICS.md` — core semantic rules.
-- `OPERATOR_TABLE.md` — canonical operator inventory.
-- `CANONICAL_EXAMPLES.md` — reference expressions.
-- `REDUCTION_RULES.md` — task-relative sufficiency and information-loss discipline.
-- `LICENSE.md` — repository documentation license notice.
-
-### Strengthened
-
-- entity identity separated from entity state;
-- relation absence separated from relation state;
-- paths retained as first-class objects;
-- scalar sign-product classified as a summary;
-- behavioral equivalence made task/horizon/input relative;
-- quotient validity tied to retained behavior/structure;
-- transformation distance derived from admissible transformations and costs;
-- physical interpretations separated from mathematical constructions.
-
-### Rejected as universal assumptions
-
-- path = scalar sign-product;
-- observation equality = identity;
-- aggregate graph statistics = complete structure;
-- connectivity = physical geometry;
-- transformation cost = physical energy;
-- stable pattern = proven emergence.
-
-### Existing results retained
-
-- relation-composition counterexamples;
-- path-dynamics counterexample;
-- invariant/symmetry controls;
-- transformation-derived metric baseline;
-- Point/boundary negative results.
-
-## v0.3
-
-Typed structural expansion, transformation layer, invariants/symmetry, path algebra, behavioral equivalence and first metric baseline.
-
-## v0.2
-
-Formal expansion of transformation, type, invariant, path and behavioral layers.
-
-## v0.1
-
-Initial foundation and experimental research map.
+### Boundary
+The v0.9 core remains closed. External-domain evidence may motivate a versioned extension only after formal definition, counterexample testing, sufficiency analysis, and cross-domain verification.
