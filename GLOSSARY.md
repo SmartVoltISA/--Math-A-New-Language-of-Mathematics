@@ -1,123 +1,123 @@
-# Ω-Math v0.4 — Controlled Vocabulary
+# Ω-Math v0.9 — Controlled Vocabulary
 
-This glossary is canonical for the current language. A term must not silently change meaning between experiments.
+This glossary defines the current vocabulary. Legacy documents may use older wording; the v0.9 definitions control current semantics.
 
 ## Entity
-A distinguishable modeled position with an identity and a current state.
+A distinguishable modeled object with identity and current state.
 
 ## Entity identity
-The identifier that distinguishes one entity from another. Identity is not the same as state.
+The identifier distinguishing one entity from another. Identity is not state.
 
 ## Entity state
-The current value of an entity: `0` or `1`.
+A primitive current value in `{0,1}`.
 
 ## Relation
-A directed modeled connection between ordered entity positions. Its primitive state belongs to `{−1,+1}`.
+A directed modeled connection between ordered entities. Its primitive state belongs to `{−1,+1}`.
 
 ## Relation state
-The current signed state of a relation: `−1` or `+1`.
+The primitive signed state of a relation: `−1` or `+1`. It has no intrinsic physical interpretation.
 
 ## Relation domain
-The set of ordered pairs for which relations are present or explicitly modeled. Absence from the domain is not a relation value.
+The set of ordered pairs for which relations are present/defined. Absence from the domain is not a relation value.
 
 ## Distinction
-A declared comparison showing whether two selected objects differ. At the primitive entity-state level, `D(a,b)=0` for equality and `D(a,b)=1` for difference.
+A declared comparison identifying equality or difference. At primitive entity-state level, `D(a,b)=0` for equality and `D(a,b)=1` for difference.
 
 ## Configuration
-A complete declared arrangement of entities and relations at one modeling step.
+A declared arrangement of entities, relation domain and relations at one modeling step.
 
 ## State
-A configuration together with explicitly retained additional variables such as memory or control state.
+A configuration together with explicitly retained variables such as memory or control state.
 
 ## Structure
 The organization of entities and relations in a configuration.
 
 ## Path
-An ordered connected sequence of relations. Order and intermediate structure are retained.
+An ordered compatible sequence of relations retaining endpoints, intermediate structure, relation order and states.
+
+## Empty path
+`ε_e`, the identity of compatible path concatenation. It is not a primitive relation identity.
 
 ## Path summary
-A derived map from a path to a smaller description. A summary is not automatically an equivalence.
+A derived map from a path to a smaller description. A summary is not automatically sufficient or an equivalence.
 
-## Cycle
-A path satisfying a declared return criterion. A cycle alone does not imply causality.
+## Sign summary
+A derived scalar such as the product of relation signs along a non-empty path. It preserves only the declared property it measures and can lose organization.
 
 ## Transformation
 A declared mapping between states/configurations.
 
 ## Transformation family
-A declared set/class of admissible transformations used to define invariants, symmetry or distance.
+A declared collection of admissible transformations used for invariance, symmetry or distance.
 
 ## Invariant
-A property preserved by a specified transformation family.
-
-## Symmetry
-A transformation that preserves an object exactly or up to a declared equivalence.
+A property preserved under a specified transformation family.
 
 ## Observation
-A mapping from a state to a selected description that may intentionally erase distinctions.
+A mapping that retains selected information and may erase distinctions.
 
 ## Observational equivalence
-Two objects with equal outputs under a declared observation map.
+Equality under a declared observation map.
 
 ## Behavioral equivalence
-Equivalence of declared future observations under a specified transition rule, input/intervention class and horizon.
+Equality of declared future observations under specified dynamics, inputs/interventions, task and horizon.
 
 ## Quotient
-A construction that identifies objects under a declared equivalence and specifies how retained structure maps to quotient structure.
+A construction identifying objects under a declared equivalence and specifying how retained structure maps to quotient objects.
 
 ## Reduction
-A map from a richer representation to a smaller or differently organized representation.
+A map from a richer representation to a smaller/differently organized representation.
 
 ## Sufficiency
-A property of a representation that it preserves all information required for a declared task or behavior.
+The property that a representation preserves all information required for a declared task or behavior.
 
 ## Information loss
-A distinction present in the original representation that is not recoverable from the reduced representation for the declared task.
+A distinction in the original representation that is not recoverable from the reduced representation for the declared task.
 
 ## Transition
-A rule or observed mapping from one state to another.
-
-## Change
-A declared comparison between states. It is not automatically ordinary subtraction.
+A declared rule or observed mapping from one state to another.
 
 ## Memory
 Retained internal state that persists and can affect later behavior or comparison.
 
 ## Functional memory
-Memory demonstrated to have a measurable later effect under an appropriate intervention or controlled comparison.
+Memory whose persistence and later functional influence are demonstrated by a controlled test.
 
 ## Predictive state
-A retained representation sufficient for a specified prediction task under specified conditions.
+A representation sufficient for a specified prediction task under specified conditions.
 
 ## Causality
-A relation supported by a declared intervention/counterfactual criterion. Succession or correlation alone is insufficient.
+A relation supported by an explicit intervention/counterfactual criterion. Temporal succession alone is insufficient.
 
 ## Self-model
-An internal representation generated from, and causally used with respect to, the system's own state.
+An internal representation of system state that participates functionally in subsequent dynamics.
 
 ## Feedback
-A recurrent dependency in which later system state influences subsequent dynamics that return to an earlier process or variable.
+A recurrent dependency in which later state influences subsequent dynamics that return to an earlier process or variable.
 
 ## Emergence
 A candidate higher-level structure or behavior arising from lower-level organization under an explicit identification and validation criterion.
 
 ## Geometry
-A mathematical structure derived from declared relations, transformations, costs or equivalences. Physical geometry is a separate hypothesis.
+A mathematical structure derived from declared relations, transformations, costs or equivalences. Physical geometry is a separate empirical hypothesis.
 
 ## Metric
-A function satisfying the metric axioms on a declared domain. In Ω-Math it is derived only after its transformation/cost basis is specified.
+A function satisfying metric axioms on a declared domain. In Ω-Math it is admitted only after its construction and axioms are verified.
 
 ## Hypothesis
 A proposition proposed for testing but not established.
 
 ## Derivation
-A result that follows from stated definitions and accepted rules.
+A result following from stated definitions and accepted rules.
 
 ## Theorem
-A formally proved proposition inside the specified mathematical system.
+A formally proved proposition within the specified mathematical system.
 
 ## Executed result
 A result obtained from an explicit finite computation or construction.
+
+## Counterexample
+A valid construction showing that a proposed universal implication fails under the stated assumptions.
 
 ## Validation
 Evidence that a result passed predefined checks and controls.
@@ -126,13 +126,17 @@ Evidence that a result passed predefined checks and controls.
 An independent execution reproducing a documented result under the same declared protocol.
 
 ## Artifact
-A feature that can create an apparent result without the intended mechanism.
+A feature capable of creating an apparent result without the intended mechanism.
 
 ## Ω-system
-A system represented using typed Ω primitives and derived structures.
+A system represented using typed Ω primitives and declared derived structures.
 
 ## Ω-level
-A descriptive scale obtained by explicit coarse-graining or structural aggregation.
+A descriptive scale obtained through explicit coarse-graining or structural aggregation.
 
 ## Ω-Math
-The evolving formal language developed in this repository. It is a research program, not an assumed theory of nature.
+The evolving formal language and research program developed in this repository. It is not assumed to be the ontology of nature.
+
+## Status
+
+`CANONICAL / v0.9 SYNCHRONIZED`
