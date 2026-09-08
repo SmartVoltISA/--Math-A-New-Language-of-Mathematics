@@ -32,6 +32,7 @@ Single navigation point for the canonical Ω-Math v0.9 language core, research m
 ## External-domain bridge records
 
 - `LIGHT_STRUCTURAL_BRIDGE_v0.1.md` — structural comparison with electromagnetic/QFT architecture; does not alter the primitive core.
+- `TRANSPORT_LAYER_v0.1.md` — proposed typed transport/composition layer above Ω v0.9; not core.
 
 ## Verification records
 
@@ -55,6 +56,7 @@ Single navigation point for the canonical Ω-Math v0.9 language core, research m
 - `EXPERIMENT_LIGHT_BRIDGE_003.md`
 - `EXPERIMENT_LIGHT_BRIDGE_004.md`
 - `EXPERIMENT_LIGHT_BRIDGE_005.md`
+- `EXPERIMENT_TRANSPORT_MINIMALITY_006.md`
 
 ## Historical / superseded
 
