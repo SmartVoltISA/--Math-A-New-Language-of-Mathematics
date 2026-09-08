@@ -1,0 +1,9 @@
+# Ω-Math v0.9 reference syntax
+entity A 0
+entity B 0
+entity C 1
+relation A B +1
+relation B C -1
+path P = A->B->C
+sign P
+cycle P
