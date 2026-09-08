@@ -19,7 +19,8 @@
 - Added `EXPERIMENT_LIGHT_BRIDGE_001.md` as an analytical test of admissibility, locality, and loop-residual candidates.
 - Added `EXPERIMENT_LIGHT_BRIDGE_003.md` with an executed finite locality/propagation verification.
 - Added `EXPERIMENT_LIGHT_BRIDGE_004.md` with an executed algebraic boundary test for loop residuals.
-- Result: connectivity alone is insufficient to determine locality-dependent propagation; the scalar sign product is insufficient to represent ordered loop structure; no missing primitive type has been demonstrated.
+- Added `EXPERIMENT_LIGHT_BRIDGE_005.md` with an executed finite transport/holonomy boundary test.
+- Result: connectivity alone is insufficient to determine locality-dependent propagation; the scalar sign product is insufficient to represent ordered loop structure; a richer transport/composition law is sufficient in a finite external model, but is not derived from Ω v0.9 primitives.
 
 ### Boundary
 The v0.9 core remains closed. External-domain evidence may motivate a versioned extension only after formal definition, counterexample testing, sufficiency analysis, and cross-domain verification.
