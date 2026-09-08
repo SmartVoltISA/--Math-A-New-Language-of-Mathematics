@@ -1,6 +1,6 @@
 """Typed Ω-Math core objects. No implicit arithmetic coercions are provided."""
-from dataclasses import dataclass, field
-from typing import Any, Callable, Iterable, Mapping, Optional, Tuple
+from dataclasses import dataclass
+from typing import Any, Callable, Tuple
 
 ENTITY_STATES = frozenset({0, 1})
 RELATION_STATES = frozenset({-1, 1})
@@ -94,7 +94,15 @@ def sign_summary(p: Path):
     return out
 
 def reverse_path(p: Path):
-    return Path(tuple(reversed(p.relations)), p.target, p.source)
+    """Reject reversal unless explicit inverse relations exist.
+
+    Reversing a path's relation sequence does not create inverse edges. Since
+    inverse relations are not primitive in Ω-Math v0.9, silently constructing
+    such a path would violate the typed relational semantics.
+    """
+    if not p.relations:
+        return p
+    raise ValueError("path reversal requires explicit inverse relations; Ω-Math does not invent edges")
 
 def compare(a: State, b: State):
     return {"equal": a == b, "config_equal": a.config == b.config, "memory_equal": a.memory == b.memory, "control_equal": a.control == b.control}
