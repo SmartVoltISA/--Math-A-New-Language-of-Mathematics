@@ -1,8 +1,10 @@
-# Ω-Math v0.9 — Canonical Index
+# Ω-Math — Canonical Index v0.9
 
-This file defines which documents are authoritative for the current v0.9 language layer.
+## Purpose
 
-## Canonical core
+Single navigation point for the canonical Ω-Math v0.9 language core, research modules, and verification records.
+
+## Canonical language core
 
 - `README.md`
 - `FOUNDATION.md`
@@ -18,27 +20,25 @@ This file defines which documents are authoritative for the current v0.9 languag
 - `FRONTIER_CLOSURE_v0.9.md`
 - `STATUS_v0.9.md`
 - `QUOTIENT_GEOMETRY_CONDITIONS.md`
-- `V09_MATH_AUDIT_001.md`
-- `V09_MATH_AUDIT_002.md`
-- `V09_MATH_AUDIT_003.md`
-
-## Canonical dynamics/research layer
-
-- `DYNAMICS.md`
-- `EMERGENCE.md`
+- `CANONICAL_EXAMPLES.md`
 - `GLOSSARY.md`
 - `TIME_INTERNAL_ORDER.md`
 
-These documents are synchronized with v0.9 terminology and define research-layer semantics and vocabulary. They do not promote physical hypotheses into the minimal core.
+## Canonical dynamics / research modules
 
-## Canonical verification records
+- `DYNAMICS.md`
+- `EMERGENCE.md`
+
+## External-domain bridge records
+
+- `LIGHT_STRUCTURAL_BRIDGE_v0.1.md` — structural comparison with electromagnetic/QFT architecture; does not alter the primitive core.
+
+## Verification records
 
 - `EXPERIMENT_BEHAVIORAL_QUOTIENT_001.md`
-- `EXPERIMENT_BEHAVIORAL_EQUIV_002.md`
 - `EXPERIMENT_NONDETERMINISTIC_001.md`
 - `EXPERIMENT_PATH_PROFILE_003.md`
 - `EXPERIMENT_PATH_PROFILE_004.md`
-- `EXPERIMENT_PATH_DYNAMICS_001.md`
 - `EXPERIMENT_STRUCTURE_004.md`
 - `EXPERIMENT_RELATIONAL_GEOMETRY_001.md`
 - `EXPERIMENT_METRIC_001.md`
@@ -46,41 +46,19 @@ These documents are synchronized with v0.9 terminology and define research-layer
 - `ALGEBRA_DYNAMICS_VERIFICATION_001.md`
 - `EXPERIMENT_RELATION_COMPOSITION_001.md`
 - `EXPERIMENT_TOPOLOGY_003.md`
-- `EXPERIMENT_POINT_006.md`
-- `EXPERIMENT_POINT_008.md`
-- `EXPERIMENT_POINT_009.md`
+- `EXPERIMENT_PATH_DYNAMICS_001.md`
 - `EXPERIMENT_GEOMETRY_SIGN_001.md`
+- `EXPERIMENT_POINT_006.md`
+- `EXPERIMENT_POINT_009.md`
+- `EXPERIMENT_LIGHT_BRIDGE_001.md`
 
-## Historical / legacy documents requiring care
+## Historical / superseded
 
-### `PATH_ALGEBRA.md`
+- `PATH_ALGEBRA.md`
+- `EQUIVALENCE.md`
+- `STATUS.md`
+- v0.8 closure records
 
-The conceptual material remains useful, but its older wording predates the v0.9 empty-path identity. Use `PATH_ALGEBRA_v0.9.md` for current path semantics.
+## Boundary rule
 
-### `EQUIVALENCE.md`
-
-This is a historical research record. Use `EQUIVALENCE_v0.9.md` for current equivalence semantics.
-
-### v0.8 closure records
-
-`LANGUAGE_CLOSURE_v0.8.md` and `V08_COMPLETION_INDEX.md` remain part of research history and are superseded for current language status by v0.9 records.
-
-## Reading rule
-
-When a legacy document and a v0.9 canonical document differ, the v0.9 canonical document controls current semantics. Legacy documents are not evidence against the v0.9 core unless their mathematical content is explicitly re-audited.
-
-## Mathematical discipline
-
-A document being canonical does not make every statement inside it a theorem. Each claim retains its status: definition, derivation, theorem, finite verification, counterexample, supported result, hypothesis, open problem or external bridge.
-
-A compact descriptor may replace a richer representation only after task-specific sufficiency is established:
-
-`Q(x)=Q(y) ⇒ F(x)=F(y)`.
-
-## Current boundary
-
-The minimal language is closed at v0.9. Research continues above it through dynamics, memory, geometry, emergence and empirical bridges.
-
-`complete language ≠ complete mathematics ≠ complete physics`.
-
-**Status: CANONICAL INDEX / v0.9 / SYNCHRONIZED**
+The canonical core is closed at v0.9 for the declared minimal typed relational language. External-domain mappings may motivate new research, but do not change the core without a separately defined, tested, and versioned extension.
