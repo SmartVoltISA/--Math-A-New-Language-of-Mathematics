@@ -95,4 +95,4 @@ Any new algebraic primitive requires: typed signature; domain restrictions; sema
 
 The minimal algebraic boundary is closed: path composition is defined; sign multiplication is a derived summary; primitive relation composition, identity and inverse remain outside the required core.
 
-See `PATH_ALGEBRA.md`, `RELATION_COMPOSITION.md`, `OPERATOR_TABLE.md`, and `FRONTIER_CLOSURE_v0.9.md` for corresponding canonical definitions and limits.
+See `PATH_ALGEBRA_v0.9.md`, `RELATION_COMPOSITION.md`, `OPERATOR_TABLE.md`, and `FRONTIER_CLOSURE_v0.9.md` for corresponding canonical definitions and limits. `PATH_ALGEBRA.md` remains historical.
