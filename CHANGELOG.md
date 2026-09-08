@@ -34,6 +34,12 @@
 - Added `EXPERIMENT_LOCALITY_ADMISSIBILITY_BOUNDARY_010.md` with an executed finite verification.
 - Result: locality, admissibility, and boundary restrictions can be represented as declared semantic predicates/domain restrictions over existing Ω objects; no new primitive type is justified.
 - Strengthened the separation: relation existence, locality, admissibility, and boundary crossing are distinct predicates/constraints and must not be silently identified.
+- Added `EXPERIMENT_INTERACTION_REDUCTION_011.md` with an executed exhaustive finite verification of locality/admissibility interaction, boundary restriction, and quotient information loss.
 - `EXPERIMENT_POINT_009.md` remains preregistered and untouched because its causal-interface phrase is not operationally defined.
+
+### Causal intervention
+- Added `EXPERIMENT_CAUSAL_INTERVENTION_012.md` with an executed finite exhaustive verification.
+- Result: explicit interventions are representable as existing typed transformations/inputs; baseline temporal succession can be identical while intervention responses differ; directional models can therefore be interventionally distinguishable without being distinguishable from the chosen baseline trajectory.
+- No new `CAUSE` primitive is justified. Causal direction/dependency remains an explicit intervention/comparison semantics and a research frontier.
 
 The v0.9 core remains closed. External-domain evidence may motivate a versioned extension only after formal definition, counterexample testing, sufficiency analysis, and cross-domain verification.
