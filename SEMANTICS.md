@@ -1,94 +1,120 @@
-# Ω-Math v0.4 — Semantic Rules
+# Ω-Math v0.9 — Semantic Rules
 
-## 1. Meaning is typed
+## 1. Typed meaning
 
-A symbol has meaning only together with its declared type and position in an expression.
+A symbol has meaning only together with its declared type and position.
 
-`0:EntityState` is not `0:RelationState` and relation absence has no primitive numeric value.
+`0:EntityState` and `0:RelationState` are different typed objects; in the minimal language `0:RelationState` is not admitted. Entity states are `{0,1}` and relation states are `{−1,+1}`.
 
-## 2. Identity
+Relation absence is domain absence, not a third relation value.
 
-Entity identity is represented by `id`. State is a separate field.
+## 2. Identity and state
 
-Therefore:
+Entity identity is represented separately from entity state.
 
 `(i,0) ≠ (j,0)` when `i ≠ j`.
 
 Equal state does not imply equal entity.
 
+A system state may contain configuration plus explicitly retained variables such as memory or control state.
+
 ## 3. Relation semantics
 
-A relation sign has only the semantic meaning assigned by the current model. The signs `−1` and `+1` do not intrinsically mean attraction, repulsion, causation, truth, energy or force.
+A relation is an ordered directed connection whose primitive state belongs to `{−1,+1}`. The signs have no intrinsic interpretation as attraction, repulsion, causation, force, truth or energy.
 
-## 4. Direction
+## 4. Direction and reversal
 
-A directed relation retains source and target order. Reversal is a distinct transformation unless an explicit symmetry identifies the two directions.
+A directed relation retains source and target order. Reversal is a sequence transformation unless reverse edges are independently present or an explicit symmetry identifies the directions.
 
-## 5. Absence
+`rev(P)` does not imply `rev(r)` exists as a relation.
 
-If `(i,j) ∉ D_R`, the relation is absent/undefined in the current relational domain. It is not silently converted into a third relation state.
+## 5. Relation domain and absence
 
-## 6. Path semantics
+If `(i,j) ∉ D_R`, the relation is absent/undefined in the declared relational domain. It is not silently represented by another relation state.
+
+## 6. Paths
 
 A path preserves:
 
 - endpoint order;
 - intermediate entities;
 - relation order;
-- relation signs;
+- relation states;
 - path length;
 - multiplicity when multiple paths exist.
 
-A scalar summary is allowed only as a declared map from the path to another type.
+Exact path equality is sequence equality. A scalar path summary is a declared reduction and is not automatically behavior-preserving.
 
-## 7. Change semantics
+## 7. Change and transformation
 
-Change is a relation between two states/configurations. It records which declared components differ and how.
+Change is a declared comparison between states/configurations. It is not ordinary subtraction unless an external arithmetic model explicitly says so.
 
-A quantitative magnitude of change must be separately defined.
+A transformation must declare its domain, action and output. Invertibility is a property to prove or test, not a default assumption.
 
-## 8. Transformation semantics
+## 8. Observation
 
-A transformation is admissible only when its domain, action and output are declared. Invertibility is a property to test, not a default assumption.
+An observation intentionally retains selected information and may erase distinctions.
 
-## 9. Observation semantics
+`O(x)=O(y)` establishes observational equivalence under `O`, not identity or universal behavioral equivalence.
 
-An observation is a mapping that intentionally forgets some distinctions. Equal observations imply only observational equivalence, not identity.
+## 9. Equivalence and behavior
 
-## 10. Equivalence semantics
+An equivalence must specify the task, observation, transition semantics, input/intervention class and horizon where relevant.
 
-An equivalence relation must specify what is considered irrelevant for the task. Different observations, horizons or interventions may induce different equivalence classes.
+For finite deterministic systems, finite-horizon behavioral equivalence may be defined recursively and verified against direct exhaustive comparison. Increasing the horizon can split classes but cannot merge them.
 
-## 11. Quotient semantics
+Infinite-horizon equivalence is derived as:
 
-A quotient must specify how retained entities, relations and paths map into quotient objects. Merging names alone is insufficient.
+`s≈∞s' ⇔ ∀h∈ℕ₀, s≈ₕs'`.
 
-## 12. Causality
+For nondeterministic systems, successor sets remain first-class and equivalence is task-relative: trace/output, branching-sensitive, existential reachability, universal safety, or another explicit predicate.
 
-Temporal succession or correlation is not causality. A causal claim requires a declared intervention or equivalent counterfactual criterion.
+## 10. Quotients and reduction
 
-## 13. Memory
+A quotient identifies objects under a declared equivalence and must specify how retained structure maps to quotient structure.
 
-A stored value is not automatically memory in the functional sense. Memory requires persistence plus a demonstrated later effect under a specified test.
+A reduction is behavior-preserving only when the retained representation is sufficient for the declared task:
 
-## 14. Emergence
+`Q(x)=Q(y) ⇒ F(x)=F(y)`.
 
-A macro-object is an emergence candidate only when:
+This implication is a criterion to verify, not an automatic property of compact summaries.
 
-1. a lower-level construction is declared;
-2. a higher-level identification map is explicit;
-3. persistence/stability is tested;
-4. the macro-level has a declared property or behavior;
-5. controls show the result is not a measurement artifact.
+## 11. Invariants and geometry
 
-## 15. Geometry
+An invariant is always relative to a declared transformation family:
 
-Distance is not primitive in the current core. A candidate distance must arise from a declared transformation family and cost. Physical space cannot be identified with the resulting mathematical metric without an independent bridge.
+`I(T(x))=I(x)`.
 
-## 16. Semantic priority rule
+Distance and geometry are not primitive. A candidate metric requires a declared transformation family and cost, followed by verification of metric axioms on the stated domain.
 
-When two interpretations conflict, the more explicit typed definition wins over intuition, analogy or ordinary arithmetic.
+For quotient geometry, the infimum construction is only a candidate in general; triangle inequality and separation require explicit compatibility/conditions or finite verification.
+
+## 12. Time, probability and causality
+
+Transition order is distinct from physical duration. Physical time requires an independent empirical bridge.
+
+Probability requires an independently declared kernel such as `K:S×U→Dist(S)`.
+
+Temporal succession is not causality. Causal claims require explicit intervention/counterfactual semantics.
+
+## 13. Memory, feedback and emergence
+
+Persistent storage is not automatically functional memory. Memory requires persistence plus demonstrated later functional influence.
+
+A graph cycle is not automatically causal feedback.
+
+Emergence requires explicit coarse-graining/identification, a macro-property or behavior, persistence/prediction criteria, and controls.
+
+## 14. Semantic priority
+
+When intuition, analogy or ordinary arithmetic conflicts with a typed Ω definition, the explicit typed definition controls.
+
+`description ≠ explanation`
+
+`model ≠ reality`
+
+`correlation ≠ causation`.
 
 ## Status
 
-`DEFINED / CORE SEMANTICS`
+`CANONICAL / v0.9 SYNCHRONIZED`
