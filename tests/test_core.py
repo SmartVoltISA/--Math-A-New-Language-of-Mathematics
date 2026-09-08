@@ -4,6 +4,7 @@ from omega_math.runtime import (
     concat, sign_summary, reverse_path, sufficient, verify_metric,
     quotient, distance, symmetry, model, execute,
 )
+from omega_math.parser import Program, ParseError
 
 def R(a,b,s): return Relation(a,b,s)
 
@@ -57,3 +58,51 @@ def test_execute_exposes_all_new_canonical_runtime_operators():
     assert execute('DISTANCE', 0, 2, [Transformation('step', lambda s,_=None:s+1, cost=1.0)]) == 2.0
     assert execute('SYMMETRY', 0, [Transformation('flip', lambda s,_=None:1-s)]) == frozenset({0,1})
     assert execute('MODEL', 3, lambda s:s*2) == 6
+
+def test_parser_reference_surface():
+    text='''
+    entity A 0
+    entity B 1
+    entity C 0
+    relation A B +1 rAB
+    relation B C -1 rBC
+    relation C A +1 rCA
+    path P = A->B->C
+    path Q = A->B->C
+    path E = epsilon(B)
+    concat R = P + E
+    incident B rAB
+    cycle P
+    path_eq P Q
+    sign P
+    dist A B
+    '''
+    assert Program().run(text) == [True, False, True, -1, 1]
+
+def test_parser_empty_path_is_identity():
+    p=Program()
+    assert p.run('entity A 0\npath E = epsilon(A)\npath_eq E E') == [True]
+
+def test_parser_rejects_relation_zero_and_unknown_endpoints():
+    with pytest.raises(ParseError): Program().run('entity A 0\nrelation A A 0')
+    with pytest.raises(ParseError): Program().run('entity A 0\nrelation A B +1 r')
+
+def test_parser_rejects_implicit_relation_absence_as_zero():
+    with pytest.raises(ParseError): Program().run('entity A 0\nentity B 0\nrelation A B 0')
+
+def test_parser_rejects_unsupported_external_semantics():
+    with pytest.raises(ParseError): Program().run('entity A 0\nCAUSE A A')
+    with pytest.raises(ParseError): Program().run('entity A 0\nPROB A')
+
+def test_parser_rejects_incompatible_concat():
+    text='''
+    entity A 0
+    entity B 0
+    entity C 0
+    relation A B +1 rAB
+    relation C A +1 rCA
+    path P = A->B
+    path Q = C->A
+    concat R = P + Q
+    '''
+    with pytest.raises(ParseError): Program().run(text)
