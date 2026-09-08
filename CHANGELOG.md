@@ -26,7 +26,8 @@
 - Added `EXPERIMENT_TRANSPORT_MINIMALITY_006.md` to test whether bijective edge transports are actually required for nontrivial loop residuals.
 - Result: arbitrary composable typed functions with identity and associative composition are sufficient; bijectivity is stronger than necessary for residual generation.
 - Separated minimal residual generation from the stronger frame-change/gauge-conjugation requirement, where invertible local frame maps are required.
-- Added `TRANSPORT_LAYER_v0.1.md` as a proposed research layer above Ω v0.9; it is not part of the canonical primitive core.
+- Added `TRANSPORT_LAYER_v0.1.md` as a proposed research schema above Ω v0.9; it is not a new primitive.
+- Added `EXPERIMENT_TRANSPORT_REDUCTION_007.md`: the transport maps can be represented as typed specializations of the existing Ω transformation layer, so a separate `TRANSPORT` primitive is not currently justified.
 
 ### Boundary
 The v0.9 core remains closed. External-domain evidence may motivate a versioned extension only after formal definition, counterexample testing, sufficiency analysis, and cross-domain verification.
