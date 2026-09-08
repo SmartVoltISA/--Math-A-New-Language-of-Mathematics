@@ -27,7 +27,8 @@ def test_sign_is_summary_not_path_identity():
 
 def test_reversal_does_not_invent_edges():
     p=Path((R('a','b',1),R('b','c',-1)),'a','c')
-    assert reverse_path(p).relations == (p.relations[1],p.relations[0])
+    with pytest.raises(ValueError, match='does not invent edges'):
+        reverse_path(p)
 
 def test_reduction_witness():
     ok,w=sufficient(lambda x:x%2, lambda x:x, range(4))
