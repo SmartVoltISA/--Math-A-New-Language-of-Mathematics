@@ -2,6 +2,7 @@ import pytest
 
 from omega_math.ir import IRInstruction, IRProgram
 from omega_math.parser import Program, ParseError
+from omega_math.runtime import execute_ir
 
 
 def test_parser_lowers_reference_program_to_deterministic_ir():
@@ -34,6 +35,28 @@ def test_parser_lowers_reference_program_to_deterministic_ir():
         ('PATH_EQ', ('P', 'P')),
         ('DIST', ('A', 'B')),
     )
+
+
+def test_parser_and_ir_runtime_agree():
+    source = '''
+    entity A 0
+    entity B 1
+    entity C 0
+    relation A B +1 rAB
+    relation B C -1 rBC
+    path P = A->B->C
+    path E = epsilon(C)
+    concat R = P + E
+    incident B rAB
+    sign P
+    cycle P
+    path_eq P P
+    dist A B
+    '''
+    p = Program()
+    direct = p.run(source)
+    ir = p.to_ir()
+    assert execute_ir(ir) == direct
 
 
 def test_ir_is_immutable_and_validates_arity():
