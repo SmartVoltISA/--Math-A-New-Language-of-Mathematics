@@ -1,6 +1,9 @@
 import pytest
-from omega_math.core import Entity, Relation, Path, Configuration, State
-from omega_math.runtime import concat, sign_summary, reverse_path, sufficient, verify_metric
+from omega_math.core import Entity, Relation, Path, Configuration, State, Transformation
+from omega_math.runtime import (
+    concat, sign_summary, reverse_path, sufficient, verify_metric,
+    quotient, distance, symmetry, model, execute,
+)
 
 def R(a,b,s): return Relation(a,b,s)
 
@@ -32,3 +35,25 @@ def test_reduction_witness():
 def test_metric_verifier():
     d=lambda a,b: abs(a-b)
     assert verify_metric(range(3),d)[0]
+
+def test_quotient_builds_declared_equivalence_classes():
+    classes=quotient(range(4), lambda a,b:(a%2)==(b%2))
+    assert {frozenset(c) for c in classes} == {frozenset({0,2}),frozenset({1,3})}
+
+def test_distance_is_declared_transformation_cost_not_energy():
+    step=Transformation('step', lambda s, _=None:s+1, cost=2.0)
+    assert distance(0,3,[step]) == 6.0
+    assert distance(0,3,[step],max_steps=2) == float('inf')
+
+def test_symmetry_returns_transformation_orbit():
+    flip=Transformation('flip', lambda s, _=None:1-s, cost=1.0)
+    assert symmetry(0,[flip]) == frozenset({0,1})
+
+def test_model_is_an_explicit_representation_hook():
+    assert model(7, lambda s:s%2) == 1
+
+def test_execute_exposes_all_new_canonical_runtime_operators():
+    assert execute('QUOTIENT', [0,1,2], lambda a,b:a%2==b%2)
+    assert execute('DISTANCE', 0, 2, [Transformation('step', lambda s,_=None:s+1, cost=1.0)]) == 2.0
+    assert execute('SYMMETRY', 0, [Transformation('flip', lambda s,_=None:1-s)]) == frozenset({0,1})
+    assert execute('MODEL', 3, lambda s:s*2) == 6
