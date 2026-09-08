@@ -28,6 +28,7 @@
 - Separated minimal residual generation from the stronger frame-change/gauge-conjugation requirement, where invertible local frame maps are required.
 - Added `TRANSPORT_LAYER_v0.1.md` as a proposed research schema above Ω v0.9; it is not a new primitive.
 - Added `EXPERIMENT_TRANSPORT_REDUCTION_007.md`: the transport maps can be represented as typed specializations of the existing Ω transformation layer, so a separate `TRANSPORT` primitive is not currently justified.
+- Added `EXPERIMENT_TRANSPORT_QUOTIENT_008.md`: quotient-compatible transport factors through the reduction, but quotienting can erase nontrivial loop residuals; existing task-relative sufficiency machinery is sufficient to express this information-loss boundary.
 
 ### Boundary
 The v0.9 core remains closed. External-domain evidence may motivate a versioned extension only after formal definition, counterexample testing, sufficiency analysis, and cross-domain verification.
