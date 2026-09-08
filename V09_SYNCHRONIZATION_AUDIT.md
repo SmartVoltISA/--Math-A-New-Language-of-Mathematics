@@ -2,69 +2,92 @@
 
 ## Purpose
 
-The v0.9 frontier closure exists, but several legacy documents still identify earlier versions as current. This audit separates the canonical v0.9 state from historical documents and prevents version drift from being mistaken for mathematical contradiction.
+This audit records the current synchronization state after the v0.9 closure pass. It distinguishes active canonical documents from intentionally historical records and checks that no known version drift is being mistaken for a mathematical contradiction.
 
-## Canonical v0.9 integration records
+## Current canonical layer
 
-1. `FRONTIER_CLOSURE_v0.9.md` — canonical frontier decisions.
-2. `STATUS_v0.9.md` — canonical v0.9 status summary.
-3. `QUOTIENT_GEOMETRY_CONDITIONS.md` — corrected conditions for quotient-induced distance.
+The authoritative map is `CANONICAL_INDEX_v0.9.md`.
 
-These documents are the integration layer until legacy canonical filenames are synchronized.
+The current canonical layer includes the synchronized:
 
-## Legacy documents requiring synchronization
+- `README.md`
+- `FOUNDATION.md`
+- `TYPE_SYSTEM.md`
+- `LANGUAGE_SPEC.md`
+- `SEMANTICS.md`
+- `OPERATOR_TABLE.md`
+- `REDUCTION_RULES.md`
+- `ALGEBRA.md`
+- `BEHAVIORAL_EQUIVALENCE.md`
+- `EQUIVALENCE_v0.9.md`
+- `PATH_ALGEBRA_v0.9.md`
+- `FRONTIER_CLOSURE_v0.9.md`
+- `STATUS_v0.9.md`
+- `QUOTIENT_GEOMETRY_CONDITIONS.md`
+- `DYNAMICS.md`
+- `EMERGENCE.md`
+- `GLOSSARY.md`
+- `TIME_INTERNAL_ORDER.md`
+- `CANONICAL_EXAMPLES.md`
 
-- `README.md` — still labels the project v0.4 and lists already-closed frontiers as open.
-- `CHANGELOG.md` — currently ends at v0.4.
-- `OPERATOR_TABLE.md` — v0.8; its unresolved list predates exact path equality and infinite-horizon closure.
-- `FOUNDATION.md` — v0.4 document version.
-- `REDUCTION_RULES.md` — v0.4 document version.
-- `TRANSFORMATION.md` — v0.2 document version.
-- `BEHAVIORAL_EQUIV.md` — v0.1 document version.
-- `RELATION_COMPOSITION.md` — v0.2 document version.
-- `LANGUAGE_CLOSURE_v0.8.md` and `V08_COMPLETION_INDEX.md` — historical v0.8 closure records.
+The v0.9 mathematical audits and declared verification records are maintained separately from the specification layer.
 
-Legacy version numbers are not themselves errors: they become dangerous only when the file is presented as the current canonical specification.
+## Historical documents
 
-## v0.9 decisions that supersede older wording
+The following remain historical by design:
+
+- `PATH_ALGEBRA.md`
+- `EQUIVALENCE.md`
+- `STATUS.md`
+- `LANGUAGE_CLOSURE_v0.8.md`
+- `V08_COMPLETION_INDEX.md`
+- other explicitly versioned pre-v0.9 research records.
+
+Historical status is intentional. These files must not be read as current authority when their wording differs from v0.9.
+
+## Superseding v0.9 decisions
 
 - exact path equality is admitted at the representation level;
 - empty path is the identity for path concatenation;
-- infinite-horizon equivalence is derived as the intersection of finite-horizon equivalences;
-- nondeterministic successor sets are first-class;
-- branching equivalence is task-semantics dependent;
+- path concatenation is the canonical sequential composition;
+- primitive relation identity, inverse and relation-to-relation collapse remain non-primitive;
+- infinite-horizon behavioral equivalence is the intersection of finite-horizon equivalences;
+- nondeterministic successor sets are retained explicitly;
+- branching/reachability/safety/trace semantics are task-dependent;
 - fairness/liveness are explicit predicates over infinite runs;
-- relation identity/inverse and primitive relation-to-relation collapse remain non-primitive;
-- continuous state sets are permitted only when their additional structure is explicitly declared;
-- probability requires an independently declared kernel;
+- probability requires an independent kernel;
 - causal claims require explicit intervention semantics;
-- physical time and energy remain external empirical bridges;
+- physical time and physical energy remain external empirical bridges;
 - quotient geometry requires explicit compatibility conditions.
 
-## Mathematical correction
+## Mathematical correction retained
 
-The earlier wording that unconditionally called
+The construction
 
 `d_Q([x],[y]) = inf{d(x',y'): x'~x, y'~y}`
 
-a quotient pseudodistance was too strong. For an arbitrary equivalence relation, triangle inequality is not automatic. The corrected status is **quotient-distance candidate**, promoted to pseudometric/metric only after the required compatibility and separation conditions are established. See `QUOTIENT_GEOMETRY_CONDITIONS.md`.
+is a quotient-distance candidate in the general case. Triangle inequality and separation are not automatic for an arbitrary equivalence relation. The repository retains the finite counterexample and the guarded conditions in `QUOTIENT_GEOMETRY_CONDITIONS.md`.
 
-## Canonical status boundary
+## Experiment/protocol discipline
 
-`Ω-Math v0.9 = formally complete minimal typed relational language for the declared domain.`
+Executed results remain scoped to their declared finite model, observation map, dynamics and horizon. A counterexample rejects only the tested sufficiency claim; it does not justify a universal negative claim about every richer representation.
 
-This means language closure, not universal mathematics, physical ontology, or a finished theory of nature.
+Preregis​tered protocols must declare domain guards before execution. Undefined normalization is not silently interpreted as zero.
 
-## Synchronization rule
-
-When legacy and v0.9 documents disagree, use the v0.9 integration records above for current status. Legacy documents must not be silently edited into new mathematics; synchronization should preserve their historical version or explicitly mark them superseded.
+Physical interpretations are not inferred from graph activity, transformation cost, transition order, recurrence, or stable macro-patterns.
 
 ## Audit result
 
-**Architecture: coherent.**
+**Canonical layer: synchronized.**
 
-**Documentation: previously desynchronized.**
+**Historical layer: explicitly contained.**
 
-**Critical mathematical correction: quotient geometry conditionally valid, not automatic.**
+**Mathematical core: internally coherent under declared scope.**
 
-**Current closure: v0.9, with explicit external/empirical boundaries.**
+**Quotient geometry: conditionally valid, not automatic.**
+
+**Research frontier: open above the closed v0.9 language layer.**
+
+`complete language ≠ complete mathematics ≠ complete physics`
+
+**Status: AUDIT REFRESH / v0.9 / PASS**
