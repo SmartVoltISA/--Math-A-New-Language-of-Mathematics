@@ -8,11 +8,11 @@ Can directional path-cost asymmetry emerge from a symmetric initial relation gra
 
 ## Null hypothesis
 
-H0: Starting from a reciprocal graph with identical forward/backward edge weights, the declared local update rule and reciprocalized control do not produce persistent directional path-cost asymmetry beyond the seeded null distribution.
+H0: Starting from a reciprocal graph with identical forward/backward edge weights, destroying the temporal ordering of the same activity observations removes the directional signal; any residual asymmetry is attributable to finite-sample fluctuations.
 
 ## Alternative
 
-H1: A lagged local update rule can produce persistent directional path-cost asymmetry from symmetric initial edge weights, and the asymmetry is distinguishable from a reciprocalized control.
+H1: A lagged local update rule can produce persistent directional path-cost asymmetry from symmetric initial edge weights, and the asymmetry is distinguishable from a temporal-shuffle null.
 
 ## Fixed model
 
@@ -34,11 +34,13 @@ For each directed edge `i -> j`:
 
 where `eta = 0.015`, `delta = 0.001`, `epsilon = 0.05`.
 
-The activity pulse is local and moves one lattice position per step. A small seeded background component is added independently at each node. The same generated activity series is used for the learned and control measurements for each seed.
+The activity pulse is local and moves one lattice position per step. A small seeded background component is added independently at each node.
 
-## Reciprocalized control
+## Temporal-shuffle null
 
-After learning, construct `w_sym(i,j) = (w(i,j)+w(j,i))/2` for every neighbour pair. This removes directional asymmetry while preserving the learned undirected mean weight.
+For each seed, generate exactly the same activity observations as the experimental condition, then apply a deterministic random permutation to the time index using the same seed. Learn the directed weights from this shuffled sequence.
+
+This preserves the marginal activity observations while destroying the intended temporal ordering.
 
 ## Measurement
 
@@ -53,8 +55,8 @@ Primary metric:
 Secondary metrics:
 
 - fraction of pairs with nonzero directional difference;
-- persistence of the sign of each directional difference across repeated seeds;
-- ratio `A_learned / A_reciprocalized`;
+- persistence of the directional signal across repeated seeds;
+- ratio `A_ordered / A_shuffled`;
 - relabelling invariance of the complete directional-difference vector.
 
 ## Seeds and acceptance criteria
@@ -63,17 +65,17 @@ Seeds: `20260909..20260924` (16 independent deterministic runs).
 
 Support H1 only if all are satisfied:
 
-1. mean learned asymmetry exceeds 5 times the mean reciprocalized-control asymmetry;
-2. at least 75% of learned pair measurements have nonzero asymmetry;
-3. the learned asymmetry remains positive under every tested seed;
+1. mean ordered asymmetry exceeds 5 times the mean shuffled-null asymmetry;
+2. at least 75% of ordered pair measurements have nonzero asymmetry;
+3. every tested seed has ordered asymmetry greater than its corresponding shuffled-null asymmetry;
 4. relabelling preserves the directional-difference vector after corresponding pair remapping;
 5. no initial directed edge has asymmetric weight.
 
-Otherwise classify as `INCONCLUSIVE` unless the null clearly contradicts the observed result, in which case report the observed counterexample to H0 without promoting it to physical geometry.
+Otherwise classify as `INCONCLUSIVE` unless the observed result directly contradicts the declared alternative under the fixed criterion.
 
 ## Falsification / controls
 
-- Reciprocalized post-learning control.
+- Temporal-shuffle null using the same activity observations.
 - Multiple independent fixed seeds.
 - Explicit check of symmetric initialization.
 - Node relabelling control.
@@ -87,4 +89,4 @@ It is **not** evidence for physical nonreciprocal geometry, spacetime structure,
 
 ## Reproducibility
 
-All constants, update rule, seed range, metrics, and acceptance criteria are fixed in this document before execution.
+All constants, update rule, seed range, null construction, metrics, and acceptance criteria are fixed in this document before execution.
