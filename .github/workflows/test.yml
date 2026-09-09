@@ -16,3 +16,4 @@ jobs:
       - run: python -m pip install -e . pytest
       - run: python -m pytest -q
       - run: python experiments/run_v09_verification.py
+      - run: python bridges/RELATION_GEOMETRY_NONRECIPROCAL_EXP_002.py
