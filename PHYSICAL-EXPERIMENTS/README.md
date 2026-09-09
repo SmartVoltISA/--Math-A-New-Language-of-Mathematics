@@ -1,6 +1,6 @@
 # Ω-Math — Physical Experiments Program
 
-Version: 1.0  
+Version: 1.1  
 Date: 2026-09-09  
 Status: PROTOCOLS FOR INDEPENDENT TESTING
 
@@ -12,27 +12,125 @@ This directory translates the Ω-Math algebra-selection problem into physical ex
 
 The experiments do **not** assume that max-min, min-plus, or sum-product is fundamental. They test whether independently measured physical behavior is better predicted by one candidate composition law than by competing laws.
 
+A second rule is now mandatory:
+
+> Physical experiments must not be treated as clean mathematical experiments. Raw measurements contain environmental variation, instrument error, calibration uncertainty, finite resolution and uncontrolled disturbances. These effects must be measured, modelled and propagated into the final uncertainty.
+
 ## Candidate algebras
 
 ### A — max-min
-
 `(A ∘ B)_ij = max_k min(A_ik, B_kj)`
 
 Natural interpretation to test: bottleneck / limiting-capacity propagation.
 
 ### B — min-plus
-
 `(A ∘ B)_ij = min_k (A_ik + B_kj)`
 
 Natural interpretation to test: minimum accumulated cost/time.
 
 ### C — sum-product
-
 `(A ∘ B)_ij = Σ_k A_ik B_kj`
 
 Natural interpretation to test: additive superposition / linear transfer.
 
 These interpretations are hypotheses, not definitions of the measurements.
+
+---
+
+# PHYSICAL MEASUREMENT LAYER — MANDATORY
+
+The mathematical model must receive a **measurement record**, not an idealized number.
+
+For every observation record store:
+
+`raw signal → calibration → environmental state → corrected estimate → uncertainty`
+
+Never replace this chain by a single clean value without retaining the raw data.
+
+## Environmental variables
+
+Depending on the experiment, record at minimum the variables that can materially affect the measurement:
+
+- air temperature;
+- atmospheric pressure;
+- relative humidity;
+- air density, calculated or independently measured when relevant;
+- medium temperature;
+- fluid density and viscosity when relevant;
+- local acceleration due to gravity when relevant;
+- ambient vibration;
+- background acoustic/electromagnetic noise;
+- supply voltage/current for electrical systems;
+- sensor temperature;
+- apparatus geometry and thermal expansion;
+- timestamp from a calibrated reference clock.
+
+Not every variable is required for every experiment. The protocol must state explicitly which variables are relevant and which were tested and found negligible.
+
+## Air density
+
+For experiments involving propagation through air, do not assume a fixed density. Use the measured temperature, pressure and humidity to estimate air density with a declared physical model, and propagate its uncertainty.
+
+Conceptually:
+
+`rho_air = f(T, p, RH, gas composition)`
+
+The exact equation/model and constants must be frozen during preregistration.
+
+## Other environmental corrections
+
+Examples:
+
+- acoustic propagation: temperature, pressure, humidity, air composition;
+- mechanical propagation: temperature, material properties, tension, geometry, gravity;
+- fluid flow: pressure, temperature, density, viscosity, tube geometry;
+- electrical circuits: component temperature coefficients, supply stability, contact resistance, parasitic capacitance/inductance;
+- optical measurements: temperature, refractive index, pressure/humidity where relevant;
+- timing: reference-clock accuracy, oscillator drift, cable/sensor latency.
+
+The purpose is not to eliminate the environment. The purpose is to **measure it and include it in the uncertainty budget**.
+
+---
+
+# UNCERTAINTY BUDGET
+
+Every physical experiment must publish an uncertainty budget before the final model comparison.
+
+Separate at least:
+
+1. **Type A uncertainty** — estimated statistically from repeated measurements;
+2. **Type B uncertainty** — calibration certificates, instrument resolution, manufacturer specifications, physical constants, environmental-model uncertainty and other justified sources.
+
+For an output `y = f(x1, ..., xn)`, propagate uncertainties using the declared method. For approximately independent inputs:
+
+`u_y^2 ≈ Σ_i (∂f/∂x_i)^2 u_i^2`
+
+If nonlinearities, correlations or large uncertainties make first-order propagation inadequate, use a preregistered Monte Carlo propagation or another justified method.
+
+## Correlated errors
+
+Do not assume independence automatically. Examples:
+
+- common clock error affects many sensors;
+- common temperature drift affects many measurements;
+- calibration factor shared by a sensor family creates covariance;
+- pressure measurement may be correlated with density calculation.
+
+The covariance structure must be retained where known.
+
+## Final result format
+
+Do not report only:
+
+`prediction = 12.37`
+
+Report something like:
+
+`prediction = 12.37 ± 0.08 (expanded uncertainty, k=2)`
+
+or provide a confidence/credible interval using a preregistered statistical definition.
+
+The exact convention must be declared before analysis.
 
 ---
 
@@ -55,29 +153,52 @@ Record, without any Ω-Math preprocessing:
 - arrival time;
 - peak amplitude;
 - signal envelope;
-- uncertainty of each measurement.
+- uncertainty of each measurement;
+- environmental state at the time of each run.
+
+For acoustic air experiments additionally record:
+- air temperature;
+- atmospheric pressure;
+- relative humidity;
+- estimated air density;
+- sensor/microphone calibration;
+- ambient sound level.
 
 ## Procedure
 
 1. Randomize sensor labels.
 2. Excite the first location with a short calibrated pulse.
 3. Record the complete waveform at all sensors.
-4. Repeat from several source locations.
-5. Repeat in both directions where physically possible.
-6. Reserve source/receiver combinations for a blind held-out test.
-7. Only after data lock, construct candidate relational models.
+4. Record environmental variables synchronously or as close in time as practical.
+5. Repeat from several source locations.
+6. Repeat in both directions where physically possible.
+7. Reserve source/receiver combinations for a blind held-out test.
+8. Lock raw data and environmental metadata.
+9. Apply only preregistered calibration/correction procedures.
+10. Propagate uncertainty into every derived travel-time estimate.
+11. Only after data lock construct candidate relational models.
 
-## Primary prediction
+## Physical prediction
 
-Travel times should be approximately additive along serial paths. Therefore min-plus should produce the strongest prediction for earliest arrival time when the medium behaves as a propagation-delay network.
+For a sufficiently homogeneous propagation medium, travel time along serial segments is expected to be approximately additive. Therefore min-plus is the leading candidate for earliest-arrival composition.
+
+But the test is not:
+
+`clean mathematical travel time → min-plus`.
+
+It is:
+
+`measured travel time + environmental state + uncertainty → held-out prediction`.
 
 ## Expected result if hypothesis is supported
 
-`prediction_error(min-plus) << prediction_error(max-min)` and `prediction_error(min-plus) << prediction_error(sum-product)` on held-out source/receiver pairs.
+`error(min-plus)` should be significantly smaller than competing errors on held-out paths, with the difference remaining larger than the combined experimental uncertainty and surviving environmental corrections.
+
+A stronger result is obtained if the same preference survives changes in temperature, pressure and humidity and independent apparatus rebuilds.
 
 ## Expected null result
 
-No stable separation, or performance depends on the fitting procedure. Then algebra selection is NOT PROVEN.
+If candidate differences fall within the uncertainty interval, or the winning algebra changes after reasonable environmental correction, algebra selection is NOT PROVEN.
 
 ## Important control
 
@@ -89,27 +210,36 @@ Use a reciprocal homogeneous medium. Directional asymmetry must not be assumed.
 
 ## Physical system
 
-A passive network of resistors with independently measured voltage and current at nodes/branches.
+A passive low-voltage network of resistors, optionally with capacitors/inductors, with independently measured voltage and current.
 
 ## Independent measurements
 
 Measure:
-- resistance values with calibrated instruments;
-- applied voltage;
+- component values and tolerances;
+- component temperature;
+- applied voltage/current;
 - node voltages;
 - branch currents;
-- transient response if RC elements are included.
+- frequency where AC is used;
+- instrument calibration and resolution;
+- supply stability;
+- contact resistance where material.
 
-The network topology and component values are recorded before model fitting.
+## Environmental correction
+
+Component resistance and other parameters may depend on temperature. Measure component temperature and use declared temperature coefficients where justified. Record supply drift and measurement uncertainty.
 
 ## Procedure
 
 1. Build several networks with different topologies.
-2. Randomly choose a subset of node/edge measurements for training.
-3. Hold out other measurements.
-4. Fit each candidate algebra separately.
-5. Predict held-out voltages/currents.
-6. Repeat with relabelled nodes and independently rebuilt networks.
+2. Calibrate instruments.
+3. Record environmental and electrical state.
+4. Randomly choose a subset of measurements for training.
+5. Hold out other measurements.
+6. Fit each candidate algebra separately.
+7. Propagate component and instrument uncertainty.
+8. Predict held-out voltages/currents with uncertainty intervals.
+9. Repeat with relabelled nodes and independently rebuilt networks.
 
 ## Prediction
 
@@ -117,11 +247,11 @@ For a linear passive network, superposition-like behavior is expected. This make
 
 ## Expected result if supported
 
-Sum-product consistently predicts held-out transfer behavior better than max-min and min-plus under the same observation protocol.
+Sum-product consistently predicts held-out transfer behavior better than max-min and min-plus, with a statistically significant and uncertainty-robust margin.
 
 ## Critical caution
 
-This would support sum-product for this physical model class. It would **not** prove sum-product is universally fundamental.
+This supports sum-product only for the tested physical model class. It does not prove sum-product universally fundamental.
 
 ---
 
@@ -129,33 +259,35 @@ This would support sum-product for this physical model class. It would **not** p
 
 ## Physical system
 
-A fluid or electrical-current network containing controllable restrictions.
+A benign low-pressure fluid network containing controllable restrictions.
 
 Examples:
 - transparent tubing with valves/restrictors;
-- low-voltage hydraulic analogue;
 - safe laboratory flow network.
 
 ## Independent measurements
 
 Measure:
-- input flow;
-- output flow;
+- input/output flow;
 - pressure difference;
-- restriction capacity;
-- temperature where relevant.
+- temperature;
+- fluid density;
+- fluid viscosity;
+- restriction geometry/capacity;
+- sensor calibration;
+- environmental pressure where relevant.
 
 ## Prediction
 
-For serial restrictions, the effective capacity is controlled by the weakest link. This gives max-min a direct physical hypothesis.
+For serial restrictions, effective capacity can be controlled by the weakest link, giving max-min a direct physical hypothesis.
 
 ## Expected result if supported
 
-Max-min predicts held-out effective capacity better than min-plus and sum-product across networks with multiple serial and branching paths.
+Max-min predicts held-out effective capacity better than min-plus and sum-product across networks with serial and branching paths, with the advantage surviving uncertainty propagation.
 
-## Key adversarial test
+## Adversarial test
 
-Construct parallel paths where a sum of capacities can compete with a bottleneck. This prevents the experiment from being trivial.
+Construct parallel paths where capacities can add. This prevents a trivial experiment in which max-min is guaranteed by construction.
 
 ---
 
@@ -163,12 +295,7 @@ Construct parallel paths where a sum of capacities can compete with a bottleneck
 
 ## Physical system
 
-Two or more mechanical/electrical oscillators coupled by known passive interactions.
-
-Possible implementations:
-- pendulums;
-- masses and springs;
-- low-voltage electronic oscillators.
+Two or more mechanical or low-voltage electronic oscillators coupled by known passive interactions.
 
 ## Independent measurements
 
@@ -177,15 +304,20 @@ Record:
 - phase;
 - frequency;
 - coupling configuration;
-- damping.
+- damping;
+- temperature;
+- timing-reference uncertainty;
+- sensor calibration.
 
 ## Goal
 
-Test whether composition of measured transfer responses is better described by one candidate algebra, without defining the measured response through that algebra.
+Test whether composition of measured transfer responses is better described by one candidate algebra without defining the measured response through that algebra.
+
+Environmental drift and timing uncertainty must be propagated into phase and frequency estimates.
 
 ## Expected result
 
-No candidate is assumed in advance. The result is informative only if one algebra wins consistently across independently built systems and held-out conditions.
+No candidate is assumed in advance. A meaningful positive result requires one algebra to win consistently across independently built systems and held-out conditions by more than the experimental uncertainty.
 
 ---
 
@@ -199,21 +331,76 @@ Use one networked physical system and measure three fundamentally different obse
 2. signal amplitude/transfer;
 3. throughput/capacity.
 
+Record all relevant environmental variables and their uncertainties for every run.
+
 Then independently test:
 
 `time → min-plus hypothesis`  
 `transfer amplitude → sum-product hypothesis`  
 `capacity → max-min hypothesis`
 
+The final comparison must use uncertainty-aware held-out predictions, not ideal values.
+
 ## Why this matters
 
 If the same physical structure naturally produces different composition laws for different observables, this is evidence that algebra is tied to the transformation law of the observable rather than being contained in bare topology.
 
-If one algebra dominates all three observables and survives cross-system replication, that becomes a much stronger candidate for deeper status.
+If one algebra dominates all three observables and survives cross-system replication with margins larger than experimental uncertainty, that becomes a much stronger candidate for deeper status.
 
 ---
 
-# Blind-analysis protocol
+# FULL PHYSICAL ERROR MODEL
+
+A useful conceptual decomposition is:
+
+`observed = ideal physical response + environmental variation + instrument error + stochastic noise + model discrepancy`
+
+Do not silently absorb all deviations into random noise. Separate what can be measured from what cannot.
+
+## Environmental variation
+
+If temperature, pressure, humidity or another variable changes during the experiment, record the value and test its influence.
+
+## Instrument uncertainty
+
+Include:
+- calibration uncertainty;
+- digitization/ADC resolution;
+- sensor bandwidth;
+- timing resolution;
+- systematic offset;
+- gain uncertainty;
+- latency.
+
+## Model discrepancy
+
+Even a correct physical model may not reproduce reality exactly. Report residuals rather than forcing them into measurement uncertainty.
+
+## Repeated trials
+
+Repeat enough times to estimate the distribution of the measured observable. Do not confuse repeatability with accuracy.
+
+---
+
+# ENVIRONMENTAL ADVERSARIAL TEST
+
+At least one physical experiment should deliberately vary an environmental parameter across a controlled range.
+
+Example for acoustic propagation:
+
+`temperature: low → nominal → high`
+
+while independently recording pressure and humidity.
+
+The candidate algebra must be evaluated against corrected observations under all conditions.
+
+A claimed effect that disappears after proper environmental correction is **FAIL**, not a discovery.
+
+A claimed effect that remains after correction and uncertainty propagation is substantially stronger evidence.
+
+---
+
+# BLIND-ANALYSIS PROTOCOL
 
 Every serious physical run should register before measurement:
 
@@ -222,19 +409,22 @@ Every serious physical run should register before measurement:
 - topology;
 - calibration method;
 - sampling rate;
+- environmental variables to record;
 - uncertainty model;
 - train/test split;
 - candidate algebra definitions;
 - primary metric;
 - exclusion criteria;
 - stopping rule;
-- null hypothesis.
+- null hypothesis;
+- correction models and constants;
+- uncertainty convention.
 
-The analyst should not change the primary metric after seeing which algebra wins.
+The analyst should not change the primary metric or correction model after seeing which algebra wins.
 
 ## Primary metric
 
-Use held-out predictive error. Prefer normalized RMSE/MAE for continuous observables. Report confidence intervals and paired differences between candidate models.
+Use held-out predictive error with uncertainty-aware comparison. Prefer normalized RMSE/MAE for continuous observables. Report confidence intervals and paired differences between candidate models.
 
 Secondary metrics may include:
 - rank correlation;
@@ -245,7 +435,7 @@ Secondary metrics may include:
 
 ---
 
-# Required controls
+# REQUIRED CONTROLS
 
 ## Negative control
 
@@ -257,7 +447,7 @@ A known physical relation where the measurement pipeline demonstrably detects th
 
 ## Symmetry control
 
-Use physically reciprocal systems to test whether an apparent directionality is an artefact of sensors, wiring, geometry, or analysis.
+Use physically reciprocal systems to test whether apparent directionality is an artefact of sensors, wiring, geometry, environment or analysis.
 
 ## Instrument permutation control
 
@@ -267,13 +457,22 @@ Randomly permute sensor labels after acquisition. Physical predictions must tran
 
 Repeat the model comparison under realistic calibration uncertainty.
 
+## Environmental correction control
+
+Compare:
+1. raw data;
+2. corrected data;
+3. uncertainty-expanded predictions.
+
+A candidate should not be declared the winner solely because it fits an uncorrected environmental artefact.
+
 ---
 
-# What counts as a result
+# WHAT COUNTS AS A RESULT
 
 ### PASS — empirical algebra discrimination
 
-One candidate has significantly lower held-out prediction error than competitors, the effect survives controls, and the result replicates on independently rebuilt systems.
+One candidate has significantly lower held-out prediction error than competitors, the effect survives environmental correction and uncertainty propagation, the controls pass, and the result replicates on independently rebuilt systems.
 
 ### PARTIAL
 
@@ -281,25 +480,25 @@ A candidate wins for one apparatus/observable but not under independent replicat
 
 ### NOT PROVEN
 
-No reliable separation between candidates.
+No reliable separation between candidates, or the difference is comparable to experimental uncertainty.
 
 ### FAIL
 
-The proposed algebra loses to a competitor or the effect disappears under a declared control.
+The proposed algebra loses to a competitor or the effect disappears under a declared control/correction.
 
 ### INVALID
 
-Measurement leakage, post-hoc metric selection, calibration failure, insufficient data, or another preregistered validity violation.
+Measurement leakage, post-hoc metric selection, calibration failure, invalid environmental correction, insufficient data, or another preregistered validity violation.
 
 ---
 
-# Expected global outcomes
+# EXPECTED GLOBAL OUTCOMES
 
 There are three scientifically useful outcomes.
 
 ## Outcome A — Observable-dependent algebra
 
-Different observables consistently favor different algebras.
+Different observables consistently favor different algebras after environmental corrections and uncertainty propagation.
 
 Interpretation:
 
@@ -309,13 +508,13 @@ This would strengthen the Ω-Math distinction between relational carrier and alg
 
 ## Outcome B — Cross-domain algebra winner
 
-The same algebra repeatedly wins across unrelated physical systems and observables.
+The same algebra repeatedly wins across unrelated physical systems and observables with margins larger than experimental uncertainty.
 
 Interpretation: a serious candidate for a deeper universal regularity, but still not automatically a fundamental law.
 
 ## Outcome C — No stable winner
 
-Different datasets favor different models, or all candidates perform similarly.
+Different datasets favor different models, or all candidates perform similarly within uncertainty.
 
 Interpretation: no evidence for a universal algebra. This is a valid and important negative result.
 
@@ -334,13 +533,15 @@ Each completed experiment should publish:
 1. apparatus diagram;
 2. raw measurements;
 3. calibration records;
-4. preregistration;
-5. analysis code;
-6. candidate-model definitions;
-7. held-out predictions;
-8. residual/error tables;
-9. controls;
-10. exact conclusion: PASS / PARTIAL / NOT PROVEN / FAIL / INVALID.
+4. environmental time series;
+5. preregistration;
+6. analysis code;
+7. candidate-model definitions;
+8. held-out predictions;
+9. uncertainty budget;
+10. residual/error tables;
+11. controls;
+12. exact conclusion: PASS / PARTIAL / NOT PROVEN / FAIL / INVALID.
 
 The raw data must remain sufficient for an independent analyst to rerun the comparison without contacting the original experimenter.
 
@@ -354,4 +555,4 @@ No predicted result is evidence until an independent physical experiment produce
 
 The program deliberately separates:
 
-`mathematical possibility → physical hypothesis → preregistered measurement → blind prediction → replication → possible promotion`.
+`mathematical possibility → physical hypothesis → raw measurement → environmental correction → uncertainty propagation → blind prediction → replication → possible promotion`.
