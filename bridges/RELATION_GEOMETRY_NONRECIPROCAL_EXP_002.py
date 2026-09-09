@@ -39,6 +39,13 @@ def generate_activity(seed: int) -> tuple[tuple[float, ...], ...]:
     return tuple(series)
 
 
+def shuffle_activity(activity: tuple[tuple[float, ...], ...], seed: int):
+    rng = random.Random(seed)
+    shuffled = list(activity)
+    rng.shuffle(shuffled)
+    return tuple(shuffled)
+
+
 def learn(activity: tuple[tuple[float, ...], ...]) -> dict[tuple[int, int], float]:
     weights = {(i, (i + 1) % N): 1.0 for i in range(N)}
     weights.update({((i + 1) % N, i): 1.0 for i in range(N)})
@@ -52,21 +59,6 @@ def learn(activity: tuple[tuple[float, ...], ...]) -> dict[tuple[int, int], floa
             updated[i, j] = max(EPSILON, value)
         weights = updated
     return weights
-
-
-def reciprocalize(weights: dict[tuple[int, int], float]) -> dict[tuple[int, int], float]:
-    result = dict(weights)
-    seen: set[tuple[int, int]] = set()
-    for edge in weights:
-        if edge in seen:
-            continue
-        i, j = edge
-        mean = (weights[i, j] + weights[j, i]) / 2.0
-        result[i, j] = mean
-        result[j, i] = mean
-        seen.add((i, j))
-        seen.add((j, i))
-    return result
 
 
 def shortest(weights: dict[tuple[int, int], float], src: int, dst: int) -> float:
@@ -99,11 +91,12 @@ def measure(weights: dict[tuple[int, int], float]) -> tuple[float, ...]:
 
 
 def run(seed: int) -> RunResult:
-    activity = generate_activity(seed)
-    learned = learn(activity)
-    control = reciprocalize(learned)
+    ordered_activity = generate_activity(seed)
+    shuffled_activity = shuffle_activity(ordered_activity, seed + 1)
+    learned = learn(ordered_activity)
+    null = learn(shuffled_activity)
     deltas = measure(learned)
-    control_deltas = measure(control)
+    control_deltas = measure(null)
     asymmetry = sum(abs(x) for x in deltas) / len(deltas)
     control_asymmetry = sum(abs(x) for x in control_deltas) / len(control_deltas)
     return RunResult(asymmetry, control_asymmetry, deltas, control_deltas)
@@ -117,24 +110,24 @@ def main() -> None:
     initial.update({((i + 1) % N, i): 1.0 for i in range(N)})
     assert all(initial[i, j] == initial[j, i] for i in range(N) for j in ((i + 1) % N,))
 
-    learned_mean = sum(r.asymmetry for r in results) / len(results)
-    control_mean = sum(r.control_asymmetry for r in results) / len(results)
-    ratio = learned_mean / control_mean if control_mean else float("inf")
+    ordered_mean = sum(r.asymmetry for r in results) / len(results)
+    shuffled_mean = sum(r.control_asymmetry for r in results) / len(results)
+    ratio = ordered_mean / shuffled_mean
     nonzero_fraction = sum(
         sum(abs(x) > 1e-12 for x in r.deltas) / len(r.deltas) for r in results
     ) / len(results)
-    positive_seeds = sum(r.asymmetry > 0.0 for r in results)
+    seedwise_win_fraction = sum(
+        r.asymmetry > r.control_asymmetry for r in results
+    ) / len(results)
 
-    assert learned_mean > 5.0 * control_mean
+    assert ordered_mean > 5.0 * shuffled_mean
     assert nonzero_fraction >= 0.75
-    assert positive_seeds == len(results)
-    assert all(abs(x - y) < 1e-12 for r in results for x, y in zip(r.control_deltas, [0.0] * N))
+    assert seedwise_win_fraction == 1.0
 
-    # Relabelling invariance: the same learned relation structure must survive
-    # a pure permutation of node labels.
+    # Relabelling invariance: pure node renaming preserves the directional
+    # response vector after corresponding pair remapping.
     seed = SEEDS[0]
-    activity = generate_activity(seed)
-    learned = learn(activity)
+    learned = learn(generate_activity(seed))
     permutation = (3, 9, 1, 10, 5, 0, 8, 2, 11, 6, 4, 7)
     relabelled = {(permutation[i], permutation[j]): value for (i, j), value in learned.items()}
     original_pairs = tuple((i, (i + TARGET_OFFSET) % N) for i in range(N))
@@ -144,11 +137,11 @@ def main() -> None:
     assert original == transformed
 
     print("PASS symmetric initialization")
-    print(f"learned_mean_abs_asymmetry={learned_mean:.6f}")
-    print(f"reciprocalized_mean_abs_asymmetry={control_mean:.6f}")
-    print(f"learned_to_control_ratio={ratio:.6f}")
+    print(f"ordered_mean_abs_asymmetry={ordered_mean:.6f}")
+    print(f"shuffled_mean_abs_asymmetry={shuffled_mean:.6f}")
+    print(f"ordered_to_shuffled_ratio={ratio:.6f}")
     print(f"nonzero_direction_fraction={nonzero_fraction:.6f}")
-    print(f"positive_seed_fraction={positive_seeds / len(results):.6f}")
+    print(f"seedwise_win_fraction={seedwise_win_fraction:.6f}")
     print("PASS relabelling invariance")
     print("PASS emergent nonreciprocity criteria")
 
