@@ -27,9 +27,15 @@
 
 ### Cross-domain verification
 - Added `EXPERIMENT_OMEGA_CROSS_DOMAIN_019.md` defining explicit mappings to harmonic oscillator, diffusion/consensus, damped oscillator and directed-cycle transport.
-- Added `EXPERIMENT_OMEGA_CROSS_DOMAIN_020.md` with finite numerical checks of those mappings, including `Φ=Σx_i^4/4`.
+- Added `EXPERIMENT_OMEGA_CROSS_DOMAIN_020.md` with finite numerical checks of those mappings, including `Phi=Σx_i^4/4`.
 - Result: the reversible/dissipative graph architecture reproduces the declared mathematical forms under supplied model semantics.
 - Boundary retained: this does not establish a universal physical ontology, physical units, or independent physical predictions.
+
+### Physical vortex bridge
+- Added `EXPERIMENT_OMEGA_PHYSICAL_VORTEX_021.md` as a finite physical-bridge check using a steady free vortex with independently specified `rho`, `K`, `r_i`, `r_o`, and `p_o`.
+- Verified exactly for the declared model that `Delta_p/rho = Delta_Kinetic = 1.875`, `H=p/rho+u_theta^2/2=10.125` at both selected contours, and radial acceleration is zero.
+- Explicitly recorded the critical boundary: pressure difference plus circulation does not imply radial transport; the Ω reversible operator has not thereby derived the fluid pressure field or Navier–Stokes.
+- Next falsification target: transient/open vortex with nonzero mass flux and explicit energy-flow/dissipation accounting.
 
 ### Existing bridges
 - Retained LIGHT and TRANSPORT bridge records and all prior v0.9 verification records.
