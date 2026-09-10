@@ -50,6 +50,7 @@
 - Result: the conservation, antisymmetry and dissipation properties now follow from the relation graph construction for the tested finite model rather than from hand-specified node matrices.
 - Added `EXPERIMENT_OMEGA_CYCLE_DERIVED_CIRCULATION_015.md`: constructed `C` from the successor/predecessor order of a closed relation cycle rather than supplying an arbitrary skew matrix.
 - Result: for exact finite cycles `n=3,4,5,6,7`, the induced `A=BCB^T` is skew-symmetric, conservative, nonzero, preserves the quadratic potential under the reversible part, and reverses sign with cycle orientation. The `n=3` construction exactly recovers the reversible operator of Experiment 014.
-- The general multi-cycle combination rule remains an open research boundary.
+- Added `EXPERIMENT_OMEGA_FINAL_NORMAL_FORM_017.md`: consolidated the verified structure into the final research normal form `dx/dt = B(C-K)B^T grad(Phi)` with `C^T=-C`, `K^T=K>=0`, and `1^T B=0`.
+- Result: the reversible/dissipative split, conservation, and potential monotonicity are structurally characterized; a unique `C` cannot be selected from incidence `B` alone on arbitrary multi-cycle graphs without additional ordering/transport/weighting semantics.
 
 The v0.9 core remains closed. External-domain evidence may motivate a versioned extension only after formal definition, counterexample testing, sufficiency analysis, and cross-domain verification.
