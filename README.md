@@ -62,6 +62,7 @@ Canonical integration records:
 - `STATUS_v0.9.md` — current status.
 - `V09_SYNCHRONIZATION_AUDIT.md` — canonical/legacy synchronization map.
 - `QUOTIENT_GEOMETRY_CONDITIONS.md` — conditions for quotient-induced distance.
+- `WORK_COMPLETION_STANDARD_v1.0.md` — mandatory completion and final-verification protocol.
 
 Path concatenation is the primary sequential operation:
 
@@ -98,6 +99,22 @@ This is a mathematical construction, not a derivation of physical space.
 `define → derive → implement → execute → verify → compare → falsify → record`
 
 Every serious claim states its status: Definition, Derivation, Executed, Supported, Hypothesis, Theorem, Counterexample, or Rejected.
+
+## Completion rule
+
+Work is not considered `DONE` merely because the main change has been implemented.
+
+The required sequence is:
+
+`make → write → reread → verify → synchronize → validate → self-contain → declare DONE`
+
+In compact form:
+
+`DONE = IMPLEMENTED + WRITTEN + VERIFIED + SYNCHRONIZED + SELF-CONTAINED`
+
+The actual stored artifact must be reread after the final write. Empty definitions, placeholders, broken references, stale indexes, unverified claims, or information required only from the conversation prevent a `DONE` status.
+
+The full process standard is `WORK_COMPLETION_STANDARD_v1.0.md`.
 
 ## Important rules
 
