@@ -24,6 +24,10 @@ Single navigation point for the canonical Ω-Math v0.9 language core, research m
 - `GLOSSARY.md`
 - `TIME_INTERNAL_ORDER.md`
 
+## Process / completion standard
+
+- `WORK_COMPLETION_STANDARD_v1.0.md` — mandatory process rule: `make → write → reread → verify → synchronize → validate → self-contain → declare DONE`.
+
 ## Canonical dynamics / research modules
 
 - `DYNAMICS.md`
