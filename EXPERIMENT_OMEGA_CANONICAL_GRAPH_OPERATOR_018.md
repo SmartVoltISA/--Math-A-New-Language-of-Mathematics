@@ -10,27 +10,95 @@ Can the reversible operator `C` be derived directly from the full ordered relati
 
 ## 1. Canonical path-continuation relation
 
-Let `B` be the oriented node-edge incidence matrix.
+Let the system contain `n` nodes and `m` oriented edges.
+
+Let `B ∈ R^(n×m)` be the oriented node-edge incidence matrix.
 
 For an oriented edge `e=(u,v)` and another edge `f=(a,b)`, define the one-step ordered continuation relation:
 
 `S[e,f] = 1` iff `v = a`.
 
-Thus `S` records whether edge `f` can immediately follow edge `e` as a composable directed path.
+Otherwise `S[e,f] = 0`.
+
+Thus `S ∈ R^(m×m)` records whether edge `f` can immediately follow edge `e` as a composable directed path.
 
 This uses only graph incidence and the ordered path relation. No cycle basis is chosen.
 
-## 2. Reversible operator
+## 2. Explicit definitions of all symbols in the final equation
 
-Define the antisymmetric part of path continuation:
+### `B` — oriented incidence matrix
 
-`C = (S - S^T)/2`.
+For an oriented edge `e=(u,v)`:
 
-Therefore, identically:
+`B[u,e] = +1`
+
+`B[v,e] = -1`
+
+and all other entries of that column are `0`.
+
+Therefore every column of `B` sums to zero:
+
+`1^T B = 0`.
+
+The sign convention fixes the direction of the relation. Reversing every edge changes `B` to `-B`.
+
+### `S` — ordered edge-continuation matrix
+
+For edges `e=(u,v)` and `f=(a,b)`:
+
+`S[e,f] = 1  if  v=a`
+
+`S[e,f] = 0  otherwise`.
+
+So `S` contains the immediate path-composition structure of the complete oriented graph.
+
+### `(S-S^T)/2` — reversible path-continuation operator
+
+Define
+
+`C = (S-S^T)/2`.
+
+By construction:
 
 `C^T = -C`.
 
-The induced node operator is:
+Thus only the antisymmetric part of ordered continuation contributes to the reversible component.
+
+### `K` — dissipative edge coupling
+
+`K ∈ R^(m×m)` satisfies
+
+`K = K^T >= 0`.
+
+That is, `K` is symmetric positive semidefinite.
+
+The simplest tested case is positive diagonal `K`, but the structural derivation permits any symmetric positive-semidefinite edge coupling.
+
+The induced dissipative node operator is
+
+`D = B K B^T`.
+
+### `Phi` — scalar potential / Lyapunov function
+
+`Phi = Phi(x)` is a differentiable scalar function of the node state `x`.
+
+Its gradient is
+
+`grad(Phi) = ∇Phi(x)`.
+
+`Phi` is model-dependent. It is not assumed here to be physical energy, entropy, or any other universal physical quantity.
+
+For the quadratic verification used in this experiment:
+
+`Phi(x) = 1/2 x^T x`.
+
+## 3. Reversible operator
+
+Define
+
+`C = (S-S^T)/2`.
+
+The induced node operator is
 
 `A = B C B^T`.
 
@@ -46,27 +114,57 @@ For every vector `phi`:
 
 `phi^T A phi = 0`.
 
-Thus the reversible part is conservative with respect to the quadratic potential while producing nonzero state motion whenever `A phi != 0`.
+Thus the reversible part is conservative with respect to the scalar quadratic potential while producing nonzero state motion whenever `A phi != 0`.
 
-## 3. Full transition law
+## 4. Dissipative operator and balance
 
-Use the dissipative edge operator
+Use
 
 `D = B K B^T`,
 
 where
 
-`K^T = K >= 0`.
+`K = K^T >= 0`.
 
-The resulting graph-local transition law is:
+Then `D` is symmetric positive semidefinite:
 
-`dx/dt = B[(S-S^T)/2 - K]B^T grad(Phi)`.
+`D^T = D`.
+
+`x^T D x >= 0` for every `x`.
+
+Also:
+
+`1^T D = 0`.
+
+For the quadratic potential `Phi = 1/2 x^T x`, the full transition law gives
+
+`dx/dt = (A-D)∇Phi`.
+
+Therefore
+
+`dPhi/dt = ∇Phi^T (A-D)∇Phi`.
+
+Since `A^T=-A`:
+
+`∇Phi^T A ∇Phi = 0`.
+
+Hence
+
+`dPhi/dt = -∇Phi^T D ∇Phi <= 0`.
+
+So the reversible component can move the state without changing the quadratic potential, while the positive-semidefinite coupling provides the non-increasing component.
+
+## 5. Final transition law
+
+Substituting the definitions of `C` and `D` gives the complete graph-local transition law:
+
+`dx/dt = B[(S-S^T)/2 - K]B^T ∇Phi`.
 
 This is stronger than the previous cycle construction because `S` is obtained directly from the complete ordered relation graph.
 
 No cycle basis is selected.
 
-## 4. Exact graph families
+## 6. Exact graph families
 
 The construction was evaluated on:
 
@@ -96,7 +194,7 @@ With positive diagonal `K`, the combined potential derivative satisfies:
 
 `dPhi/dt <= 0`.
 
-## 5. Random-graph verification
+## 7. Random-graph verification
 
 300 connected randomly generated simple directed graphs were tested for sizes `n=3..8`.
 
@@ -112,7 +210,7 @@ For every graph, the following identities were checked numerically:
 
 The maximum absolute numerical residual across all checks was below `3e-15`.
 
-## 6. Orientation reversal
+## 8. Orientation reversal
 
 Reverse every edge of a graph.
 
@@ -132,7 +230,7 @@ This was verified exactly for all random test graphs.
 
 Thus the direction of the ordered relation graph determines the sign of the reversible transition.
 
-## 7. What this resolves
+## 9. What this resolves
 
 Experiment 015 required an ordered cycle and therefore still required a choice of cycle structure when multiple cycles existed.
 
@@ -142,9 +240,9 @@ The reversible operator is generated from the complete graph itself:
 
 `graph → ordered edge continuation S → antisymmetric part C → node operator A`.
 
-The construction is therefore invariant to the particular cycle decomposition used to describe the same graph.
+The construction is therefore independent of the particular cycle decomposition used to describe the same graph.
 
-## 8. Important boundary
+## 10. Important boundary
 
 The construction is canonical only after the graph has been given an orientation and an ordered path-composition semantics.
 
@@ -154,7 +252,13 @@ The potential `Phi` and dissipative coupling `K` remain model-dependent.
 
 The resulting formula should therefore be treated as the final Ω research bridge, not as a newly admitted primitive or established universal physical law.
 
-## 9. Final structural form
+In particular:
+
+`structural potential ≠ physical energy`.
+
+The present result establishes mathematical properties of the constructed dynamics; physical interpretation requires a separate model and experimental or empirical validation.
+
+## 11. Final structural form
 
 The complete tested chain is:
 
@@ -162,7 +266,7 @@ The complete tested chain is:
 
 Mathematically:
 
-`dx/dt = B[(S-S^T)/2 - K]B^T grad(Phi)`.
+`dx/dt = B[(S-S^T)/2 - K]B^T ∇Phi`.
 
 Equivalently:
 
@@ -170,9 +274,9 @@ Equivalently:
 
 `D = BKB^T`.
 
-`dx/dt = (A-D)grad(Phi)`.
+`dx/dt = (A-D)∇Phi`.
 
-## 10. Final result
+## 12. Final result
 
 `PASS — C IS DERIVABLE DIRECTLY FROM FULL ORDERED GRAPH PATH-COMPOSITION.`
 
@@ -190,7 +294,7 @@ Equivalently:
 
 `PASS — EXACT FINITE GRAPH TESTS AND 300 RANDOM CONNECTED GRAPHS PASS.`
 
-## 11. Final boundary statement
+## 13. Final boundary statement
 
 This is the strongest result reached by the present Ω transition program:
 
