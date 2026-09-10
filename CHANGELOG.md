@@ -23,7 +23,7 @@
 - Result: connectivity alone is insufficient to determine locality-dependent propagation; the scalar sign product is insufficient to represent ordered loop structure; a richer transport/composition law is sufficient in a finite external model, but is not derived from Ω v0.9 primitives.
 
 ### Transport minimality
-- Added `EXPERIMENT_TRANSPORT_MINIMALITY_006.md` to test whether bijective edge transports are actually required for nontrivial loop residuals.
+- Added `EXPERIMENT_TRANSPORT_MINIMALITY_006.md` to test whether bijectivity is actually required for nontrivial ordered-loop residuals.
 - Result: arbitrary composable typed functions with identity and associative composition are sufficient; bijectivity is stronger than necessary for residual generation.
 - Separated minimal residual generation from the stronger frame-change/gauge-conjugation requirement, where invertible local frame maps are required.
 - Added `TRANSPORT_LAYER_v0.1.md` as a proposed research schema above Ω v0.9; it is not a new primitive.
@@ -46,6 +46,8 @@
 - Added `POTENTIAL_TRANSITION_OPERATOR_v0.1.md` as a research bridge for the candidate operator `dx/dt = (A-D) δPhi/δx`.
 - Added `EXPERIMENT_OMEGA_NETWORK_TRANSITION_013.md` with an exact finite three-node verification.
 - Result: antisymmetric `A` gives nonzero reversible state motion with zero potential change; positive-semidefinite `D` gives non-increasing potential; both can conserve the closed-network total state quantity when the operator has zero column sum.
+- Added `EXPERIMENT_OMEGA_GRAPH_DERIVATION_014.md` and derived both operators from graph incidence and edge coupling: `D=BKB^T`, `A=BCB^T` with `K^T=K>=0` and `C^T=-C`.
+- Result: the conservation, antisymmetry and dissipation properties now follow from the relation graph construction for the tested finite model rather than from hand-specified node matrices.
 - This remains an external mathematical bridge and does not modify the v0.9 primitive core.
 
 The v0.9 core remains closed. External-domain evidence may motivate a versioned extension only after formal definition, counterexample testing, sufficiency analysis, and cross-domain verification.
