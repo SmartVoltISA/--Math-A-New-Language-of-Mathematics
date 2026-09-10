@@ -64,27 +64,58 @@ Result: `PASS`.
 
 ## Test D — Non-quadratic potential
 
-Use a finite three-node cycle operator from the canonical graph construction and
+Use the canonical three-cycle construction with edges
 
-`Φ(x)=Σ_i x_i^4/4`.
+`(1→2),(2→3),(3→1)`.
 
-For arbitrary finite `x`, let
+Its incidence matrix is
+
+`B=[[1,0,-1],[-1,1,0],[0,-1,1]]`.
+
+The continuation matrix is
+
+`S=[[0,1,0],[0,0,1],[1,0,0]]`.
+
+Therefore
+
+`C=(S-S^T)/2`
+
+and
+
+`A=BCB^T
+ =[[0,1.5,-1.5],[-1.5,0,1.5],[1.5,-1.5,0]]`.
+
+Use
+
+`Φ(x)=Σ_i x_i^4/4`,
+
+so
 
 `g=∇Φ=(x_1^3,x_2^3,x_3^3)`.
 
-Because the constructed reversible operator satisfies `A^T=-A`, exact algebra gives
+At
 
-`g^T A g=0`.
+`x=(2,-1,0.5)`,
 
-For a positive diagonal `K`,
+`g=(8,-1,0.125)`.
 
-`g^T D g>=0`.
+Direct evaluation gives
 
-Thus
+`g^T A g = 0` exactly in the finite arithmetic calculation.
 
-`dΦ/dt=-g^T Dg<=0`.
+With `K=I`,
 
-A direct finite numerical evaluation at `x=(2,-1,0.5)` gives the reversible contribution zero to machine precision and a non-positive full derivative.
+`D=BB^T`
+
+and
+
+`g^T D g = 144.28125`.
+
+Hence
+
+`dΦ/dt = -144.28125 < 0`.
+
+The reversible contribution is zero while the dissipative contribution is strictly negative.
 
 Result: `PASS`.
 
@@ -92,7 +123,7 @@ Result: `PASS`.
 
 All four concrete reductions satisfy their declared mathematical checks.
 
-This strengthens Experiment 019 from a proposed cross-domain mapping to an executed finite verification of the stated operator identities.
+The non-quadratic test confirms that the skew-symmetry argument is not specific to the quadratic choice of `Φ`: the reversible contribution vanishes for the gradient of the tested nonlinear potential as well.
 
 ## Boundary
 
