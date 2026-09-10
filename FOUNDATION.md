@@ -62,8 +62,12 @@ A stable substructure may be mapped to a higher-level entity only through an exp
 
 **P7 — Emergence requires identification.** A macro-object needs an explicit map and validation criterion.
 
+**P8 — Completion requires final verification.** Work is not `DONE` until the written artifact has been reread and checked, dependent records have been synchronized, and the result is self-contained. See `WORK_COMPLETION_STANDARD_v1.0.md`.
+
 ## Scope
 
 The foundation is the minimal typed relational base. Higher layers are defined and tested separately. v0.9 language closure does not claim universal mathematical completeness or a physical ontology.
+
+Process completion is governed by `WORK_COMPLETION_STANDARD_v1.0.md` and does not add a mathematical primitive.
 
 **Status: DEFINED / FOUNDATION / v0.9 SYNCHRONIZED**
