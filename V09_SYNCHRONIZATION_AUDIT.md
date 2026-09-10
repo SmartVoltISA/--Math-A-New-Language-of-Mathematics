@@ -32,6 +32,16 @@ The current canonical layer includes the synchronized:
 
 The v0.9 mathematical audits and declared verification records are maintained separately from the specification layer.
 
+## Process standard
+
+`WORK_COMPLETION_STANDARD_v1.0.md` is now the repository-wide completion protocol.
+
+The governing rule is:
+
+`DONE = IMPLEMENTED + WRITTEN + VERIFIED + SYNCHRONIZED + SELF-CONTAINED`.
+
+The final stored artifact must be reread after the last write. A task is not complete if required definitions, references, synchronization, validation, or self-contained explanation are missing.
+
 ## Historical documents
 
 The following remain historical by design:
@@ -81,6 +91,8 @@ Physical interpretations are not inferred from graph activity, transformation co
 **Canonical layer: synchronized.**
 
 **Historical layer: explicitly contained.**
+
+**Completion protocol: defined and linked from canonical documentation.**
 
 **Mathematical core: internally coherent under declared scope.**
 
