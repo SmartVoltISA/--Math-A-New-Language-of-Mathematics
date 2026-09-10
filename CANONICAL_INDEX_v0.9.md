@@ -63,6 +63,7 @@ Single navigation point for the canonical Ω-Math v0.9 language core, research m
 - `EXPERIMENT_LOCALITY_ADMISSIBILITY_BOUNDARY_010.md`
 - `EXPERIMENT_INTERACTION_REDUCTION_011.md`
 - `EXPERIMENT_CAUSAL_INTERVENTION_012.md`
+- `EXPERIMENT_OMEGA_NETWORK_TRANSITION_013.md` — exact finite test of conservation, circulation, dissipation and nonzero motion at zero net potential change.
 
 ## Historical / superseded
 
