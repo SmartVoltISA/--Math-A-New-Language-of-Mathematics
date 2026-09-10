@@ -11,7 +11,7 @@
 - Kept probability, causal intervention, physical time, physical energy, and physical ontology as external bridges rather than hidden primitives.
 
 ### Synchronization
-- Synchronized `SEMANTICS.md`, `GLOSSARY.md`, `DYNAMICS.md`, `EMERGENCE.md`, `TYPE_SYSTEM.md`, and canonical examples with v0.9.
+- Synchronized canonical semantics, dynamics, examples, type system and navigation.
 - Added `CANONICAL_INDEX_v0.9.md` as the navigation layer for canonical and historical material.
 
 ### Process completion standard
@@ -33,9 +33,9 @@
 
 ### Physical vortex bridge
 - Added `EXPERIMENT_OMEGA_PHYSICAL_VORTEX_021.md` as a finite physical-bridge check using a steady free vortex with independently specified `rho`, `K`, `r_i`, `r_o`, and `p_o`.
-- Verified exactly for the declared model that `Delta_p/rho = Delta_Kinetic = 1.875`, `H=p/rho+u_theta^2/2=10.125` at both selected contours, and radial acceleration is zero.
-- Explicitly recorded the critical boundary: pressure difference plus circulation does not imply radial transport; the Ω reversible operator has not thereby derived the fluid pressure field or Navier–Stokes.
-- Next falsification target: transient/open vortex with nonzero mass flux and explicit energy-flow/dissipation accounting.
+- Added `EXPERIMENT_OMEGA_OPEN_TRANSIENT_VORTEX_022.md` with explicit open-system energy accounting: boundary flux, pressure work, storage change and dissipation.
+- Added `EXPERIMENT_OMEGA_AXISYMMETRIC_VORTEX_023.md` with a finite 3×3 radial+axial field, geometry-derived incidence/continuation operators, finite kinetic storage and dissipation proxy.
+- Experiment 023 result: radial+axial graph construction, skew reversible operator and positive dissipation measure all pass; physical pressure/velocity prediction remains NOT_PROVEN.
 
 ### Existing bridges
 - Retained LIGHT and TRANSPORT bridge records and all prior v0.9 verification records.
