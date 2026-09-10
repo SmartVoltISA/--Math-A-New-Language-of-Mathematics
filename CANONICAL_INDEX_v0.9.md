@@ -28,6 +28,7 @@ Single navigation point for the canonical Ω-Math v0.9 language core, research m
 
 - `DYNAMICS.md`
 - `EMERGENCE.md`
+- `POTENTIAL_TRANSITION_OPERATOR_v0.1.md` — candidate potential/transition operator; research bridge, not a new primitive.
 
 ## External-domain bridge records
 
