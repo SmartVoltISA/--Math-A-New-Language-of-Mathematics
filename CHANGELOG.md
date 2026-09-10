@@ -42,4 +42,10 @@
 - Result: explicit interventions are representable as existing typed transformations/inputs; baseline temporal succession can be identical while intervention responses differ; directional models can therefore be interventionally distinguishable without being distinguishable from the chosen baseline trajectory.
 - No new `CAUSE` primitive is justified. Causal direction/dependency remains an explicit intervention/comparison semantics and a research frontier.
 
+### Potential / transition bridge
+- Added `POTENTIAL_TRANSITION_OPERATOR_v0.1.md` as a research bridge for the candidate operator `dx/dt = (A-D) δPhi/δx`.
+- Added `EXPERIMENT_OMEGA_NETWORK_TRANSITION_013.md` with an exact finite three-node verification.
+- Result: antisymmetric `A` gives nonzero reversible state motion with zero potential change; positive-semidefinite `D` gives non-increasing potential; both can conserve the closed-network total state quantity when the operator has zero column sum.
+- This remains an external mathematical bridge and does not modify the v0.9 primitive core.
+
 The v0.9 core remains closed. External-domain evidence may motivate a versioned extension only after formal definition, counterexample testing, sufficiency analysis, and cross-domain verification.
