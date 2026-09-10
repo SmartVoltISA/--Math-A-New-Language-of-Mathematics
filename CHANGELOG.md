@@ -48,6 +48,8 @@
 - Result: antisymmetric `A` gives nonzero reversible state motion with zero potential change; positive-semidefinite `D` gives non-increasing potential; both can conserve the closed-network total state quantity when the operator has zero column sum.
 - Added `EXPERIMENT_OMEGA_GRAPH_DERIVATION_014.md` and derived both operators from graph incidence and edge coupling: `D=BKB^T`, `A=BCB^T` with `K^T=K>=0` and `C^T=-C`.
 - Result: the conservation, antisymmetry and dissipation properties now follow from the relation graph construction for the tested finite model rather than from hand-specified node matrices.
-- This remains an external mathematical bridge and does not modify the v0.9 primitive core.
+- Added `EXPERIMENT_OMEGA_CYCLE_DERIVED_CIRCULATION_015.md`: constructed `C` from the successor/predecessor order of a closed relation cycle rather than supplying an arbitrary skew matrix.
+- Result: for exact finite cycles `n=3,4,5,6,7`, the induced `A=BCB^T` is skew-symmetric, conservative, nonzero, preserves the quadratic potential under the reversible part, and reverses sign with cycle orientation. The `n=3` construction exactly recovers the reversible operator of Experiment 014.
+- The general multi-cycle combination rule remains an open research boundary.
 
 The v0.9 core remains closed. External-domain evidence may motivate a versioned extension only after formal definition, counterexample testing, sufficiency analysis, and cross-domain verification.
