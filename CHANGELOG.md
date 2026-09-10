@@ -14,6 +14,13 @@
 - Synchronized `SEMANTICS.md`, `GLOSSARY.md`, `DYNAMICS.md`, `EMERGENCE.md`, `TYPE_SYSTEM.md`, and canonical examples with v0.9.
 - Added `CANONICAL_INDEX_v0.9.md` as the navigation layer for canonical and historical material.
 
+### Process completion standard
+- Added `WORK_COMPLETION_STANDARD_v1.0.md` as the repository-wide completion protocol.
+- Established the mandatory sequence `make → write → reread → verify → synchronize → validate → self-contain → declare DONE`.
+- Established the hard rule `DONE = IMPLEMENTED + WRITTEN + VERIFIED + SYNCHRONIZED + SELF-CONTAINED`.
+- Required final verification against the actual stored artifact after the last write; placeholders, missing definitions, stale references, unverified claims, or conversation-only dependencies prevent `DONE`.
+- Added the completion rule to `FOUNDATION.md` as principle P8, to `README.md`, and to the canonical index.
+
 ### LIGHT bridge
 - Added `LIGHT_STRUCTURAL_BRIDGE_v0.1.md` to compare Ω-Math with the electromagnetic/QFT structure in `SmartVoltISA/LIGHT-`.
 - Added `EXPERIMENT_LIGHT_BRIDGE_001.md` as an analytical test of admissibility, locality, and loop-residual candidates.
