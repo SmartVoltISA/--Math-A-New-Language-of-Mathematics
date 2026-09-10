@@ -65,6 +65,7 @@ Single navigation point for the canonical Ω-Math v0.9 language core, research m
 - `EXPERIMENT_CAUSAL_INTERVENTION_012.md`
 - `EXPERIMENT_OMEGA_NETWORK_TRANSITION_013.md` — exact finite test of conservation, circulation, dissipation and nonzero motion at zero net potential change.
 - `EXPERIMENT_OMEGA_GRAPH_DERIVATION_014.md` — derives the reversible/dissipative operators from graph incidence and edge coupling rather than inserting node operators by hand.
+- `EXPERIMENT_OMEGA_CYCLE_DERIVED_CIRCULATION_015.md` — derives the reversible edge operator from ordered cycle successor/predecessor structure; recovers the 3-node operator of 014 and passes exact tests for n=3..7.
 
 ## Historical / superseded
 
