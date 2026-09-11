@@ -3,11 +3,17 @@
 
 No GitHub Actions, network access, or pytest is required. Exit code 0 means
 PASS; 1 means FAIL; 2 means INVALID runner/environment.
+
+The synchronization gate checks that the canonical operator registry agrees
+with the executable runtime, IR bridge, and canonical operator table. The
+textual surface is checked separately because semantic operators may
+intentionally have no declarative textual encoding yet.
 """
 from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path as FSPath
@@ -30,10 +36,53 @@ class Check:
     detail: str = ""
 
 
+def _read_root(name: str) -> str:
+    path = ROOT / name
+    if not path.is_file():
+        raise RuntimeError(f"required synchronization file is absent: {name}")
+    return path.read_text(encoding="utf-8")
+
+
+def _table_operators() -> set[str]:
+    """Extract canonical operator names from OPERATOR_TABLE.md.
+
+    The parser deliberately reads only table rows, not the prose section, so
+    historical/non-primitive module names cannot become accidental operators.
+    """
+    text = _read_root("OPERATOR_TABLE.md")
+    found: set[str] = set()
+    for line in text.splitlines():
+        m = re.match(r"^\|\s*`([A-Z][A-Z0-9_]*)`(?:\s*/|\s*\|)", line)
+        if m:
+            found.add(m.group(1))
+    return found
+
+
+def _runtime_dispatch_names() -> set[str]:
+    """Recover names from the reference dispatch table without executing it."""
+    text = _read_root("omega_math/runtime.py")
+    marker = 'table = {'
+    start = text.find(marker)
+    if start < 0:
+        raise RuntimeError("runtime dispatch table not found")
+    end = text.find("\n    }", start)
+    if end < 0:
+        raise RuntimeError("runtime dispatch table terminator not found")
+    block = text[start:end]
+    return set(re.findall(r'"([A-Z][A-Z0-9_]*)"\s*:', block))
+
+
+def _ir_call_names() -> set[str]:
+    text = _read_root("omega_math/ir.py")
+    if '"CALL": 2' not in text:
+        return set()
+    return {"CALL"}
+
+
 def check_registry() -> list[Check]:
     checks: list[Check] = []
-    names = [s.name for s in OPERATOR_REGISTRY]
-    checks.append(Check("registry_unique_names", len(names) == len(set(names))))
+    names = {s.name for s in OPERATOR_REGISTRY}
+    checks.append(Check("registry_unique_names", len(names) == len(OPERATOR_REGISTRY)))
 
     missing = [s.name for s in OPERATOR_REGISTRY if not hasattr(runtime, s.runtime)]
     checks.append(Check("registry_runtime_symbols", not missing,
@@ -48,6 +97,40 @@ def check_registry() -> list[Check]:
     checks.append(Check("surface_inventory", surface == expected,
                         f"got={sorted(surface)} expected={sorted(expected)}"))
     checks.append(Check("registry_lookup", all(get_operator(n).name == n for n in names)))
+    return checks
+
+
+def check_synchronization() -> list[Check]:
+    """Cross-check the canonical registry against executable/documented layers."""
+    checks: list[Check] = []
+    registry = {s.name for s in OPERATOR_REGISTRY}
+    table = _table_operators()
+    dispatch = _runtime_dispatch_names()
+
+    missing_table = sorted(registry - table)
+    extra_table = sorted(table - registry)
+    checks.append(Check("sync_registry_vs_operator_table",
+                        not missing_table and not extra_table,
+                        f"missing={missing_table} extra={extra_table}"))
+
+    runtime_specs = {s.name for s in OPERATOR_REGISTRY if s.ir_op != "CALL"}
+    call_specs = {s.name for s in OPERATOR_REGISTRY if s.ir_op == "CALL"}
+    missing_dispatch = sorted(runtime_specs - dispatch)
+    checks.append(Check("sync_direct_runtime_dispatch", not missing_dispatch,
+                        f"missing={missing_dispatch}"))
+
+    # CALL operators intentionally share one dispatch entry; their individual
+    # runtime functions were already checked by check_registry().
+    checks.append(Check("sync_call_bridge_declared", "CALL" in _ir_call_names() if call_specs else True,
+                        "IR CALL operation is absent"))
+
+    # Every non-CALL registry entry must map to a dispatch name with the same
+    # canonical spelling. This catches accidental renames in one layer.
+    bad_mapping = sorted(s.name for s in OPERATOR_REGISTRY
+                         if s.ir_op != "CALL" and s.ir_op != s.name)
+    checks.append(Check("sync_registry_ir_names", not bad_mapping,
+                        f"non-identity IR mappings={bad_mapping}"))
+
     return checks
 
 
@@ -142,7 +225,7 @@ def check_runtime() -> list[Check]:
 
 def run() -> list[Check]:
     out: list[Check] = []
-    for group in (check_registry, check_core_and_ir, check_parser, check_runtime):
+    for group in (check_registry, check_synchronization, check_core_and_ir, check_parser, check_runtime):
         out.extend(group())
     return out
 
