@@ -94,6 +94,27 @@ A metric is accepted only when its axioms follow for the declared domain and tra
 
 This is a mathematical construction, not a derivation of physical space.
 
+## Mathematical extensions
+
+The v0.9 core is closed for its declared minimal typed-language domain. New mathematical results from Ω-Lab are integrated as **extensions**, not silently promoted into primitives.
+
+Canonical extension register:
+
+- `extensions/CONSERVATION_AND_OPERATOR_SELECTION.md` — positive quadratic conservation and metric-skew operator selection.
+- `extensions/SPECTRAL_RELATIONAL_DYNAMICS.md` — spectral classes and dynamical mode taxonomy.
+- `extensions/LOCAL_RELATIONAL_PROPAGATION.md` — local graph propagation and dispersion.
+- `extensions/DISSIPATION_VS_CONSERVATION.md` — conservative, dissipative and unstable operator classes.
+- `extensions/RELATIONAL_CIRCULATION.md` — oriented cycles, circulation and feedback.
+- `extensions/VECTOR_RELATIONAL_OPERATORS.md` — conditional curl-sector selection in a restricted isotropic first-order class.
+- `extensions/SCALE_AND_TIME.md` — separation of ordinal succession, dimensionless interval and physical duration.
+- `extensions/MATHEMATICAL_EXTENSION_STATUS_v1.0.md` — canonical status register and next mathematical gate.
+
+The current mathematical bridge is:
+
+`local distinction → local relation → operator → conservation/constraint → spectrum → mode → propagation → field structure`.
+
+Every arrow is conditional on explicitly declared mathematical assumptions. No extension is a claim that physical laws have been derived.
+
 ## Method
 
 `define → derive → implement → execute → verify → compare → falsify → record`
@@ -148,14 +169,14 @@ The formal language is closed for its declared domain. The following remain exte
 - causal self-model;
 - independent physical predictions.
 
-These are not blockers for language closure.
+The mathematical extensions add conditional operator, spectral, propagation and scale results without removing these boundaries.
 
 ## Repository structure
 
-See the canonical documents and experiment records in the repository. v0.8 closure documents are retained as historical records; v0.9 documents define the current frontier status.
+See the canonical documents, mathematical extensions and experiment records in the repository. v0.8 closure documents are retained as historical records; v0.9 documents define the current frontier status; `extensions/` contains post-closure mathematical structures and results.
 
 ## Status
 
-**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain.**
+**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain, with a registered mathematical extension layer.**
 
 This is not a claim of universal mathematical completeness or a completed physical theory.
