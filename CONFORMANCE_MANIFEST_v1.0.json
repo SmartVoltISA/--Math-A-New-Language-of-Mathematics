@@ -1,0 +1,89 @@
+{
+  "manifest": "Ω-Math Conformance Manifest",
+  "version": "1.0",
+  "status": "CANONICAL",
+  "purpose": "Single machine-readable contract for cross-layer Ω-Math conformance.",
+  "semantic_core": {
+    "entity_state": [0, 1],
+    "relation_state": [-1, 1],
+    "absence_is_relation_value": false
+  },
+  "layers": {
+    "semantic_spec": "LANGUAGE_SPEC.md",
+    "surface_syntax": "LANGUAGE_SYNTAX_v1.0.md",
+    "operator_registry": "omega_math/operator_registry.py",
+    "ir": "omega_math/ir.py",
+    "runtime": "omega_math/runtime.py",
+    "operator_table": "OPERATOR_TABLE.md",
+    "conformance_runner": "tools/conformance.py"
+  },
+  "surface_operators": [
+    "dist", "incident", "path", "path_eq", "cycle", "concat", "sign"
+  ],
+  "operators": [
+    {"name":"DIST","status":"DEFINED","surface":"dist","ir":"DIST","runtime":"dist"},
+    {"name":"INCIDENT","status":"DEFINED","surface":"incident","ir":"INCIDENT","runtime":"incident"},
+    {"name":"PATH","status":"DEFINED","surface":"path","ir":"PATH","runtime":"path"},
+    {"name":"PATH_EQ","status":"DERIVED / ADMITTED","surface":"path_eq","ir":"PATH_EQ","runtime":"path_eq"},
+    {"name":"CYCLE","status":"DEFINED","surface":"cycle","ir":"CYCLE","runtime":"cycle"},
+    {"name":"CONCAT","status":"DEFINED","surface":"concat","ir":"CONCAT","runtime":"concat"},
+    {"name":"SIGN","status":"DERIVED","surface":"sign","ir":"SIGN","runtime":"sign_summary"},
+    {"name":"COMPARE","status":"DEFINED","surface":null,"ir":"CALL","runtime":"compare"},
+    {"name":"TRANSFORM","status":"DEFINED","surface":null,"ir":"CALL","runtime":"transform"},
+    {"name":"OBSERVE","status":"DEFINED","surface":null,"ir":"CALL","runtime":"observe"},
+    {"name":"EQUIV","status":"DEFINED","surface":null,"ir":"CALL","runtime":"equiv"},
+    {"name":"QUOTIENT","status":"DEFINED","surface":null,"ir":"CALL","runtime":"quotient"},
+    {"name":"INVARIANT","status":"DEFINED","surface":null,"ir":"CALL","runtime":"invariant"},
+    {"name":"BEHAVIOR","status":"DEFINED","surface":null,"ir":"CALL","runtime":"behavior"},
+    {"name":"COST","status":"DEFINED FRAMEWORK","surface":null,"ir":"CALL","runtime":"cost"},
+    {"name":"DISTANCE","status":"DERIVED","surface":null,"ir":"CALL","runtime":"distance"},
+    {"name":"QUOTIENT_DISTANCE","status":"DERIVED","surface":null,"ir":"CALL","runtime":"quotient_distance"},
+    {"name":"SYMMETRY","status":"DEFINED","surface":null,"ir":"CALL","runtime":"symmetry"},
+    {"name":"RETAIN","status":"DEFINED FRAMEWORK","surface":null,"ir":"CALL","runtime":"retain"},
+    {"name":"ORDER","status":"DERIVED","surface":null,"ir":"CALL","runtime":"order"},
+    {"name":"HORIZON","status":"DEFINED","surface":null,"ir":"CALL","runtime":"horizon"},
+    {"name":"BRANCH","status":"DEFINED","surface":null,"ir":"CALL","runtime":"branch"},
+    {"name":"REACH","status":"DEFINED FRAMEWORK","surface":null,"ir":"CALL","runtime":"reach"},
+    {"name":"MODEL","status":"HYPOTHESIS FRAMEWORK","surface":null,"ir":"CALL","runtime":"model"},
+    {"name":"FEEDBACK","status":"DEFINED FRAMEWORK","surface":null,"ir":"CALL","runtime":"feedback"},
+    {"name":"COARSE","status":"DEFINED FRAMEWORK","surface":null,"ir":"CALL","runtime":"coarse"}
+  ],
+  "required_gates": [
+    "registry_unique_names",
+    "registry_runtime_symbols",
+    "call_surface_boundary",
+    "surface_inventory",
+    "registry_lookup",
+    "sync_registry_vs_operator_table",
+    "sync_direct_runtime_dispatch",
+    "sync_call_bridge_declared",
+    "sync_registry_ir_names",
+    "entity_domain",
+    "relation_domain",
+    "epsilon_identity",
+    "path_sign",
+    "distance_boundary",
+    "incident_endpoint",
+    "call_validation_execution",
+    "call_rejects_empty_name",
+    "parser_reference_surface",
+    "parser_ir_valid",
+    "singleton_path_rejected",
+    "zero_relation_rejected",
+    "ambiguous_parallel_relation_rejected",
+    "runtime_unknown_operator_rejected"
+  ],
+  "rules": {
+    "semantic_operator_is_not_primitive": true,
+    "semantic_operator_is_not_surface_syntax": true,
+    "surface_requires_declarative_encoding": true,
+    "arbitrary_python_serialization_forbidden": true,
+    "unknown_runtime_operator_must_fail": true,
+    "operator_table_and_registry_must_match": true
+  },
+  "exit_codes": {
+    "PASS": 0,
+    "FAIL": 1,
+    "INVALID": 2
+  }
+}
