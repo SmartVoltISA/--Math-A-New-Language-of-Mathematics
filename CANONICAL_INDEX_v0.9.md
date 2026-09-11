@@ -75,8 +75,16 @@ Single navigation point for the canonical Ω-Math v0.9 language core, research m
 - `EXPERIMENT_OMEGA_CROSS_DOMAIN_019.md`
 - `EXPERIMENT_OMEGA_CROSS_DOMAIN_020.md`
 - `EXPERIMENT_OMEGA_PHYSICAL_VORTEX_021.md`
-- `EXPERIMENT_OMEGA_OPEN_TRANSIENT_VORTEX_022.md` — finite open-system accounting with explicit boundary energy flux, pressure work, storage change and dissipation.
-- `EXPERIMENT_OMEGA_AXISYMMETRIC_VORTEX_023.md` — finite 3×3 radial+axial physical bridge; geometry-derived incidence/continuation operators, kinetic storage and dissipation proxy.
+- `EXPERIMENT_OMEGA_OPEN_TRANSIENT_VORTEX_022.md`
+- `EXPERIMENT_OMEGA_AXISYMMETRIC_VORTEX_023.md`
+- `EXPERIMENT_OMEGA_FLOW_OPERATOR_SPLIT_028.md`
+- `EXPERIMENT_OMEGA_CONVECTION_FALSIFICATION_030.md`
+- `EXPERIMENT_OMEGA_CONSERVATIVE_CYLINDRICAL_FLUX_031.md`
+- `EXPERIMENT_OMEGA_VECTOR_CYLINDRICAL_CONVECTION_032.md`
+- `EXPERIMENT_OMEGA_PRESSURE_POWER_033.md`
+- `EXPERIMENT_OMEGA_VISCOSITY_POSITIVE_034.md`
+- `EXPERIMENT_OMEGA_COMPLETE_KINETIC_BALANCE_035.md`
+- `EXPERIMENT_OMEGA_GRID_ROBUSTNESS_036.md`
 
 ## Historical / superseded
 
