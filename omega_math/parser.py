@@ -1,4 +1,4 @@
-"""Small deterministic Ω-Math reference parser with v1 IR lowering."""
+"""Deterministic Ω-Math reference parser with v1 IR lowering."""
 import re
 from .core import Entity, Relation, Path, concat, incident, dist
 from .ir import IRInstruction, IRProgram
@@ -75,6 +75,8 @@ class Program:
             if name in self.paths:
                 raise ValueError(f"duplicate path {name}")
             ids = nodes.split('->')
+            if len(ids) < 2:
+                raise ValueError("non-empty path needs at least one relation; use epsilon(entity) for an empty path")
             if any(x not in self.entities for x in ids):
                 raise ValueError("path endpoint entity is absent")
             rs = []
@@ -82,6 +84,8 @@ class Program:
                 candidates = [r for r in self.relations.values() if r.src == a and r.dst == b]
                 if not candidates:
                     raise ValueError(f"missing relation {a}->{b}")
+                if len(candidates) > 1:
+                    raise ValueError(f"ambiguous relation {a}->{b}; assign and use an explicit relation key")
                 rs.append(candidates[0])
             self.paths[name] = Path(tuple(rs), ids[0], ids[-1])
             self._add('PATH', name, tuple(ids))
