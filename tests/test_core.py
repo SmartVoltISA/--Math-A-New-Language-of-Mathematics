@@ -107,3 +107,18 @@ def test_parser_rejects_incompatible_concat():
     concat R = P + Q
     '''
     with pytest.raises(ParseError): Program().run(text)
+
+def test_parser_rejects_ambiguous_parallel_relations():
+    text='''
+    entity A 0
+    entity B 1
+    relation A B +1 r1
+    relation A B -1 r2
+    path P = A->B
+    '''
+    with pytest.raises(ParseError, match='ambiguous relation'):
+        Program().run(text)
+
+def test_parser_rejects_single_entity_path_without_epsilon():
+    with pytest.raises(ParseError, match='use epsilon'):
+        Program().run('entity A 0\npath P = A')
