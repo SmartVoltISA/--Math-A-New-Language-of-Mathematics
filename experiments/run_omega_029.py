@@ -1,10 +1,9 @@
 """Ω-029: axisymmetric finite-volume projection bridge.
 
 A finite-volume-like (r,z) incompressible state is projected onto the
-axisymmetric divergence-free subspace. The frozen transport operator is
-split into a reversible skew part and a dissipative PSD part after the
-finite-volume mass normalization. This is a bridge test, not an independent
-Navier–Stokes prediction.
+axisymmetric divergence-free subspace. The transport and viscous operators
+are tested in the cylindrical control-volume inner product. This is a bridge
+test, not an independent Navier–Stokes prediction.
 """
 import numpy as np
 
@@ -17,6 +16,7 @@ z = (np.arange(nz)+0.5)*dz
 RR, ZZ = np.meshgrid(r,z,indexing="ij")
 N = nr*nz
 
+# Axisymmetric divergence: (1/r)d(r ur)/dr + d(uz)/dz.
 H = np.zeros((N,2*N))
 for i in range(nr):
     for j in range(nz):
@@ -32,10 +32,12 @@ G = H.T @ np.linalg.pinv(H@H.T)
 P = np.eye(2*N) - G@H
 u0 = P @ np.r_[ur.ravel(),uz.ravel()]
 
+# Cylindrical control-volume mass weights.
 m = np.repeat(r,nz)*dr*dz
 Mhalf = np.diag(np.sqrt(np.r_[m,m]))
 Minvhalf = np.diag(1/np.sqrt(np.r_[m,m]))
 
+# Symmetric positive finite-volume stiffness; physical operator is M^{-1}L.
 Ls=np.zeros((N,N))
 for i in range(nr):
     for j in range(nz):
@@ -46,8 +48,10 @@ for i in range(nr):
         if j<nz-1: Ls[q,i*nz+j+1]=-1/dz**2
         Ls[q,q]=-Ls[q].sum()
 L=np.block([[Ls,np.zeros((N,N))],[np.zeros((N,N)),Ls]])
-D=nu*L
+M = np.diag(np.r_[m,m])
+D = nu*np.linalg.inv(M)@L
 
+# Frozen upwind transport proxy; its skew part is the reversible operator.
 def transport(u):
     a,b=u[:N],u[N:]
     T=np.zeros((2*N,2*N))
@@ -62,8 +66,7 @@ def transport(u):
         if j>0: T[N+q,N+i*nz+j-1]+=min(b[q],0)/dz
     return T
 
-T=transport(u0)
-C=(T-T.T)/2
+C=(transport(u0)-transport(u0).T)/2
 Cw=Mhalf@C@Minvhalf
 Dw=Mhalf@D@Minvhalf
 z0=Mhalf@u0
