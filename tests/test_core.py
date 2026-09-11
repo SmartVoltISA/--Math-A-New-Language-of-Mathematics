@@ -2,9 +2,11 @@ import pytest
 from omega_math.core import Entity, Relation, Path, Configuration, State, Transformation
 from omega_math.runtime import (
     concat, sign_summary, reverse_path, sufficient, verify_metric,
-    quotient, distance, symmetry, model, execute,
+    quotient, distance, symmetry, model, execute, execute_ir,
 )
 from omega_math.parser import Program, ParseError
+from omega_math.ir import IRInstruction, IRProgram
+from omega_math.operator_registry import get_operator, surface_operators, runtime_operators
 
 def R(a,b,s): return Relation(a,b,s)
 
@@ -122,3 +124,24 @@ def test_parser_rejects_ambiguous_parallel_relations():
 def test_parser_rejects_single_entity_path_without_epsilon():
     with pytest.raises(ParseError, match='use epsilon'):
         Program().run('entity A 0\npath P = A')
+
+def test_operator_registry_is_unique_and_resolves_runtime_surface():
+    specs = runtime_operators()
+    assert len({s.name for s in specs}) == len(specs)
+    assert {s.name for s in surface_operators()} == {'DIST','INCIDENT','PATH','PATH_EQ','CYCLE','CONCAT','SIGN'}
+    assert get_operator('transform').runtime == 'transform'
+    assert get_operator('DISTANCE').ir_op == 'CALL'
+
+def test_ir_call_is_validated_and_executable():
+    flip = Transformation('flip', lambda s, _=None: 1-s)
+    ir = IRProgram((IRInstruction('CALL', ('SYMMETRY', (0, (flip,)))),))
+    assert execute_ir(ir) == [frozenset({0,1})]
+
+def test_ir_call_rejects_non_tuple_operands():
+    with pytest.raises(TypeError, match='CALL operands must be a tuple'):
+        IRProgram((IRInstruction('CALL', ('MODEL', [1, 2])),)).validate()
+
+def test_ir_call_rejects_unknown_runtime_operator():
+    ir = IRProgram((IRInstruction('CALL', ('NOPE', (1,))),))
+    with pytest.raises(KeyError, match='unknown or non-primitive operator'):
+        execute_ir(ir)
