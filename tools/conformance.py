@@ -22,7 +22,7 @@ ROOT = FSPath(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from omega_math.core import Entity, Relation, Path, dist, incident, sign_summary
+from omega_math.core import ENTITY_STATES, RELATION_STATES, Entity, Relation, Path, dist, incident, sign_summary
 from omega_math.ir import IRInstruction, IRProgram
 from omega_math.operator_registry import OPERATOR_REGISTRY, get_operator, surface_operators
 from omega_math.parser import ParseError, Program
@@ -83,17 +83,20 @@ def _ir_call_names() -> set[str]:
 
 def check_manifest_structure() -> list[Check]:
     m = _manifest()
+    expected_layers = {
+        "semantic_spec", "surface_syntax", "operator_registry", "ir", "runtime",
+        "operator_table", "conformance_runner"
+    }
     checks = [
         Check("manifest_identity", m.get("manifest") == "Ω-Math Conformance Manifest"),
         Check("manifest_version", m.get("version") == "1.0"),
         Check("manifest_canonical", m.get("status") == "CANONICAL"),
-        Check("manifest_layers_complete", set(m.get("layers", {})) == {
-            "semantic_spec", "surface_syntax", "operator_registry", "ir", "runtime",
-            "operator_table", "conformance_runner"
-        }),
+        Check("manifest_layers_complete", set(m.get("layers", {})) == expected_layers),
+        Check("manifest_entity_domain", set(m.get("semantic_core", {}).get("entity_state", [])) == set(ENTITY_STATES)),
+        Check("manifest_relation_domain", set(m.get("semantic_core", {}).get("relation_state", [])) == set(RELATION_STATES)),
+        Check("manifest_absence_rule", m.get("semantic_core", {}).get("absence_is_relation_value") is False),
     ]
-    required_files = m.get("layers", {})
-    for key, rel in required_files.items():
+    for key, rel in m.get("layers", {}).items():
         checks.append(Check(f"manifest_file_{key}", (ROOT / rel).is_file(), f"missing={rel}"))
     return checks
 
@@ -102,10 +105,11 @@ def check_manifest_against_registry() -> list[Check]:
     m = _manifest()
     manifest_ops = {x["name"]: x for x in m.get("operators", [])}
     registry_ops = {s.name: s for s in OPERATOR_REGISTRY}
-    checks = [
-        Check("manifest_registry_name_set", set(manifest_ops) == set(registry_ops),
-              f"manifest_only={sorted(set(manifest_ops)-set(registry_ops))}; registry_only={sorted(set(registry_ops)-set(manifest_ops))}"),
-    ]
+    checks = [Check(
+        "manifest_registry_name_set",
+        set(manifest_ops) == set(registry_ops),
+        f"manifest_only={sorted(set(manifest_ops)-set(registry_ops))}; registry_only={sorted(set(registry_ops)-set(manifest_ops))}"
+    )]
     mismatches = []
     for name in sorted(set(manifest_ops) & set(registry_ops)):
         item, spec = manifest_ops[name], registry_ops[name]
@@ -114,9 +118,11 @@ def check_manifest_against_registry() -> list[Check]:
         if actual != expected:
             mismatches.append(f"{name}: actual={actual} expected={expected}")
     checks.append(Check("manifest_registry_metadata", not mismatches, "; ".join(mismatches)))
-    checks.append(Check("manifest_surface_set", set(m.get("surface_operators", [])) ==
-                        {s.surface for s in surface_operators()},
-                        "manifest surface inventory differs from registry"))
+    checks.append(Check(
+        "manifest_surface_set",
+        set(m.get("surface_operators", [])) == {s.surface for s in surface_operators()},
+        "manifest surface inventory differs from registry"
+    ))
     return checks
 
 
@@ -142,26 +148,33 @@ def check_synchronization() -> list[Check]:
     registry = {s.name for s in OPERATOR_REGISTRY}
     table = _table_operators()
     dispatch = _runtime_dispatch_names()
-    checks = []
-
-    checks.append(Check("sync_registry_vs_operator_table", registry == table,
-                        f"missing={sorted(registry-table)} extra={sorted(table-registry)}"))
-
+    checks = [
+        Check("sync_registry_vs_operator_table", registry == table,
+              f"missing={sorted(registry-table)} extra={sorted(table-registry)}"),
+    ]
     direct = {s.name for s in OPERATOR_REGISTRY if s.ir_op != "CALL"}
     checks.append(Check("sync_direct_runtime_dispatch", direct <= dispatch,
                         f"missing={sorted(direct-dispatch)}"))
-
     call_specs = {s.name for s in OPERATOR_REGISTRY if s.ir_op == "CALL"}
     checks.append(Check("sync_call_bridge_declared", "CALL" in _ir_call_names() if call_specs else True,
                         "IR CALL operation is absent"))
-
     bad_mapping = sorted(s.name for s in OPERATOR_REGISTRY if s.ir_op != "CALL" and s.ir_op != s.name)
     checks.append(Check("sync_registry_ir_names", not bad_mapping,
                         f"non-identity IR mappings={bad_mapping}"))
-
-    manifest_layers = m.get("layers", {})
-    checks.append(Check("sync_manifest_runner_path", manifest_layers.get("conformance_runner") == "tools/conformance.py"))
+    checks.append(Check("sync_manifest_runner_path", m.get("layers", {}).get("conformance_runner") == "tools/conformance.py"))
     return checks
+
+
+def check_manifest_gates() -> list[Check]:
+    """Ensure the manifest names every executable gate the runner claims to provide."""
+    m = _manifest()
+    actual_names = set()
+    for group in (check_manifest_structure, check_manifest_against_registry, check_registry,
+                  check_synchronization, check_core_and_ir, check_parser, check_runtime):
+        actual_names.update(c.name for c in group())
+    required = set(m.get("required_gates", []))
+    missing = sorted(required - actual_names)
+    return [Check("manifest_required_gates_implemented", not missing, f"missing={missing}")]
 
 
 def check_core_and_ir() -> list[Check]:
