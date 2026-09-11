@@ -12,6 +12,27 @@ This document defines the canonical Ω-Math language layer: primitive domains, t
 
 The domains are disjoint by type. Relation absence is a domain condition, not a third relation value.
 
+### 1.1 Ω-0 boundary/reference principle
+
+The symbol/value `0` also has a broader foundational research interpretation as a **boundary, neutral reference, or interaction frontier** between opposing states or directions. This interpretation is not a third `RelationState` value and does not encode relation absence.
+
+Conceptually:
+
+`−1 ← 0 → +1`
+
+Here `0` is the reference/boundary against which deviation toward `−1` or `+1` may be described. In dynamical models, a changing boundary/front can be indexed by time; its ordered evolution is a candidate dynamic interpretation of a path. The stronger interpretation of a path as “struggle through time” applies only to models whose interaction mechanism is explicitly competitive or oppositional.
+
+Therefore the following remain distinct:
+
+- `0 as boundary/reference` ≠ `0 as relation value`
+- `absence` ≠ `0`
+- `boundary` ≠ `entity`
+- `boundary` ≠ `relation`
+- `path` ≠ automatically `struggle`
+- temporal ordering ≠ physical duration
+
+See `extensions/O_ZERO_BOUNDARY_REFERENCE_PRINCIPLE_v1.0.md` for the canonical research formulation.
+
 ## 2. Primitive objects
 
 `e=(id,s)`, `s∈EntityState`.
@@ -98,11 +119,13 @@ Physical time requires an empirical duration map. Physical energy is not identif
 
 ## 9. Forbidden implicit meanings
 
-Entity state ≠ relation state; absence ≠ relation value; `−1` ≠ subtraction; `+1` ≠ addition; path ≠ scalar; cycle ≠ causality; connectivity ≠ physical space; observation equality ≠ identity; structural similarity ≠ behavioral equivalence; transition order ≠ physical duration; transformation cost ≠ physical energy.
+Entity state ≠ relation state; absence ≠ relation value; `0 as boundary/reference` ≠ `0 as relation value`; `−1` ≠ subtraction; `+1` ≠ addition; path ≠ scalar; cycle ≠ causality; connectivity ≠ physical space; observation equality ≠ identity; structural similarity ≠ behavioral equivalence; transition order ≠ physical duration; transformation cost ≠ physical energy.
 
 ## 10. Extension/admission rule
 
 A new primitive requires a demonstrated need, declared type/semantics, comparison with existing mathematics, counterexample/failure analysis and tests before promotion.
+
+The Ω-0 boundary/reference principle is recorded as a foundational research interpretation, not as a new primitive type or relation value.
 
 ## 11. Completeness boundary
 
