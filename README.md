@@ -109,19 +109,26 @@ Canonical extension register:
 - `extensions/SCALE_AND_TIME.md` — separation of ordinal succession, dimensionless interval and physical duration.
 - `extensions/TWO_FIELD_COUPLED_VECTOR_SYSTEM.md` — two-field transverse system selected by locality, isotropy and positive quadratic conservation within the declared class.
 - `extensions/TWO_FIELD_COUPLING_AUDIT.md` — executed numerical consistency audit of the two-field reduction.
-- `extensions/MATHEMATICAL_EXTENSION_STATUS_v1.1.md` — canonical status register and next mathematical gate.
+- `extensions/VARIATIONAL_HAMILTONIAN_AUDIT.md` — Hamiltonian/variational structural audit, including pairing and operator-adjointness conditions.
+- `extensions/BOUNDARY_FLUX_AND_GLOBAL_CONSERVATION.md` — finite-domain boundary-flux condition for global conservation.
+- `extensions/TRANSVERSE_CONSTRAINT_AND_POISSON_AUDIT.md` — invariant transverse sector, longitudinal zero modes and Poisson degeneracy.
+- `extensions/MATHEMATICAL_EXTENSION_STATUS_v1.2.md` — canonical status register after the Hamiltonian and transverse-constraint gates.
 
 The current mathematical bridge is:
 
 `local distinction → local relation → operator → conservation/constraint → spectrum → mode → propagation → field structure`.
 
-The two-field gate is now closed conditionally: after positive field-space normalization, the minimal nontrivial transverse sector has the form
+The two-field gate is closed conditionally: after positive field-space normalization, the minimal nontrivial transverse sector has the form
 
 `∂t E = ω curl B`
 
 `∂t B = -ω curl E`.
 
-This is a mathematical selection result within a restricted class, not a derivation of Maxwell theory or electromagnetism.
+The Hamiltonian audit establishes that the full operator is skew-adjoint because field-space `J` is skew while spatial curl is self-adjoint under the admissible L2 pairing. Global conservation on finite domains depends on boundary flux.
+
+The transverse condition is not derived: divergence is conserved, so divergence-free data define an invariant sector while longitudinal components remain zero-frequency modes. The associated Hamiltonian/Poisson operator is generally degenerate because curl has a kernel.
+
+These are mathematical selection and structural results within restricted classes, not derivations of Maxwell theory or electromagnetism.
 
 Every arrow is conditional on explicitly declared mathematical assumptions. No extension is a claim that physical laws have been derived.
 
@@ -177,9 +184,11 @@ The formal language is closed for its declared domain. The following remain exte
 - physical ontology;
 - task-independent emergence;
 - causal self-model;
-- independent physical predictions.
+- independent physical predictions;
+- nondegenerate symplectic reduction of the curl kernel;
+- additional conserved quantities from a fully specified reduced phase space.
 
-The mathematical extensions add conditional operator, spectral, propagation and scale results without removing these boundaries.
+The mathematical extensions add conditional operator, spectral, propagation, Hamiltonian and scale results without removing these boundaries.
 
 ## Repository structure
 
@@ -187,6 +196,6 @@ See the canonical documents, mathematical extensions and experiment records in t
 
 ## Status
 
-**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain, with a registered and audited mathematical extension layer v1.1.**
+**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain, with a registered and audited mathematical extension layer v1.2.**
 
 This is not a claim of universal mathematical completeness or a completed physical theory.
