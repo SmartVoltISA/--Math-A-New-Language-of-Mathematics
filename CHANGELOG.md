@@ -34,8 +34,19 @@
 ### Physical vortex bridge
 - Added `EXPERIMENT_OMEGA_PHYSICAL_VORTEX_021.md` as a finite physical-bridge check using a steady free vortex with independently specified `rho`, `K`, `r_i`, `r_o`, and `p_o`.
 - Added `EXPERIMENT_OMEGA_OPEN_TRANSIENT_VORTEX_022.md` with explicit open-system energy accounting: boundary flux, pressure work, storage change and dissipation.
-- Added `EXPERIMENT_OMEGA_AXISYMMETRIC_VORTEX_023.md` with a finite 3×3 radial+axial field, geometry-derived incidence/continuation operators, finite kinetic storage and dissipation proxy.
+- Added `EXPERIMENT_OMEGA_AXISYMMETRIC_VORTEX_023.md` with a finite radial+axial field, geometry-derived incidence/continuation operators, finite kinetic storage and dissipation proxy.
 - Experiment 023 result: radial+axial graph construction, skew reversible operator and positive dissipation measure all pass; physical pressure/velocity prediction remains NOT_PROVEN.
+
+### Flow falsification and construction sequence
+- Ω-028 verifies compatibility of an energy-consistent incompressible flow discretization with a skew/reversible plus PSD dissipative split, while explicitly retaining the boundary that this is representation rather than an independent Navier–Stokes derivation.
+- Ω-030 falsifies the stronger claim that an independently specified axisymmetric pointwise convection operator is automatically recovered by metric-weighted skew projection. The measured operator mismatch is order-one relative to the physical operator norm.
+- Ω-031 constructs conservative cylindrical transport directly from geometry and face fluxes, without post-hoc skew projection.
+- Ω-032 extends that construction to the vector cylindrical convective term, including the `u_θ²/r` and `u_r u_θ/r` curvature terms. Discrete kinetic-energy power cancels to numerical precision.
+- Ω-033 verifies pressure-work compatibility using the same divergence-free face-flux geometry; pressure power is numerically zero in the closed configuration.
+- Ω-034 constructs an independent symmetric positive geometry-derived viscous operator. The minimum eigenvalue is within numerical roundoff of zero and the quadratic dissipation is positive.
+- Ω-035 combines convection, pressure and viscosity into one complete instantaneous kinetic-energy accounting check. Reversible powers are approximately zero and viscous power is negative.
+- Ω-036 repeats the vector conservative construction on 4×4 through 12×12 grids and retains the declared conservation/energy tolerances.
+- The sequence strengthens the Ω physical bridge but does not yet establish a new physical law, a complete Navier–Stokes derivation, or independent pressure/vortex prediction.
 
 ### Existing bridges
 - Retained LIGHT and TRANSPORT bridge records and all prior v0.9 verification records.
