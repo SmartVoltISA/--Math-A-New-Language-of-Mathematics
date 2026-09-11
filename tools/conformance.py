@@ -166,12 +166,11 @@ def check_synchronization() -> list[Check]:
 
 
 def check_manifest_gates() -> list[Check]:
-    """Ensure the manifest names every executable gate the runner claims to provide."""
+    """Ensure the manifest names every required executable gate."""
     m = _manifest()
-    actual_names = set()
-    for group in (check_manifest_structure, check_manifest_against_registry, check_registry,
-                  check_synchronization, check_core_and_ir, check_parser, check_runtime):
-        actual_names.update(c.name for c in group())
+    groups = (check_manifest_structure, check_manifest_against_registry, check_registry,
+              check_synchronization, check_core_and_ir, check_parser, check_runtime)
+    actual_names = {c.name for group in groups for c in group()}
     required = set(m.get("required_gates", []))
     missing = sorted(required - actual_names)
     return [Check("manifest_required_gates_implemented", not missing, f"missing={missing}")]
@@ -268,6 +267,7 @@ def run() -> list[Check]:
     for group in (check_manifest_structure, check_manifest_against_registry, check_registry,
                   check_synchronization, check_core_and_ir, check_parser, check_runtime):
         out.extend(group())
+    out.extend(check_manifest_gates())
     return out
 
 
