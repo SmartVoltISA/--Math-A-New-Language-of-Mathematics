@@ -76,6 +76,14 @@ Finite-horizon behavioral equivalence extends to infinite horizon by:
 
 Nondeterministic successor sets are first-class, while branching equivalence is parameterized by explicitly declared task semantics.
 
+## Reference textual language
+
+The semantic core and concrete textual surface are deliberately separated. `LANGUAGE_SPEC.md` remains the canonical semantic specification for v0.9; `LANGUAGE_SYNTAX_v1.0.md` fixes the reference textual grammar.
+
+The reference parser supports entity and signed-relation declarations, explicit empty paths, node-defined non-empty paths, path concatenation, and queries for incidence, entity distinction, sign summary, cycles and exact path equality.
+
+The parser is intentionally strict: ambiguous parallel relations in a node-defined path are rejected instead of silently selecting one; singleton paths are rejected and empty paths must use `epsilon(entity)`.
+
 ## Reduction principle
 
 For a task `F` and reduction `Q`, behavior/task sufficiency requires:
@@ -113,7 +121,7 @@ Canonical extension register:
 - `extensions/BOUNDARY_FLUX_AND_GLOBAL_CONSERVATION.md` — finite-domain boundary-flux condition for global conservation.
 - `extensions/TRANSVERSE_CONSTRAINT_AND_POISSON_AUDIT.md` — invariant transverse sector, longitudinal zero modes and Poisson degeneracy.
 - `extensions/REDUCED_TRANSVERSE_SYMPLECTIC_THEOREM.md` — conditional nondegeneracy after explicit transverse and zero-mode reduction on `T³`.
-- `extensions/MATHEMATICAL_EXTENSION_STATUS_v1.2.md` — status register after the Hamiltonian and transverse-constraint gates.
+- `extensions/MATHEMATICAL_EXTENSION_STATUS_v1.2.md` — status after the Hamiltonian and transverse-constraint gates.
 - `extensions/MATHEMATICAL_EXTENSION_STATUS_v1.3.md` — canonical status after the reduced transverse symplectic gate.
 
 The current mathematical bridge is:
@@ -192,7 +200,8 @@ The formal language is closed for its declared domain. The following remain exte
 - general bounded-domain symplectic reduction;
 - Hodge/topological harmonic sectors;
 - full infinite-dimensional functional-analytic domain specification;
-- canonical/unique variational formulation.
+- canonical/unique variational formulation;
+- broader textual surface coverage for the semantic operator inventory.
 
 The mathematical extensions add conditional operator, spectral, propagation, Hamiltonian and scale results without removing these boundaries.
 
@@ -202,6 +211,6 @@ See the canonical documents, mathematical extensions and experiment records in t
 
 ## Status
 
-**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain, with a registered and audited mathematical extension layer v1.3.**
+**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain, with a registered and audited mathematical extension layer v1.3 and a fixed reference surface syntax v1.0.**
 
 This is not a claim of universal mathematical completeness or a completed physical theory.
