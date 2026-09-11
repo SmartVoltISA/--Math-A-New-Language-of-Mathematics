@@ -4,62 +4,51 @@
 EXECUTED / FINITE NUMERICAL VERIFICATION
 
 ## Question
-Can a finite incompressible-flow discretization be written as the sum of a reversible skew operator and a positive-semidefinite dissipative operator, while reproducing the same state transition as the reference discretized flow law?
+Can an energy-consistent finite incompressible-flow discretization be represented as reversible skew transport plus positive-semidefinite dissipation, with the same projected state transition?
 
 ## Model
-A periodic 2D incompressible velocity field on a 10×10 grid is initialized from an analytic streamfunction. Spatial derivatives are represented by the exact Fourier differentiation matrices for the periodic grid.
+Periodic 2D incompressible velocity field on a 10×10 grid. Spatial derivatives use Fourier differentiation matrices. The reference discretization uses the standard skew-symmetric advective form and a viscous operator `K = -νΔ`, with `ν = 0.05`.
 
-The reference velocity law is
+The Ω form is
 
-`z_dot = -N(z) - K z`
+`z_dot = -C(z) z - K z`
 
-where `N(z)` is the pointwise advective term and `K = -ν Δ` with `ν = 0.05`.
+where
 
-The Ω reversible operator is constructed from the skew part of the frozen advection operator:
+`C(z) = (C_raw(z) - C_raw(z)^T)/2`.
 
-`C = (C_raw - C_raw^T)/2`
-
-and the Ω form is
-
-`z_dot = -C z - K z`.
-
-Because the discrete velocity is divergence-free and the derivative matrices are skew-adjoint, the skew split reproduces the reference advective operator to numerical precision.
-
-## Execution
-20 explicit Euler transitions were run from the same initial state with `dt = 0.001`. At every step the reference and Ω right-hand sides were recomputed independently from their respective current states.
+A discrete pressure/incompressibility projection is applied after each explicit Euler step. The same initial state is used for both descriptions; 20 reference states are generated and, at every state, the Ω transition is independently evaluated and compared with the reference transition.
 
 ## Verification criteria
-1. Initial discrete divergence < `1e-10`.
-2. Skew residual `||C + C^T||_∞ < 1e-10`.
-3. Reference-vs-Ω RHS residual < `1e-10`.
-4. 20-step state residual < `1e-10`.
-5. Dissipative operator has no negative eigenvalue below numerical tolerance.
-6. Kinetic-energy rate plus dissipative quadratic form < `1e-12`.
+1. Initial projected divergence < `1e-10`.
+2. `||C + C^T||_∞ < 1e-10`.
+3. Reference-vs-Ω RHS residual < `1e-10` at all 20 states.
+4. Projected next-state residual < `1e-10` at all 20 steps.
+5. Minimum eigenvalue of `K` > `-1e-10`.
+6. `|dE/dt + z^T K z| < 1e-12`.
 
 ## Observed result
-All six criteria PASS.
+All six criteria PASS in the executable run.
 
-The construction therefore reproduces the chosen finite incompressible-flow discretization with
-
-`reversible/skew part + dissipative/PSD part`.
-
-The energy identity checked is
+The energy identity is
 
 `dE/dt = - z^T K z <= 0`
 
-because the skew contribution satisfies `z^T C z = 0`.
+because the reversible contribution satisfies
+
+`z^T C z = 0`.
 
 ## Interpretation
-This is a stronger mathematical bridge than a purely abstract matrix example: the operators are tied to a concrete incompressible-flow discretization, and the state transition is reproduced over multiple steps.
+Ω-028 establishes a concrete finite-flow representation bridge: for this declared energy-consistent incompressible discretization, the transition law separates into a skew/reversible transport part and a PSD dissipative part while preserving the same projected transition.
 
-It does **not** establish that Ω independently predicts the Navier–Stokes equations, nor does it yet establish the requested axisymmetric radial/axial vortex with independently solved pressure and boundary flux. The periodic 2D model is intentionally marked as a bridge test.
+This is stronger than an abstract arbitrary-matrix example, but it is **not an independent derivation** of Navier–Stokes. The reference discretization already uses a skew-symmetric energy-consistent advection form, so this experiment verifies compatibility/representation rather than novelty.
 
 ## Boundary
 NOT_PROVEN — full axisymmetric Navier–Stokes derivation.
 
 NOT_PROVEN — independent physical prediction of pressure, radial flux, and transient vortex evolution.
 
-NOT_PROVEN — novelty relative to existing skew-adjoint/Hamiltonian, finite-volume, spectral, and GENERIC/port-Hamiltonian formulations.
+NOT_PROVEN — novelty relative to existing skew-adjoint/Hamiltonian, finite-volume, spectral, GENERIC, and port-Hamiltonian formulations.
 
 ## Next falsification target
-Construct the same comparison on the axisymmetric `(r,z)` control-volume grid with `u_r != 0`, pressure projection, viscosity, and boundary flux. Compare the reference finite-volume transition against an Ω construction whose graph geometry, reversible transport operator, dissipative operator, and pressure constraint are fixed independently before the run.
+Ω-029: move the same comparison to the axisymmetric `(r,z)` control-volume geometry with genuinely nonzero `u_r`, independently specified pressure/boundary conditions, viscous transport, and a reference finite-volume transition. The Ω graph geometry and operators must be fixed before the reference result is inspected.
