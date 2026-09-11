@@ -36,6 +36,7 @@ OPERATOR_REGISTRY: Tuple[OperatorSpec, ...] = (
     OperatorSpec("BEHAVIOR", "State × Dynamics × Horizon → Behavior", "DEFINED", None, "CALL", "behavior"),
     OperatorSpec("COST", "Transformation → [0,∞]", "DEFINED FRAMEWORK", None, "CALL", "cost"),
     OperatorSpec("DISTANCE", "State × State → [0,∞]∪{∞}", "DERIVED", None, "CALL", "distance"),
+    OperatorSpec("QUOTIENT_DISTANCE", "Quotient × BaseDistance → [0,∞]∪{∞}", "DERIVED", None, "CALL", "quotient_distance"),
     OperatorSpec("SYMMETRY", "State × TransformFamily → Orbit/Action", "DEFINED", None, "CALL", "symmetry"),
     OperatorSpec("RETAIN", "State × RetentionRule → MemoryCandidate", "DEFINED FRAMEWORK", None, "CALL", "retain"),
     OperatorSpec("ORDER", "TransitionSequence → OrderedIndex", "DERIVED", None, "CALL", "order"),
