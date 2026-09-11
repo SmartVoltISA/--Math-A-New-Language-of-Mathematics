@@ -155,6 +155,7 @@ def execute_ir(program: IRProgram):
             for a, b in zip(ids, ids[1:]):
                 candidates = [r for r in relations.values() if r.src == a and r.dst == b]
                 if not candidates: raise ValueError(f"missing relation {a}->{b}")
+                if len(candidates) > 1: raise ValueError(f"ambiguous relation {a}->{b}; assign and use an explicit relation key")
                 rs.append(candidates[0])
             paths[name] = Path(tuple(rs), ids[0], ids[-1])
         elif op == 'CONCAT':
@@ -182,6 +183,10 @@ def execute_ir(program: IRProgram):
             left, right = args
             if left not in paths or right not in paths: raise ValueError("PATH_EQ needs two known paths")
             results.append(path_eq(paths[left], paths[right]))
+        elif op == 'CALL':
+            name, operands = args
+            if not isinstance(operands, tuple): raise TypeError("CALL operands must be a tuple")
+            results.append(execute(name, *operands))
     return results
 
 
