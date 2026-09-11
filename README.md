@@ -112,7 +112,9 @@ Canonical extension register:
 - `extensions/VARIATIONAL_HAMILTONIAN_AUDIT.md` — Hamiltonian/variational structural audit, including pairing and operator-adjointness conditions.
 - `extensions/BOUNDARY_FLUX_AND_GLOBAL_CONSERVATION.md` — finite-domain boundary-flux condition for global conservation.
 - `extensions/TRANSVERSE_CONSTRAINT_AND_POISSON_AUDIT.md` — invariant transverse sector, longitudinal zero modes and Poisson degeneracy.
-- `extensions/MATHEMATICAL_EXTENSION_STATUS_v1.2.md` — canonical status register after the Hamiltonian and transverse-constraint gates.
+- `extensions/REDUCED_TRANSVERSE_SYMPLECTIC_THEOREM.md` — conditional nondegeneracy after explicit transverse and zero-mode reduction on `T³`.
+- `extensions/MATHEMATICAL_EXTENSION_STATUS_v1.2.md` — status register after the Hamiltonian and transverse-constraint gates.
+- `extensions/MATHEMATICAL_EXTENSION_STATUS_v1.3.md` — canonical status after the reduced transverse symplectic gate.
 
 The current mathematical bridge is:
 
@@ -126,7 +128,9 @@ The two-field gate is closed conditionally: after positive field-space normaliza
 
 The Hamiltonian audit establishes that the full operator is skew-adjoint because field-space `J` is skew while spatial curl is self-adjoint under the admissible L2 pairing. Global conservation on finite domains depends on boundary flux.
 
-The transverse condition is not derived: divergence is conserved, so divergence-free data define an invariant sector while longitudinal components remain zero-frequency modes. The associated Hamiltonian/Poisson operator is generally degenerate because curl has a kernel.
+The transverse condition is not derived: divergence is conserved, so divergence-free data define an invariant sector while longitudinal components remain zero-frequency modes. The unrestricted Hamiltonian/Poisson operator is generally degenerate because curl has a kernel.
+
+Under the explicit reduced domain `T³ + transverse nonzero Fourier sector + ω ≠ 0`, curl is invertible and the two-field Hamiltonian operator becomes nondegenerate, yielding a conditional symplectic operator representation. This does not automatically generalize to arbitrary domains or topologies.
 
 These are mathematical selection and structural results within restricted classes, not derivations of Maxwell theory or electromagnetism.
 
@@ -185,8 +189,10 @@ The formal language is closed for its declared domain. The following remain exte
 - task-independent emergence;
 - causal self-model;
 - independent physical predictions;
-- nondegenerate symplectic reduction of the curl kernel;
-- additional conserved quantities from a fully specified reduced phase space.
+- general bounded-domain symplectic reduction;
+- Hodge/topological harmonic sectors;
+- full infinite-dimensional functional-analytic domain specification;
+- canonical/unique variational formulation.
 
 The mathematical extensions add conditional operator, spectral, propagation, Hamiltonian and scale results without removing these boundaries.
 
@@ -196,6 +202,6 @@ See the canonical documents, mathematical extensions and experiment records in t
 
 ## Status
 
-**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain, with a registered and audited mathematical extension layer v1.2.**
+**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain, with a registered and audited mathematical extension layer v1.3.**
 
 This is not a claim of universal mathematical completeness or a completed physical theory.
