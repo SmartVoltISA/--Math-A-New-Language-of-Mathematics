@@ -88,6 +88,30 @@ The machine-readable operator inventory is `omega_math/operator_registry.py`. Th
 
 This is intentional: runtime availability does not automatically imply textual syntax. A future textual encoding must be declarative, typed and lowerable to validated IR rather than serializing arbitrary Python.
 
+## Offline conformance
+
+The repository includes `tools/conformance.py`, an independent deterministic conformance runner that requires neither network access nor GitHub Actions nor pytest.
+
+From the repository root:
+
+```text
+python tools/conformance.py
+python tools/conformance.py --json
+```
+
+The runner checks, among other things:
+
+- canonical operator registry uniqueness and runtime symbol coverage;
+- the boundary between textual surface syntax and `CALL`-backed runtime operators;
+- typed entity/relation domains and empty-path identity;
+- IR validation and `CALL` execution;
+- parser behavior, including rejection of ambiguous parallel relations and singleton non-empty paths;
+- representative runtime operators and rejection of unknown operators.
+
+`PASS` means every declared conformance probe passed. `FAIL` means the implementation contradicted a probe. `INVALID` means the runner itself could not establish a valid execution environment.
+
+This runner is a local verification layer; it does not replace the broader experimental and mathematical verification records.
+
 ## Reduction principle
 
 For a task `F` and reduction `Q`, behavior/task sufficiency requires:
@@ -100,7 +124,7 @@ If this implication fails, the reduction is information-losing for that task. **
 
 For admissible transformations `𝒯(S,S')` with declared cost `c`, define the candidate distance:
 
-`d_c(S,S') = inf{c(T):T∈𝒯(S,S')}`.
+`d_c(S,S') = inf{c(T):T∈𝒯(S,S')} .`
 
 A metric is accepted only when its axioms follow for the declared domain and transformation family. Quotient-induced distance is additionally conditional; it is not automatically a pseudometric for an arbitrary equivalence relation.
 
@@ -215,6 +239,6 @@ See the canonical documents, mathematical extensions and experiment records in t
 
 ## Status
 
-**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain, with a registered and audited mathematical extension layer v1.3, a fixed reference surface syntax v1.0, and an implemented language-runtime bridge v1.1.**
+**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain, with a registered and audited mathematical extension layer v1.3, a fixed reference surface syntax v1.0, an implemented language-runtime bridge v1.1, and an independent offline conformance runner.**
 
 This is not a claim of universal mathematical completeness or a completed physical theory.
