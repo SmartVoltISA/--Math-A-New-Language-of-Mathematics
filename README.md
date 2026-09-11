@@ -84,6 +84,10 @@ The reference parser supports entity and signed-relation declarations, explicit 
 
 The parser is intentionally strict: ambiguous parallel relations in a node-defined path are rejected instead of silently selecting one; singleton paths are rejected and empty paths must use `epsilon(entity)`.
 
+The machine-readable operator inventory is `omega_math/operator_registry.py`. The runtime/IR boundary is documented in `LANGUAGE_RUNTIME_BRIDGE_v1.1.md`; IR v1.1 provides a validated in-memory `CALL` bridge for runtime operators whose operands are executable rules, predicates or dynamics.
+
+This is intentional: runtime availability does not automatically imply textual syntax. A future textual encoding must be declarative, typed and lowerable to validated IR rather than serializing arbitrary Python.
+
 ## Reduction principle
 
 For a task `F` and reduction `Q`, behavior/task sufficiency requires:
@@ -211,6 +215,6 @@ See the canonical documents, mathematical extensions and experiment records in t
 
 ## Status
 
-**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain, with a registered and audited mathematical extension layer v1.3 and a fixed reference surface syntax v1.0.**
+**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain, with a registered and audited mathematical extension layer v1.3, a fixed reference surface syntax v1.0, and an implemented language-runtime bridge v1.1.**
 
 This is not a claim of universal mathematical completeness or a completed physical theory.
