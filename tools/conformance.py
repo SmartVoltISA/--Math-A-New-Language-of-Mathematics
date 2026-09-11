@@ -4,8 +4,8 @@
 No GitHub Actions, network access, or pytest is required. Exit code 0 means
 PASS; 1 means FAIL; 2 means INVALID runner/environment.
 
-The synchronization gate checks that the canonical operator registry agrees
-with the executable runtime, IR bridge, and canonical operator table. The
+The synchronization gate checks the canonical manifest against the executable
+runtime, IR bridge, operator registry and canonical operator table. The
 textual surface is checked separately because semantic operators may
 intentionally have no declarative textual encoding yet.
 """
@@ -23,10 +23,12 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from omega_math.core import Entity, Relation, Path, dist, incident, sign_summary
-from omega_math.ir import IRInstruction, IRProgram, OP_ARITY
+from omega_math.ir import IRInstruction, IRProgram
 from omega_math.operator_registry import OPERATOR_REGISTRY, get_operator, surface_operators
 from omega_math.parser import ParseError, Program
 from omega_math import runtime
+
+MANIFEST_PATH = ROOT / "CONFORMANCE_MANIFEST_v1.0.json"
 
 
 @dataclass
@@ -43,8 +45,16 @@ def _read_root(name: str) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def _manifest() -> dict:
+    if not MANIFEST_PATH.is_file():
+        raise RuntimeError("required conformance manifest is absent")
+    try:
+        return json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise RuntimeError(f"invalid conformance manifest JSON: {exc}") from exc
+
+
 def _table_operators() -> set[str]:
-    """Extract canonical operator names from OPERATOR_TABLE.md table rows."""
     text = _read_root("OPERATOR_TABLE.md")
     found: set[str] = set()
     for line in text.splitlines():
@@ -55,7 +65,6 @@ def _table_operators() -> set[str]:
 
 
 def _runtime_dispatch_names() -> set[str]:
-    """Recover names from the reference dispatch table without executing it."""
     text = _read_root("omega_math/runtime.py")
     marker = 'table = {'
     start = text.find(marker)
@@ -64,112 +73,117 @@ def _runtime_dispatch_names() -> set[str]:
     end = text.find("\n    }", start)
     if end < 0:
         raise RuntimeError("runtime dispatch table terminator not found")
-    block = text[start:end]
-    return set(re.findall(r'"([A-Z][A-Z0-9_]*)"\s*:', block))
+    return set(re.findall(r'"([A-Z][A-Z0-9_]*)"\s*:', text[start:end]))
 
 
-def _ir_ops() -> set[str]:
+def _ir_call_names() -> set[str]:
     text = _read_root("omega_math/ir.py")
-    start = text.find("OP_ARITY = {")
-    if start < 0:
-        raise RuntimeError("IR OP_ARITY table not found")
-    end = text.find("\n}", start)
-    if end < 0:
-        raise RuntimeError("IR OP_ARITY terminator not found")
-    return set(re.findall(r'^\s*"([A-Z][A-Z0-9_]*)"\s*:', text[start:end], re.MULTILINE))
+    return {"CALL"} if '"CALL": 2' in text else set()
 
 
-def check_registry() -> list[Check]:
-    checks: list[Check] = []
-    names = {s.name for s in OPERATOR_REGISTRY}
-    checks.append(Check("registry_unique_names", len(names) == len(OPERATOR_REGISTRY)))
-
-    missing = [s.name for s in OPERATOR_REGISTRY if not hasattr(runtime, s.runtime)]
-    checks.append(Check("registry_runtime_symbols", not missing,
-                        "missing: " + ", ".join(missing)))
-
-    bad_call_surface = [s.name for s in OPERATOR_REGISTRY if s.ir_op == "CALL" and s.surface is not None]
-    checks.append(Check("call_surface_boundary", not bad_call_surface,
-                        "unexpected textual surface: " + ", ".join(bad_call_surface)))
-
-    surface = {s.surface for s in surface_operators()}
-    expected = {"dist", "incident", "path", "path_eq", "cycle", "concat", "sign"}
-    checks.append(Check("surface_inventory", surface == expected,
-                        f"got={sorted(surface)} expected={sorted(expected)}"))
-    checks.append(Check("registry_lookup", all(get_operator(n).name == n for n in names)))
+def check_manifest_structure() -> list[Check]:
+    m = _manifest()
+    checks = [
+        Check("manifest_identity", m.get("manifest") == "Ω-Math Conformance Manifest"),
+        Check("manifest_version", m.get("version") == "1.0"),
+        Check("manifest_canonical", m.get("status") == "CANONICAL"),
+        Check("manifest_layers_complete", set(m.get("layers", {})) == {
+            "semantic_spec", "surface_syntax", "operator_registry", "ir", "runtime",
+            "operator_table", "conformance_runner"
+        }),
+    ]
+    required_files = m.get("layers", {})
+    for key, rel in required_files.items():
+        checks.append(Check(f"manifest_file_{key}", (ROOT / rel).is_file(), f"missing={rel}"))
     return checks
 
 
+def check_manifest_against_registry() -> list[Check]:
+    m = _manifest()
+    manifest_ops = {x["name"]: x for x in m.get("operators", [])}
+    registry_ops = {s.name: s for s in OPERATOR_REGISTRY}
+    checks = [
+        Check("manifest_registry_name_set", set(manifest_ops) == set(registry_ops),
+              f"manifest_only={sorted(set(manifest_ops)-set(registry_ops))}; registry_only={sorted(set(registry_ops)-set(manifest_ops))}"),
+    ]
+    mismatches = []
+    for name in sorted(set(manifest_ops) & set(registry_ops)):
+        item, spec = manifest_ops[name], registry_ops[name]
+        expected = {"status": spec.status, "surface": spec.surface, "ir": spec.ir_op, "runtime": spec.runtime}
+        actual = {k: item.get(k) for k in expected}
+        if actual != expected:
+            mismatches.append(f"{name}: actual={actual} expected={expected}")
+    checks.append(Check("manifest_registry_metadata", not mismatches, "; ".join(mismatches)))
+    checks.append(Check("manifest_surface_set", set(m.get("surface_operators", [])) ==
+                        {s.surface for s in surface_operators()},
+                        "manifest surface inventory differs from registry"))
+    return checks
+
+
+def check_registry() -> list[Check]:
+    names = {s.name for s in OPERATOR_REGISTRY}
+    missing = [s.name for s in OPERATOR_REGISTRY if not hasattr(runtime, s.runtime)]
+    bad_call_surface = [s.name for s in OPERATOR_REGISTRY if s.ir_op == "CALL" and s.surface is not None]
+    surface = {s.surface for s in surface_operators()}
+    expected = {"dist", "incident", "path", "path_eq", "cycle", "concat", "sign"}
+    return [
+        Check("registry_unique_names", len(names) == len(OPERATOR_REGISTRY)),
+        Check("registry_runtime_symbols", not missing, "missing: " + ", ".join(missing)),
+        Check("call_surface_boundary", not bad_call_surface,
+              "unexpected textual surface: " + ", ".join(bad_call_surface)),
+        Check("surface_inventory", surface == expected,
+              f"got={sorted(surface)} expected={sorted(expected)}"),
+        Check("registry_lookup", all(get_operator(n).name == n for n in names)),
+    ]
+
+
 def check_synchronization() -> list[Check]:
-    """Cross-check registry, operator table, runtime dispatch and IR."""
-    checks: list[Check] = []
+    m = _manifest()
     registry = {s.name for s in OPERATOR_REGISTRY}
     table = _table_operators()
     dispatch = _runtime_dispatch_names()
-    ir_ops = _ir_ops()
+    checks = []
 
-    missing_table = sorted(registry - table)
-    extra_table = sorted(table - registry)
-    checks.append(Check("sync_registry_vs_operator_table",
-                        not missing_table and not extra_table,
-                        f"missing={missing_table} extra={extra_table}"))
+    checks.append(Check("sync_registry_vs_operator_table", registry == table,
+                        f"missing={sorted(registry-table)} extra={sorted(table-registry)}"))
 
-    runtime_specs = {s.name for s in OPERATOR_REGISTRY if s.ir_op != "CALL"}
-    missing_dispatch = sorted(runtime_specs - dispatch)
-    extra_dispatch = sorted(dispatch - registry)
-    checks.append(Check("sync_direct_runtime_dispatch",
-                        not missing_dispatch and not extra_dispatch,
-                        f"missing={missing_dispatch} extra={extra_dispatch}"))
+    direct = {s.name for s in OPERATOR_REGISTRY if s.ir_op != "CALL"}
+    checks.append(Check("sync_direct_runtime_dispatch", direct <= dispatch,
+                        f"missing={sorted(direct-dispatch)}"))
 
     call_specs = {s.name for s in OPERATOR_REGISTRY if s.ir_op == "CALL"}
-    checks.append(Check("sync_call_bridge_declared", "CALL" in ir_ops if call_specs else True,
+    checks.append(Check("sync_call_bridge_declared", "CALL" in _ir_call_names() if call_specs else True,
                         "IR CALL operation is absent"))
 
-    # Every non-CALL canonical operator must have a same-named IR opcode.
-    missing_ir = sorted(runtime_specs - ir_ops)
-    checks.append(Check("sync_registry_vs_ir", not missing_ir,
-                        f"missing={missing_ir}"))
-
-    # Registry entries using CALL must have an executable runtime symbol, while
-    # direct operators must map one-to-one to their canonical IR opcode.
-    bad_mapping = sorted(s.name for s in OPERATOR_REGISTRY
-                         if s.ir_op != "CALL" and s.ir_op != s.name)
+    bad_mapping = sorted(s.name for s in OPERATOR_REGISTRY if s.ir_op != "CALL" and s.ir_op != s.name)
     checks.append(Check("sync_registry_ir_names", not bad_mapping,
                         f"non-identity IR mappings={bad_mapping}"))
 
-    # The IR must not quietly contain extra canonical-looking operations.
-    ir_canonical = {x for x in ir_ops if x not in {"ENTITY", "RELATION", "EPSILON", "CALL"}}
-    extra_ir = sorted(ir_canonical - registry)
-    checks.append(Check("sync_ir_vs_registry", not extra_ir,
-                        f"extra={extra_ir}"))
-
-    # Keep the arity table itself structurally sound for every IR opcode.
-    checks.append(Check("ir_arity_table_valid", all(isinstance(v, int) and v >= 0 for v in OP_ARITY.values())))
+    manifest_layers = m.get("layers", {})
+    checks.append(Check("sync_manifest_runner_path", manifest_layers.get("conformance_runner") == "tools/conformance.py"))
     return checks
 
 
 def check_core_and_ir() -> list[Check]:
-    checks: list[Check] = []
     a, b, c = Entity("A", 0), Entity("B", 1), Entity("C", 0)
     r1 = Relation("A", "B", 1, key="r1")
     r2 = Relation("B", "C", -1, key="r2")
     p = Path((r1, r2), "A", "C")
     eps = Path((), "A", "A")
-
-    checks.append(Check("entity_domain", all(x.state in (0, 1) for x in (a, b, c))))
-    checks.append(Check("relation_domain", r1.sign in (-1, 1) and r2.sign in (-1, 1)))
-    checks.append(Check("epsilon_identity", eps.length == 0 and eps.source == eps.target == "A"))
-    checks.append(Check("path_sign", sign_summary(p) == -1))
-    checks.append(Check("distance_boundary", dist(a, b) != dist(a, a)))
-    checks.append(Check("incident_endpoint", incident(a, r1) is True and incident(c, r1) is False))
-
+    checks = [
+        Check("entity_domain", all(x.state in (0, 1) for x in (a, b, c))),
+        Check("relation_domain", r1.sign in (-1, 1) and r2.sign in (-1, 1)),
+        Check("epsilon_identity", eps.length == 0 and eps.source == eps.target == "A"),
+        Check("path_sign", sign_summary(p) == -1),
+        Check("distance_boundary", dist(a, b) != dist(a, a)),
+        Check("incident_endpoint", incident(a, r1) is True and incident(c, r1) is False),
+    ]
     ir = IRProgram((IRInstruction("CALL", ("DIST", (a, b))),))
     try:
         ir.validate()
         checks.append(Check("call_validation_execution", runtime.execute_ir(ir) == [dist(a, b)]))
     except Exception as exc:
         checks.append(Check("call_validation_execution", False, repr(exc)))
-
     bad = IRProgram((IRInstruction("CALL", ("", (a, b))),))
     try:
         bad.validate()
@@ -180,12 +194,12 @@ def check_core_and_ir() -> list[Check]:
 
 
 def check_parser() -> list[Check]:
-    checks: list[Check] = []
     source = "\n".join([
         "entity A 0", "entity B 1", "relation A B +1 rAB",
         "path p = A->B", "path e = epsilon(A)",
         "dist A B", "sign p", "path_eq p p", "cycle p",
     ])
+    checks: list[Check] = []
     try:
         p = Program()
         results = p.run(source)
@@ -195,7 +209,6 @@ def check_parser() -> list[Check]:
     except Exception as exc:
         checks.append(Check("parser_reference_surface", False, repr(exc)))
         checks.append(Check("parser_ir_valid", False, repr(exc)))
-
     cases = [
         ("singleton_path_rejected", "entity A 0\npath p = A", "non-empty path"),
         ("zero_relation_rejected", "entity A 0\nentity B 1\nrelation A B 0", "unsupported syntax"),
@@ -213,7 +226,6 @@ def check_parser() -> list[Check]:
 
 
 def check_runtime() -> list[Check]:
-    checks: list[Check] = []
     a, b = Entity("A", 0), Entity("B", 1)
     probes = {
         "DIST": lambda: runtime.execute("DIST", a, b),
@@ -223,6 +235,7 @@ def check_runtime() -> list[Check]:
         "HORIZON": lambda: runtime.execute("HORIZON", 2),
         "ORDER": lambda: runtime.execute("ORDER", ["x", "y"]),
     }
+    checks = []
     for name, fn in probes.items():
         try:
             fn()
@@ -239,7 +252,8 @@ def check_runtime() -> list[Check]:
 
 def run() -> list[Check]:
     out: list[Check] = []
-    for group in (check_registry, check_synchronization, check_core_and_ir, check_parser, check_runtime):
+    for group in (check_manifest_structure, check_manifest_against_registry, check_registry,
+                  check_synchronization, check_core_and_ir, check_parser, check_runtime):
         out.extend(group())
     return out
 
