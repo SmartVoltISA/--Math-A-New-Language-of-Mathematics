@@ -23,7 +23,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from omega_math.core import Entity, Relation, Path, dist, incident, sign_summary
-from omega_math.ir import IRInstruction, IRProgram
+from omega_math.ir import IRInstruction, IRProgram, OP_ARITY
 from omega_math.operator_registry import OPERATOR_REGISTRY, get_operator, surface_operators
 from omega_math.parser import ParseError, Program
 from omega_math import runtime
@@ -44,11 +44,7 @@ def _read_root(name: str) -> str:
 
 
 def _table_operators() -> set[str]:
-    """Extract canonical operator names from OPERATOR_TABLE.md.
-
-    The parser deliberately reads only table rows, not the prose section, so
-    historical/non-primitive module names cannot become accidental operators.
-    """
+    """Extract canonical operator names from OPERATOR_TABLE.md table rows."""
     text = _read_root("OPERATOR_TABLE.md")
     found: set[str] = set()
     for line in text.splitlines():
@@ -72,11 +68,15 @@ def _runtime_dispatch_names() -> set[str]:
     return set(re.findall(r'"([A-Z][A-Z0-9_]*)"\s*:', block))
 
 
-def _ir_call_names() -> set[str]:
+def _ir_ops() -> set[str]:
     text = _read_root("omega_math/ir.py")
-    if '"CALL": 2' not in text:
-        return set()
-    return {"CALL"}
+    start = text.find("OP_ARITY = {")
+    if start < 0:
+        raise RuntimeError("IR OP_ARITY table not found")
+    end = text.find("\n}", start)
+    if end < 0:
+        raise RuntimeError("IR OP_ARITY terminator not found")
+    return set(re.findall(r'^\s*"([A-Z][A-Z0-9_]*)"\s*:', text[start:end], re.MULTILINE))
 
 
 def check_registry() -> list[Check]:
@@ -101,11 +101,12 @@ def check_registry() -> list[Check]:
 
 
 def check_synchronization() -> list[Check]:
-    """Cross-check the canonical registry against executable/documented layers."""
+    """Cross-check registry, operator table, runtime dispatch and IR."""
     checks: list[Check] = []
     registry = {s.name for s in OPERATOR_REGISTRY}
     table = _table_operators()
     dispatch = _runtime_dispatch_names()
+    ir_ops = _ir_ops()
 
     missing_table = sorted(registry - table)
     extra_table = sorted(table - registry)
@@ -114,23 +115,36 @@ def check_synchronization() -> list[Check]:
                         f"missing={missing_table} extra={extra_table}"))
 
     runtime_specs = {s.name for s in OPERATOR_REGISTRY if s.ir_op != "CALL"}
-    call_specs = {s.name for s in OPERATOR_REGISTRY if s.ir_op == "CALL"}
     missing_dispatch = sorted(runtime_specs - dispatch)
-    checks.append(Check("sync_direct_runtime_dispatch", not missing_dispatch,
-                        f"missing={missing_dispatch}"))
+    extra_dispatch = sorted(dispatch - registry)
+    checks.append(Check("sync_direct_runtime_dispatch",
+                        not missing_dispatch and not extra_dispatch,
+                        f"missing={missing_dispatch} extra={extra_dispatch}"))
 
-    # CALL operators intentionally share one dispatch entry; their individual
-    # runtime functions were already checked by check_registry().
-    checks.append(Check("sync_call_bridge_declared", "CALL" in _ir_call_names() if call_specs else True,
+    call_specs = {s.name for s in OPERATOR_REGISTRY if s.ir_op == "CALL"}
+    checks.append(Check("sync_call_bridge_declared", "CALL" in ir_ops if call_specs else True,
                         "IR CALL operation is absent"))
 
-    # Every non-CALL registry entry must map to a dispatch name with the same
-    # canonical spelling. This catches accidental renames in one layer.
+    # Every non-CALL canonical operator must have a same-named IR opcode.
+    missing_ir = sorted(runtime_specs - ir_ops)
+    checks.append(Check("sync_registry_vs_ir", not missing_ir,
+                        f"missing={missing_ir}"))
+
+    # Registry entries using CALL must have an executable runtime symbol, while
+    # direct operators must map one-to-one to their canonical IR opcode.
     bad_mapping = sorted(s.name for s in OPERATOR_REGISTRY
                          if s.ir_op != "CALL" and s.ir_op != s.name)
     checks.append(Check("sync_registry_ir_names", not bad_mapping,
                         f"non-identity IR mappings={bad_mapping}"))
 
+    # The IR must not quietly contain extra canonical-looking operations.
+    ir_canonical = {x for x in ir_ops if x not in {"ENTITY", "RELATION", "EPSILON", "CALL"}}
+    extra_ir = sorted(ir_canonical - registry)
+    checks.append(Check("sync_ir_vs_registry", not extra_ir,
+                        f"extra={extra_ir}"))
+
+    # Keep the arity table itself structurally sound for every IR opcode.
+    checks.append(Check("ir_arity_table_valid", all(isinstance(v, int) and v >= 0 for v in OP_ARITY.values())))
     return checks
 
 
