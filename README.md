@@ -107,11 +107,21 @@ Canonical extension register:
 - `extensions/RELATIONAL_CIRCULATION.md` — oriented cycles, circulation and feedback.
 - `extensions/VECTOR_RELATIONAL_OPERATORS.md` — conditional curl-sector selection in a restricted isotropic first-order class.
 - `extensions/SCALE_AND_TIME.md` — separation of ordinal succession, dimensionless interval and physical duration.
-- `extensions/MATHEMATICAL_EXTENSION_STATUS_v1.0.md` — canonical status register and next mathematical gate.
+- `extensions/TWO_FIELD_COUPLED_VECTOR_SYSTEM.md` — two-field transverse system selected by locality, isotropy and positive quadratic conservation within the declared class.
+- `extensions/TWO_FIELD_COUPLING_AUDIT.md` — executed numerical consistency audit of the two-field reduction.
+- `extensions/MATHEMATICAL_EXTENSION_STATUS_v1.1.md` — canonical status register and next mathematical gate.
 
 The current mathematical bridge is:
 
 `local distinction → local relation → operator → conservation/constraint → spectrum → mode → propagation → field structure`.
+
+The two-field gate is now closed conditionally: after positive field-space normalization, the minimal nontrivial transverse sector has the form
+
+`∂t E = ω curl B`
+
+`∂t B = -ω curl E`.
+
+This is a mathematical selection result within a restricted class, not a derivation of Maxwell theory or electromagnetism.
 
 Every arrow is conditional on explicitly declared mathematical assumptions. No extension is a claim that physical laws have been derived.
 
@@ -173,10 +183,10 @@ The mathematical extensions add conditional operator, spectral, propagation and 
 
 ## Repository structure
 
-See the canonical documents, mathematical extensions and experiment records in the repository. v0.8 closure documents are retained as historical records; v0.9 documents define the current frontier status; `extensions/` contains post-closure mathematical structures and results.
+See the canonical documents, mathematical extensions and experiment records in the repository. v0.8 closure documents are retained as historical records; v0.9 documents define the core frontier status; `extensions/` contains post-closure mathematical structures and results.
 
 ## Status
 
-**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain, with a registered mathematical extension layer.**
+**Ω-Math v0.9 — formally complete as a minimal typed relational language for its declared domain, with a registered and audited mathematical extension layer v1.1.**
 
 This is not a claim of universal mathematical completeness or a completed physical theory.
