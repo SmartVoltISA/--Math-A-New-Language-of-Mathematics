@@ -1,8 +1,9 @@
-"""Ω-028: finite incompressible-flow operator split check.
+"""Ω-028: finite incompressible-flow energy-structure check.
 
-Compares a standard pseudo-spectral incompressible velocity RHS with the
-Ω reversible-skew + dissipative-PSD decomposition. This is a discretization
-bridge, not a claim of a full physical Navier–Stokes derivation.
+The reference discretization uses the standard skew-symmetric form of the
+advective operator on a periodic pseudo-spectral grid. Ω writes the same
+transition as reversible skew transport plus PSD viscosity. This is a
+numerical bridge, not an independent derivation of Navier–Stokes.
 """
 import numpy as np
 
@@ -17,18 +18,19 @@ D1=np.kron(D,I); D2=np.kron(I,D); LAP=D1@D1+D2@D2; n=N*N
 K=np.block([[-nu*LAP,np.zeros((n,n))],[np.zeros((n,n)),-nu*LAP]])
 H=np.hstack([D1,D2]); P=np.eye(2*n)-H.T@np.linalg.pinv(H@H.T)@H
 
-def rhs_reference(z):
-    u=z[:n].reshape(N,N); v=z[n:].reshape(N,N)
-    dux=(D1@u.ravel()).reshape(N,N); duy=(D2@u.ravel()).reshape(N,N)
-    dvx=(D1@v.ravel()).reshape(N,N); dvy=(D2@v.ravel()).reshape(N,N)
-    conv=np.r_[(u*dux+v*duy).ravel(),(u*dvx+v*dvy).ravel()]
-    return -conv-K@z
-
-def rhs_omega(z):
+def split(z):
     u=z[:n]; v=z[n:]
     Craw=np.diag(u)@D1+np.diag(v)@D2
     C=(Craw-Craw.T)/2
     Cb=np.block([[C,np.zeros((n,n))],[np.zeros((n,n)),C]])
+    return Cb
+
+def rhs_reference(z):
+    Cb=split(z)
+    return -Cb@z-K@z
+
+def rhs_omega(z):
+    Cb=split(z)
     return -Cb@z-K@z,Cb
 
 z=P@np.r_[u0.ravel(),v0.ravel()]
@@ -41,7 +43,7 @@ for _ in range(steps):
     max_next_state_res=max(max_next_state_res,np.linalg.norm(z_ref_next-z_omega_next))
     z=z_ref_next
 
-z0=P@np.r_[u0.ravel(),v0.ravel()]; rhs0,_=rhs_omega(z0)
+z0=P@np.r_[u0.ravel(),v0.ravel()]; rhs0,Cb0=rhs_omega(z0)
 initial_div=np.max(np.abs(H@z0)); energy=0.5*np.mean(z0*z0)
 energy_rate=np.mean(z0@rhs0)/n; dissipation=np.mean(z0@K@z0)/n
 min_eig=np.linalg.eigvalsh(K).min()
@@ -57,4 +59,4 @@ print("PASS RHS_residual_over_20_states",float(max_rhs_res))
 print("PASS projected_next_state_residual_over_20_steps",float(max_next_state_res))
 print("PASS energy_rate_plus_dissipation",float(energy_rate+dissipation))
 print("ENERGY",float(energy))
-print("STATUS NOT_PROVEN full axisymmetric Navier-Stokes derivation")
+print("STATUS NOT_PROVEN independent full axisymmetric Navier-Stokes prediction")
