@@ -20,6 +20,7 @@ This is the canonical operator inventory. An operator may not silently change ty
 | `BEHAVIOR` | `State × Dynamics × Horizon → Behavior` | DEFINED | trace/tree/task dependent |
 | `COST` | `Transformation → [0,∞]` | DEFINED FRAMEWORK | not physical energy by default |
 | `DISTANCE` | `State × State → [0,∞]∪{∞}` | DERIVED | minimal declared transformation cost |
+| `QUOTIENT_DISTANCE` | `Quotient × BaseDistance → [0,∞]∪{∞}` | DERIVED | quotient-distance candidate; compatibility required |
 | `SYMMETRY` | `State × TransformFamily → Orbit/Action` | DEFINED |
 | `RETAIN` | `State × RetentionRule → MemoryCandidate` | DEFINED FRAMEWORK | functional effect must be tested |
 | `ORDER` | `TransitionSequence → OrderedIndex` | DERIVED | internal order, not physical time |
