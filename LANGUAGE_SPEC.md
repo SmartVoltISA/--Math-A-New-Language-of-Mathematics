@@ -33,6 +33,30 @@ Therefore the following remain distinct:
 
 See `extensions/O_ZERO_BOUNDARY_REFERENCE_PRINCIPLE_v1.0.md` for the canonical research formulation.
 
+## 1.2 Entity–relation constitution principle
+
+An entity is not required to be treated as an irreducible object hidden inside a relation. In the Ω relational model, an entity may be represented as a **stable configuration of relations**. Relations therefore describe how configurations/entities influence one another, while the internal organization of each entity is itself relational.
+
+Canonical conceptual chain:
+
+`relations → configuration → stable entity`
+
+and dynamically:
+
+`entity/configuration A → influence → entity/configuration B`
+
+`A` and `B` may each contain internal relational structure. The relation between them must not be reified into an additional entity merely because it carries interaction semantics.
+
+This establishes the following separations:
+
+- `entity ≠ irreducible substance`
+- `relation ≠ hidden entity`
+- `entity = potentially stable relational configuration`
+- `interaction = influence/change between configurations`
+- `internal relations` and `external relations` are distinct levels but use the same relational architecture
+
+This principle does not change the primitive typing: `EntityState` and `RelationState` remain disjoint, and absence remains distinct from relation value.
+
 ## 2. Primitive objects
 
 `e=(id,s)`, `s∈EntityState`.
