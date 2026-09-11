@@ -1,26 +1,22 @@
 #!/usr/bin/env python3
 """Independent, offline Ω-Math conformance runner.
 
-This runner deliberately does not require GitHub Actions, network access, or
-pytest. It checks the executable reference layer and the registry/surface
-boundary using deterministic probes. Exit code 0 means PASS; non-zero means
-FAIL or INVALID.
+No GitHub Actions, network access, or pytest is required. Exit code 0 means
+PASS; 1 means FAIL; 2 means INVALID runner/environment.
 """
 from __future__ import annotations
 
 import argparse
 import json
-import math
 import sys
 from dataclasses import dataclass
 from pathlib import Path as FSPath
 
-# Make the repository root importable when invoked as `python tools/conformance.py`.
 ROOT = FSPath(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from omega_math.core import Entity, Relation, Path, concat, dist, incident, sign_summary
+from omega_math.core import Entity, Relation, Path, dist, incident, sign_summary
 from omega_math.ir import IRInstruction, IRProgram
 from omega_math.operator_registry import OPERATOR_REGISTRY, get_operator, surface_operators
 from omega_math.parser import ParseError, Program
@@ -39,27 +35,19 @@ def check_registry() -> list[Check]:
     names = [s.name for s in OPERATOR_REGISTRY]
     checks.append(Check("registry_unique_names", len(names) == len(set(names))))
 
-    runtime_missing = []
-    for spec in OPERATOR_REGISTRY:
-        if not hasattr(runtime, spec.runtime):
-            runtime_missing.append(spec.name)
-    checks.append(Check("registry_runtime_symbols", not runtime_missing,
-                        "missing: " + ", ".join(runtime_missing)))
+    missing = [s.name for s in OPERATOR_REGISTRY if not hasattr(runtime, s.runtime)]
+    checks.append(Check("registry_runtime_symbols", not missing,
+                        "missing: " + ", ".join(missing)))
 
-    bad_ir = []
-    for spec in OPERATOR_REGISTRY:
-        if spec.ir_op == "CALL" and spec.surface is not None:
-            bad_ir.append(spec.name)
-    checks.append(Check("call_surface_boundary", not bad_ir,
-                        "CALL operators unexpectedly have textual surface: " + ", ".join(bad_ir)))
+    bad_call_surface = [s.name for s in OPERATOR_REGISTRY if s.ir_op == "CALL" and s.surface is not None]
+    checks.append(Check("call_surface_boundary", not bad_call_surface,
+                        "unexpected textual surface: " + ", ".join(bad_call_surface)))
 
     surface = {s.surface for s in surface_operators()}
     expected = {"dist", "incident", "path", "path_eq", "cycle", "concat", "sign"}
     checks.append(Check("surface_inventory", surface == expected,
                         f"got={sorted(surface)} expected={sorted(expected)}"))
-
-    lookup_ok = all(get_operator(n).name == n for n in names)
-    checks.append(Check("registry_lookup", lookup_ok))
+    checks.append(Check("registry_lookup", all(get_operator(n).name == n for n in names)))
     return checks
 
 
@@ -78,12 +66,10 @@ def check_core_and_ir() -> list[Check]:
     checks.append(Check("distance_boundary", dist(a, b) != dist(a, a)))
     checks.append(Check("incident_endpoint", incident(a, r1) is True and incident(c, r1) is False))
 
-    call = IRInstruction("CALL", ("DIST", (a, b)))
-    ir = IRProgram((call,))
+    ir = IRProgram((IRInstruction("CALL", ("DIST", (a, b))),))
     try:
         ir.validate()
-        result = runtime.execute_ir(ir)
-        checks.append(Check("call_validation_execution", result == [dist(a, b)]))
+        checks.append(Check("call_validation_execution", runtime.execute_ir(ir) == [dist(a, b)]))
     except Exception as exc:
         checks.append(Check("call_validation_execution", False, repr(exc)))
 
@@ -98,22 +84,16 @@ def check_core_and_ir() -> list[Check]:
 
 def check_parser() -> list[Check]:
     checks: list[Check] = []
-    text = "\n".join([
-        "entity A 0",
-        "entity B 1",
-        "relation A B +1 rAB",
-        "path p = A->B",
-        "path e = epsilon(A)",
-        "dist A B",
-        "sign p",
-        "path_eq p p",
-        "cycle p",
+    source = "\n".join([
+        "entity A 0", "entity B 1", "relation A B +1 rAB",
+        "path p = A->B", "path e = epsilon(A)",
+        "dist A B", "sign p", "path_eq p p", "cycle p",
     ])
     try:
         p = Program()
-        results = p.run(text)
+        results = p.run(source)
         ir = p.to_ir()
-        checks.append(Check("parser_reference_surface", results == [True, 1, True, False]))
+        checks.append(Check("parser_reference_surface", results == [1, 1, True, False], repr(results)))
         checks.append(Check("parser_ir_valid", ir.normalized() == tuple((i.op, i.args) for i in ir.instructions)))
     except Exception as exc:
         checks.append(Check("parser_reference_surface", False, repr(exc)))
@@ -126,16 +106,16 @@ def check_parser() -> list[Check]:
          "entity A 0\nentity B 1\nrelation A B +1 r1\nrelation A B -1 r2\npath p = A->B",
          "ambiguous relation"),
     ]
-    for name, source, needle in cases:
+    for name, text, needle in cases:
         try:
-            Program().run(source)
+            Program().run(text)
             checks.append(Check(name, False, "invalid program accepted"))
         except ParseError as exc:
             checks.append(Check(name, needle in str(exc), str(exc)))
     return checks
 
 
-def check_runtime_surface() -> list[Check]:
+def check_runtime() -> list[Check]:
     checks: list[Check] = []
     a, b = Entity("A", 0), Entity("B", 1)
     probes = {
@@ -161,40 +141,35 @@ def check_runtime_surface() -> list[Check]:
 
 
 def run() -> list[Check]:
-    checks: list[Check] = []
-    for group in (check_registry, check_core_and_ir, check_parser, check_runtime_surface):
-        checks.extend(group())
-    return checks
+    out: list[Check] = []
+    for group in (check_registry, check_core_and_ir, check_parser, check_runtime):
+        out.extend(group())
+    return out
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Run offline Ω-Math conformance checks")
     ap.add_argument("--json", action="store_true", help="emit machine-readable JSON")
     args = ap.parse_args()
-
     try:
         checks = run()
     except Exception as exc:
         payload = {"status": "INVALID", "checks": [], "error": repr(exc)}
-        if args.json:
-            print(json.dumps(payload, ensure_ascii=False, indent=2))
-        else:
-            print("INVALID")
-            print(repr(exc))
+        print(json.dumps(payload, ensure_ascii=False, indent=2) if args.json else f"INVALID\n{exc!r}")
         return 2
-
     failed = [c for c in checks if not c.ok]
     status = "PASS" if not failed else "FAIL"
     payload = {
         "status": status,
         "checks": [{"name": c.name, "ok": c.ok, "detail": c.detail} for c in checks],
-        "summary": {"total": len(checks), "passed": len(checks) - len(failed), "failed": len(failed)},
+        "summary": {"total": len(checks), "passed": len(checks)-len(failed), "failed": len(failed)},
     }
     if args.json:
         print(json.dumps(payload, ensure_ascii=False, indent=2))
     else:
         for c in checks:
-            print(f"{'PASS' if c.ok else 'FAIL'}  {c.name}" + (f" — {c.detail}" if c.detail else ""))
+            suffix = f" — {c.detail}" if c.detail else ""
+            print(f"{'PASS' if c.ok else 'FAIL'}  {c.name}{suffix}")
         print(f"\n{status}: {payload['summary']['passed']}/{payload['summary']['total']} checks")
     return 0 if status == "PASS" else 1
 
