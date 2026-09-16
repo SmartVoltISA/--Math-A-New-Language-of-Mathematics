@@ -1,6 +1,8 @@
 """Typed Ω-Math core objects. No implicit arithmetic coercions are provided."""
 from dataclasses import dataclass
+from numbers import Real
 from typing import Any, Callable, Tuple
+import math
 
 ENTITY_STATES = frozenset({0, 1})
 RELATION_STATES = frozenset({-1, 1})
@@ -68,6 +70,14 @@ class Transformation:
     name: str
     fn: Callable[[State, Any], Any]
     cost: float = 0.0
+    def __post_init__(self):
+        # COST is contractually [0,∞]. Reject signed/NaN costs at construction
+        # so shortest-path and metric-adjacent operators cannot silently ingest
+        # an invalid edge weight.
+        if isinstance(self.cost, bool) or not isinstance(self.cost, Real):
+            raise TypeError("Transformation.cost must be a real number in [0,∞]")
+        if math.isnan(float(self.cost)) or self.cost < 0:
+            raise ValueError("Transformation.cost must be in [0,∞]")
     def __call__(self, state, inp=None): return self.fn(state, inp)
 
 @dataclass(frozen=True)
