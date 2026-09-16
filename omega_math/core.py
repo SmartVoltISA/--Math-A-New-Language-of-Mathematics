@@ -12,8 +12,8 @@ class Entity:
     id: Any
     state: int
     def __post_init__(self):
-        if self.state not in ENTITY_STATES:
-            raise TypeError("EntityState must be 0 or 1")
+        if isinstance(self.state, bool) or not isinstance(self.state, int) or self.state not in ENTITY_STATES:
+            raise TypeError("EntityState must be an int exactly equal to 0 or 1")
 
 @dataclass(frozen=True)
 class Relation:
@@ -22,8 +22,8 @@ class Relation:
     sign: int
     key: Any = None
     def __post_init__(self):
-        if self.sign not in RELATION_STATES:
-            raise TypeError("RelationState must be -1 or +1")
+        if isinstance(self.sign, bool) or not isinstance(self.sign, int) or self.sign not in RELATION_STATES:
+            raise TypeError("RelationState must be an int exactly equal to -1 or +1")
 
 @dataclass(frozen=True)
 class Configuration:
@@ -31,11 +31,17 @@ class Configuration:
     domain: frozenset[tuple]
     relations: Tuple[Relation, ...]
     def __post_init__(self):
-        ids = {e.id for e in self.entities}
+        ids = [e.id for e in self.entities]
+        if len(ids) != len(set(ids)):
+            raise ValueError("duplicate entity id")
+        keys = [r.key for r in self.relations if r.key is not None]
+        if len(keys) != len(set(keys)):
+            raise ValueError("duplicate relation key")
+        idset = set(ids)
         for r in self.relations:
             if (r.src, r.dst) not in self.domain:
                 raise ValueError("relation endpoint pair is outside D_R")
-            if r.src not in ids or r.dst not in ids:
+            if r.src not in idset or r.dst not in idset:
                 raise ValueError("relation endpoint entity is absent")
 
 @dataclass(frozen=True)
