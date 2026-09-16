@@ -17,21 +17,17 @@ The v0.9 operator inventory remains synchronized. Entity states are exactly inte
 
 ## B. Structural reconstruction
 
-Established across the audited domain family:
+Established as a structural response architecture:
 
 `response = H(Δ,R,C,S)`
-
-as a structural response architecture.
 
 Not established:
 
 `H ⇒ unique numerical constitutive coefficient`.
 
-Counterfamily:
+The executed withheld reconstruction experiment (`extensions/WITHHELD_RECONSTRUCTION_EXPERIMENT_v1.0.md`) confirms the identifiability boundary on a deterministic counterfamily: the same structural input admits multiple hidden coefficients `g`, while the structural form `J = gΔ` survives within the restricted linear family.
 
-`J = gΔ`, with arbitrary admissible `g`.
-
-Therefore constitutive descriptors belong to DOMAIN CLOSURE.
+Important scope limit: this is a methodological/synthetic gate experiment, not yet empirical validation using independently sourced physical datasets.
 
 ## C. Connector status
 
@@ -92,15 +88,36 @@ A Hamiltonian/Poisson representation can be established conditionally in the aud
 | Unique physical action | OPEN |
 | Emergence/COARSE promotion | OPEN / TASK-RELATIVE |
 
-## K. Next decisive experiment
+## K. Executed decisive gate
+
+The withheld reconstruction gate has now been executed as a deterministic synthetic experiment.
+
+Result:
+
+1. The restricted structural form `J = gΔ` survives.
+2. The hidden coefficient is not identifiable from the structural kernel.
+3. Adversarial nonlinear laws reject promotion of linear response to a universal law.
+4. The experiment therefore supports the separation between UNIVERSAL STRUCTURE and DOMAIN CLOSURE.
+
+The executable record is `tools/withheld_reconstruction.py`.
+
+## L. Next decisive empirical gate
 
 Do not add another primitive.
 
-Run withheld reconstruction experiments across at least three domains with constitutive coefficients hidden during structural reconstruction. The required outcome is not recovery of arbitrary coefficients; it is recovery of the common relational form plus correct identification of what cannot be inferred.
+Run the same withheld-reconstruction protocol on independently sourced equations or datasets from at least three genuinely different physical domains, with units, constitutive coefficients and domain labels hidden from the structural stage. The structural stage must attempt reconstruction from normalized relational inputs only; the closure stage may then reveal units and constitutive laws.
 
-Then run adversarial counterfamilies and negative controls. Any reconstruction that succeeds only because target-domain equations or coefficients were encoded in the structural representation is invalid.
+Required negative controls:
 
-## L. Final architecture
+- arbitrary hidden coefficients;
+- nonlinear constitutive laws;
+- threshold/saturation cases;
+- shuffled relation controls;
+- at least one case where the candidate structural form is intentionally false.
+
+A successful result is **not** recovery of a universal coefficient. The target is recovery of a common structural dependency plus correct abstention when domain closure is insufficient.
+
+## M. Final architecture
 
 ```text
 UNIVERSAL STRUCTURAL KERNEL
@@ -125,4 +142,4 @@ HIGHER STRUCTURES
 
 ## Decision
 
-No new universal primitive is justified by the current evidence. The project is now at the stage where the decisive progress comes from **withholding information and attempting reconstruction**, not from expanding the vocabulary.
+No new universal primitive is justified by the current evidence. The project has passed the synthetic identifiability gate and should now move to empirical withheld reconstruction rather than vocabulary expansion.
