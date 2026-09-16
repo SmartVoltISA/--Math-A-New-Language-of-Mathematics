@@ -1,7 +1,7 @@
 # Ω-Math — Full Stack Audit v1.0
 
 Date: 2026-09-16
-Status: EXECUTED STATIC AUDIT / OPEN GATES RECORDED
+Status: EXECUTED STATIC AUDIT / G-A CLOSED / RESEARCH GATES OPEN
 
 ## 1. Scope
 
@@ -89,7 +89,7 @@ executable runtime object
 
 ## 5. Runtime audit
 
-The runtime currently exposes implementations for the complete registry, including:
+The runtime exposes implementations for the complete registry, including:
 
 ```text
 DIST INCIDENT PATH PATH_EQ CYCLE CONCAT SIGN
@@ -98,13 +98,30 @@ BEHAVIOR COST DISTANCE QUOTIENT_DISTANCE SYMMETRY RETAIN
 ORDER HORIZON BRANCH REACH MODEL FEEDBACK COARSE
 ```
 
-The runtime also rejects unknown operator names through the central dispatch table.
+Unknown operator names are rejected through the central dispatch table.
 
-### Static issue to retain
+### 5.1 Closed implementation gap: COST positivity
 
-`Transformation.cost` is annotated as a numeric cost and the operator contract describes `COST` as `[0,∞]`, but the `Transformation` constructor currently does not enforce non-negativity. Therefore the mathematical contract is stronger than the runtime type validation.
+The previous audit identified a concrete contract/runtime mismatch:
 
-Decision: do not silently reinterpret negative costs. Add an explicit validation gate before treating `COST` as a metric-generating quantity.
+```text
+COST(Transformation) : [0,∞]
+```
+
+was declared, but `Transformation.cost` did not enforce that domain.
+
+This gap is now closed in the implementation:
+
+1. `Transformation.__post_init__` requires a real numeric value.
+2. Boolean values are rejected rather than silently treated as integers.
+3. `NaN` is rejected.
+4. negative values are rejected.
+5. `+∞` remains permitted because it belongs to the declared extended non-negative range.
+6. runtime `COST` now requires an actual `Transformation` instead of silently returning `0.0` for arbitrary objects.
+
+The shortest-path operator therefore cannot silently ingest a negative transformation edge through the canonical `COST` path.
+
+This fixes the previously identified concrete implementation gap without changing the closed v0.9 primitive domain.
 
 ## 6. Mathematical extension stack
 
@@ -205,13 +222,11 @@ The audit found no justified reason to insert `DIFF`, `FLOW`, `POTENTIAL`, `ENER
 
 This is a positive result: the research layer is expanding without corrupting the minimal typed language.
 
-## 10. Mathematical gates still open
+## 10. Remaining high-value research gates
 
-The complete pass leaves the following high-value gates:
+### G-A — Cost positivity — CLOSED
 
-### G-A — Cost positivity
-
-Enforce or explicitly permit signed transformation costs. Current mathematical contract assumes non-negative cost, while runtime construction does not enforce it.
+The concrete runtime mismatch identified in the previous audit has been repaired. The implementation now enforces the declared `[0,∞]` contract at construction and at the runtime operator boundary.
 
 ### G-B — Generic reconstruction
 
@@ -243,7 +258,7 @@ typed signature
 
 The GitHub repository was inspected directly, including the current source and conformance runner. A fresh local clone/execution was attempted in the present environment but external GitHub network resolution was unavailable.
 
-Therefore this document records **static source verification and synchronization analysis**, not a fresh local execution result for the current repository snapshot.
+Therefore this document records **static source verification and synchronization analysis**, plus direct inspection of the repair, not a fresh local execution result for the current repository snapshot.
 
 Existing conformance-runner design remains available as the canonical local execution mechanism:
 
@@ -252,16 +267,19 @@ python tools/conformance.py
 python tools/conformance.py --json
 ```
 
+The repaired COST contract should be added to the executable conformance suite during the next local STAND run; the source-level contract is already closed.
+
 ## 12. Final audit decision
 
 ```text
 CLOSED CORE: RETAIN
 EXTENSION LAYER: RETAIN
 TYPING: SUPPORTED
+COST CONTRACT: REPAIRED
 REGISTRY/MANIFEST/TABLE: SYNCHRONIZED BY DECLARATION
 PARSER/IR BOUNDARY: EXPLICIT
 PHYSICAL UNIVERSALITY: NOT ESTABLISHED
-PROMOTION: BLOCKED UNTIL OPEN GATES PASS
+PROMOTION: BLOCKED UNTIL RESEARCH GATES PASS
 ```
 
 The current research target is therefore no longer "add more concepts". It is:
