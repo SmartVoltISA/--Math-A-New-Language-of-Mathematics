@@ -14,7 +14,10 @@ def transform(state, rule, inp=None):
     return out
 
 def observe(state, fn=lambda s: s): return Observation(fn(state))
-def cost(t): return t.cost if isinstance(t, Transformation) else 0.0
+def cost(t):
+    if not isinstance(t, Transformation):
+        raise TypeError("COST expects a Transformation")
+    return t.cost
 
 def behavior(state, transition, observe_fn=lambda s:s, horizon=0, inputs=()):
     states = [state]
