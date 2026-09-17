@@ -48,6 +48,15 @@
 - Ω-036 repeats the vector conservative construction on 4×4 through 12×12 grids and retains the declared conservation/energy tolerances.
 - The sequence strengthens the Ω physical bridge but does not yet establish a new physical law, a complete Navier–Stokes derivation, or independent pressure/vortex prediction.
 
+### Bidirectional physical/structural methodology
+- Added `FOUNDATION/ENTITY_PROPERTY_LAW_UNIT_DISCIPLINE_v1.0.md` to enforce typed separation of entity, property, law, measure and unit.
+- Added `FOUNDATION/PHYSICAL_CORRESPONDENCE_AND_GOAL_DIRECTED_SEARCH_v1.0.md` for blind physical correspondence and goal-directed structural search.
+- Added `FOUNDATION/BIDIRECTIONAL_STRUCTURE_MAPPING_v1.0.md` for independent forward construction and reverse abstraction.
+- Added `FOUNDATION/FEASIBLE_SET_BIDIRECTIONAL_SEARCH_v1.0.md` to make the forward/reverse search operational through explicit admissible domains, feasible sets, observation compatibility, structural signatures and optional declared cost functions.
+- The feasible-set layer explicitly distinguishes `F_G` (goal-feasible), `F_O` (observation-compatible), and `F* = F_G ∩ F_O`; zero, multiple, and unique candidates remain distinct outcomes.
+- Structural cost and marginal cost are retained as mathematical quantities and are not identified with physical energy without an independent correspondence.
+- The v0.9 core remains unchanged; the new material is methodology/extension material.
+
 ### Existing bridges
 - Retained LIGHT and TRANSPORT bridge records and all prior v0.9 verification records.
 
