@@ -38,6 +38,10 @@ Single navigation point for the canonical Ω-Math v0.9 language core, research m
 
 - `LIGHT_STRUCTURAL_BRIDGE_v0.1.md` — structural comparison with electromagnetic/QFT architecture; does not alter the primitive core.
 - `TRANSPORT_LAYER_v0.1.md` — typed transport/composition schema above Ω v0.9; not a new primitive.
+- `FOUNDATION/ENTITY_PROPERTY_LAW_UNIT_DISCIPLINE_v1.0.md` — typed separation of entity, property, law, measure and unit.
+- `FOUNDATION/PHYSICAL_CORRESPONDENCE_AND_GOAL_DIRECTED_SEARCH_v1.0.md` — physical correspondence and goal-directed structural search.
+- `FOUNDATION/BIDIRECTIONAL_STRUCTURE_MAPPING_v1.0.md` — forward construction and reverse abstraction methodology.
+- `FOUNDATION/FEASIBLE_SET_BIDIRECTIONAL_SEARCH_v1.0.md` — feasible-set formulation for forward and reverse structural search.
 
 ## Verification records
 
@@ -95,4 +99,4 @@ Single navigation point for the canonical Ω-Math v0.9 language core, research m
 
 ## Boundary rule
 
-The canonical core is closed at v0.9 for the declared minimal typed relational language. External-domain mappings may motivate new research, but do not change the core without a separately defined, tested, and versioned extension.
+The canonical core is closed at v0.9 for the declared minimal typed relational language. External-domain mappings and feasible-set methodology may motivate new research, but do not change the core without a separately defined, tested, and versioned extension.
