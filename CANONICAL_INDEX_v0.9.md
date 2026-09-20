@@ -45,6 +45,7 @@ Single navigation point for the canonical Ω-Math v0.9 language core, research m
 
 ## Verification records
 - `EXPERIMENT_MATTER_HR_BRIDGE_001.md`
+- `EXPERIMENT_MATTER_DENSITY_BRIDGE_002.md`
 
 
 - `EXPERIMENT_BEHAVIORAL_QUOTIENT_001.md`
