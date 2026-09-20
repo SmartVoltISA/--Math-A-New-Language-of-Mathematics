@@ -309,3 +309,66 @@ The matter bridge has advanced from a formal analogy to a tested mathematical co
 The result is **mathematically verified in finite models**.
 
 It is **not yet a physical derivation of quantum mechanics, matter, or dark matter**.
+
+
+---
+
+## 12. Finite-size scaling — executed follow-up
+
+A decisive scaling control was run on periodic 1D cycles with:
+
+`n ∈ {20,40,80,160}`
+
+and the same signed-Laplacian construction `H_R=D-A_R`.
+
+Two cases were compared:
+
+- all-positive cycle;
+- one negative bond, giving odd global sign parity.
+
+### Lowest eigenvalue
+
+| n | all-positive λ₀ | odd-sign λ₀ |
+|---:|---:|---:|
+| 20 | ~0 | 0.02462331881 |
+| 40 | ~0 | 0.006165332534 |
+| 80 | ~0 | 0.001541927519 |
+| 160 | ~0 | 0.000385519036 |
+
+For the odd-sign sector:
+
+`λ₀ n²` = 9.8493, 9.8645, 9.8683, 9.8693.
+
+Log-log fitted exponent:
+
+`λ₀ ∝ n^-2.000`
+
+within the tested sizes.
+
+The limiting coefficient approaches `π² ≈ 9.8696`.
+
+### Interpretation
+
+The odd signed topology does not create a finite spectral gap in the thermodynamic limit on this cycle. Its lowest mode scales quadratically with system size.
+
+This strengthens the earlier result:
+
+`signed topology → altered finite spectrum`
+
+but does **not** establish a massive mode, a physical particle mass, or dark matter.
+
+### Localization control
+
+Median IPR remains consistent with extended cycle eigenmodes and scales approximately as `1/n`; no localization transition is present in this 1D cycle parity test.
+
+### DECISION
+
+**PASS:** finite-size scaling is consistent with the expected quadratic long-wavelength sector.
+
+**NO-GO:** this particular signed-cycle construction does not generate a size-independent low-energy gap.
+
+The next decisive test therefore moves to the requested bridge:
+
+`ψ_R → |ψ_R|² → coarse-grained ρ_R`
+
+with a fixed, declared coarse-graining rule and positive/negative topology controls.
