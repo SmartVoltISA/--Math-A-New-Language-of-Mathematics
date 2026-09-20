@@ -44,6 +44,8 @@ Single navigation point for the canonical Ω-Math v0.9 language core, research m
 - `FOUNDATION/FEASIBLE_SET_BIDIRECTIONAL_SEARCH_v1.0.md` — feasible-set formulation for forward and reverse structural search.
 
 ## Verification records
+- `EXPERIMENT_MATTER_HR_BRIDGE_001.md`
+
 
 - `EXPERIMENT_BEHAVIORAL_QUOTIENT_001.md`
 - `EXPERIMENT_NONDETERMINISTIC_001.md`
