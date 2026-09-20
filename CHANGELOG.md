@@ -71,3 +71,13 @@ The v0.9 core remains closed. External-domain evidence may motivate a versioned 
 - Verified altered localization on a 2D signed relational lattice.
 - Rejected `B R B^T` as the canonical candidate because its spectrum is not invariant under the natural node-sign gauge transformation.
 - Boundary retained: no physical derivation of quantum mechanics, Born rule, matter density or gravity.
+
+
+### MATTER / density bridge
+
+- Added `EXPERIMENT_MATTER_DENSITY_BRIDGE_002.md`.
+- Tested `H_R → ψ_R → |ψ_R|² → fixed 2×2 coarse-grained relational density` on a 20×20 square lattice.
+- Verified finite norm conservation and non-negative normalized coarse density.
+- Compared all-positive, topology-preserving random-sign, and topology-randomized controls.
+- Repeated random-sign control across 12 independent seeds; sign/topology changed propagation and localization metrics.
+- Boundary retained: coarse-grained relational density is not identified with physical probability, matter density, or a gravitational source.
