@@ -2,7 +2,7 @@
 
 ## Status
 
-**EXECUTED / FINITE + MULTI-SEED CONTROL VERIFICATION**
+**EXECUTED / FINITE + MULTI-SEED CONTROL VERIFICATION — CORRECTED RECORD**
 
 Date: 2026-09-20  
 Seed family: 0–11 for random-sign controls
@@ -70,9 +70,7 @@ Twelve independent seeds were tested.
 
 ### C3 — topology-randomized control
 
-Same number of edges but randomized endpoint topology; relation signs all +1.
-
-This separates sign effects from connectivity effects.
+**NOT EXECUTED in this corrected run.** A topology-randomization implementation was not accepted because the first attempted construction did not preserve the intended connectivity constraints. No topology-randomized numerical result is retained here.
 
 ## 1. Conservation check
 
@@ -154,23 +152,11 @@ All-positive reference at `t=20`:
 
 The sign-dependent difference is therefore not an artifact of a single random seed in this tested sample.
 
-## 6. Topology-randomized control
+## 6. Topology control — deferred
 
-A topology-randomized graph with the same edge count and all-positive relation signs was also evolved.
+A topology-randomized control is required to separate topology effects from sign effects. It is **deferred** until a degree/connectivity-preserving rewiring procedure is validated independently.
 
-At `t=20`:
-
-- microscopic PR ≈ 148.77;
-- block PR ≈ 70.70;
-- maximum block mass ≈ 0.0361.
-
-Its behavior differs from both the regular all-positive lattice and the random-sign lattice.
-
-Therefore:
-
-**PASS — both topology and relation signs can alter the coarse-grained density dynamics.**
-
-The experiment does not yet identify which structural feature would be physically fundamental.
+No topology-randomized result is used in the decision below.
 
 ## 7. What this closes
 
@@ -208,7 +194,8 @@ Therefore this experiment is not evidence that the constructed density is actual
 
 **PASS:** fixed, parameter-free 2×2 coarse-graining gives reproducible mesoscopic density measures.
 
-**PASS:** topology-randomized and sign-randomized controls change the resulting density dynamics.
+**PASS:** topology-preserving random-sign controls change the resulting density dynamics.  
+**OPEN:** topology-only effect; a validated topology-randomized control is still required.
 
 **OPEN:** whether a physically meaningful coarse-grained field can be selected without arbitrary coarse-graining choices.
 
