@@ -61,3 +61,13 @@
 - Retained LIGHT and TRANSPORT bridge records and all prior v0.9 verification records.
 
 The v0.9 core remains closed. External-domain evidence may motivate a versioned extension only after formal definition, counterexample testing, sufficiency analysis, and cross-domain verification.
+
+
+### MATTER / H_R bridge
+
+- Added `EXPERIMENT_MATTER_HR_BRIDGE_001.md`.
+- Tested a relation-defined signed Hamiltonian candidate `H_R=D-A_R`.
+- Verified Hermiticity, finite spectral evolution, norm preservation, 1D analytic dispersion and topology/sign controls.
+- Verified altered localization on a 2D signed relational lattice.
+- Rejected `B R B^T` as the canonical candidate because its spectrum is not invariant under the natural node-sign gauge transformation.
+- Boundary retained: no physical derivation of quantum mechanics, Born rule, matter density or gravity.
