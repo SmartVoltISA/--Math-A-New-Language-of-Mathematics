@@ -15,5 +15,7 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e . pytest
       - run: python -m pytest -q
+      - name: Run real Ω-Math core vs Lean import graph comparison
+        run: python -m pytest -q -s tests/test_lean_dependency_graph_comparison_20261012.py
       - run: python experiments/run_v09_verification.py
       - run: python bridges/RELATION_GEOMETRY_NONRECIPROCAL_EXP_002.py
