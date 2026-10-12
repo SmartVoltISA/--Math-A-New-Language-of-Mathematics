@@ -171,7 +171,7 @@ def test_corpus_is_pinned_and_reproducible():
     assert len(CORPUS) == 12
     assert len(EDGES) == 37
     assert len(NODES) == 35
-    assert len(EXPECTED) == 12
+    assert len(EXPECTED) == 37
     assert all(len(spec["sha"]) == 40 for spec in CORPUS.values())
     assert plain_graph_valid(NODES, EDGES)
     make_omega_configuration(NODES, EDGES)
