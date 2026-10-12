@@ -39,6 +39,71 @@ CORPUS = {
             "OAI.NumberTheory.PiExponent.Jets.AdmissibleJetSurjectivity",
         ],
     },
+
+    "lean/OAI/NumberTheory/PiExponent/Approximation/InterpolationConsequence.lean": {
+        "sha": "a578da1de6124007398ab19c0dbbe2abe3501821",
+        "imports": [
+            "OAI.NumberTheory.PiExponent.Analysis.AnalyticAggregate",
+            "OAI.NumberTheory.PiExponent.Analysis.FlintConsequence",
+            "OAI.NumberTheory.PiExponent.Approximation.Exponent",
+        ],
+    },
+    "lean/OAI/NumberTheory/PiExponent/Ampleness/AdmissibleBlowupGeometry.lean": {
+        "sha": "d81138931efefd547c1703b61389a644d97fa19b",
+        "imports": [
+            "OAI.NumberTheory.PiExponent.Ampleness.BlowupProperIntegral",
+            "OAI.NumberTheory.PiExponent.Ampleness.WeightedProjectiveAmple",
+            "OAI.NumberTheory.PiExponent.Approximation.WeightedGeometryScale",
+            "OAI.NumberTheory.PiExponent.Geometry.AdmissibleCurveInequality",
+            "OAI.NumberTheory.PiExponent.Geometry.CurveMonomialMap",
+            "OAI.NumberTheory.PiExponent.Jets.CompactLogJetIdeal",
+        ],
+    },
+    "lean/OAI/NumberTheory/PiExponent/Approximation/DeterminantContradiction.lean": {
+        "sha": "3b46a6c8002c548105a8228def6e23a7f5375d79",
+        "imports": [
+            "Mathlib",
+            "OAI.NumberTheory.PiExponent.Approximation.AdmissibleParameters",
+            "OAI.NumberTheory.PiExponent.Approximation.Comparison",
+            "OAI.NumberTheory.PiExponent.Approximation.MatrixArithmetic",
+            "OAI.NumberTheory.PiExponent.Approximation.MatrixCounting",
+            "OAI.NumberTheory.PiExponent.Statement",
+        ],
+    },
+    "lean/OAI/NumberTheory/PiExponent/Approximation/FormalMatrixSurjectivity.lean": {
+        "sha": "9bb97cb66f1a92fc8dc7422395aa49cdc34eb949",
+        "imports": [
+            "OAI.NumberTheory.PiExponent.Approximation.FormalMatrixBridge",
+            "OAI.NumberTheory.PiExponent.Jets.FormalJetIndices",
+        ],
+    },
+    "lean/OAI/NumberTheory/PiExponent/Approximation/WeightedSliceDegree.lean": {
+        "sha": "d4a66832aecc56b74ed2660c20ffc7af99e00e86",
+        "imports": ["Mathlib"],
+    },
+    "lean/OAI/NumberTheory/PiExponent/Approximation/AdmissibleMatrixFrame.lean": {
+        "sha": "c7d8370c242e33c767bd571fcfbae1f03a5937f6",
+        "imports": [
+            "OAI.NumberTheory.PiExponent.Ampleness.WeightedAffineFrame",
+            "OAI.NumberTheory.PiExponent.Jets.AffineJetCoefficientInterface",
+        ],
+    },
+    "lean/OAI/NumberTheory/PiExponent/Approximation/WeightedGlobalSectionBound.lean": {
+        "sha": "65f55b4d3ea7636cd274a7f31be7181a90eb5a2a",
+        "imports": [
+            "OAI.NumberTheory.PiExponent.Approximation.WeightedPullbackDegree",
+            "OAI.NumberTheory.PiExponent.Geometry.ProjectiveCoefficientBound",
+            "OAI.NumberTheory.PiExponent.Polynomials.WeightedHomogeneousSubstitution",
+        ],
+    },
+    "lean/OAI/NumberTheory/PiExponent/Jets/AdmissibleJetPackets.lean": {
+        "sha": "e31f4d941b972a71c1226b88d1ae5e57b6319072",
+        "imports": [
+            "OAI.NumberTheory.PiExponent.Ampleness.AdmissibleBlowupGeometry",
+            "OAI.NumberTheory.PiExponent.Jets.AffineJetFramedPackets",
+        ],
+    },
+
     "lean/OAI/NumberTheory/PiExponent/Statement.lean": {
         "sha": "f26a2c5d0bff73d1279b8c579ef68be04ee7794b",
         "imports": ["Mathlib"],
@@ -103,14 +168,14 @@ def make_omega_configuration(nodes, edges, *, signs=None, states=None, keys=None
 
 
 def test_corpus_is_pinned_and_reproducible():
-    assert len(CORPUS) == 4
-    assert len(EDGES) == 12
-    assert len(NODES) == 14
+    assert len(CORPUS) == 12
+    assert len(EDGES) == 37
+    assert len(NODES) == 35
     assert len(EXPECTED) == 12
     assert all(len(spec["sha"]) == 40 for spec in CORPUS.values())
     assert plain_graph_valid(NODES, EDGES)
     make_omega_configuration(NODES, EDGES)
-    print(f"CORPUS files={len(CORPUS)} nodes={len(NODES)} explicit_import_edges={len(EDGES)}")
+    print(f"CORPUS files={len(CORPUS)} nodes={len(NODES)} explicit_import_edges={len(EDGES)} (pinned PiExponent slice; external dependencies remain boundary nodes)")
     print("SOURCE_SHAS " + " ".join(spec["sha"] for spec in CORPUS.values()))
 
 
