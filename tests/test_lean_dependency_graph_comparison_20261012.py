@@ -256,10 +256,10 @@ def test_native_configuration_does_not_enforce_acyclicity():
     print("CYCLE detected_by_experiment_graph_checker; accepted_by_plain_graph_and_omega_Configuration")
 
 
-def test_relation_schema_does_not_encode_relation_kind_or_source_provenance():
+def test_relation_schema_has_no_first_class_kind_or_provenance_fields():
     relation_fields = {f.name for f in fields(Relation)}
     assert relation_fields == {"src", "dst", "sign", "key"}
     assert "kind" not in relation_fields
     assert "source" not in relation_fields
     assert "provenance" not in relation_fields
-    print("SCHEMA_FIELDS Relation=src,dst,sign,key; kind/provenance=NOT_REPRESENTABLE")
+    print("SCHEMA_FIELDS Relation=src,dst,sign,key; kind/provenance=NO_FIRST_CLASS_FIELDS; key remains opaque")
