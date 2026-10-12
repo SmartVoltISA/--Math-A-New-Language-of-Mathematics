@@ -45,10 +45,14 @@ CORPUS = {
     },
 }
 
-SOURCE_NODES = tuple(CORPUS)
+def module_name(path):
+    return path.removeprefix("lean/").removesuffix(".lean").replace("/", ".")
+
+
+SOURCE_NODES = tuple(module_name(path) for path in CORPUS)
 EDGES = tuple(
-    (source, target)
-    for source, spec in CORPUS.items()
+    (module_name(source_path), target)
+    for source_path, spec in CORPUS.items()
     for target in spec["imports"]
 )
 NODES = tuple(sorted(set(SOURCE_NODES) | {target for _, target in EDGES}))
