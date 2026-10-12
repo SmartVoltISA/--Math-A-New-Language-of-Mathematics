@@ -256,6 +256,15 @@ def test_native_configuration_does_not_enforce_acyclicity():
     print("CYCLE detected_by_experiment_graph_checker; accepted_by_plain_graph_and_omega_Configuration")
 
 
+def test_wrong_relation_kind_encoded_in_opaque_key_is_not_validated():
+    edge = EDGES[0]
+    wrong_key = ("kind", "uses-definition", "source", edge[0], "target", edge[1])
+    configuration = make_omega_configuration(NODES, EDGES, keys={edge: wrong_key})
+    relation = next(r for r in configuration.relations if (r.src, r.dst) == edge)
+    assert relation.key == wrong_key
+    print("WRONG_RELATION_KIND encoded_in_opaque_key=ACCEPTED; core_does_not_validate_key_semantics")
+
+
 def test_relation_schema_has_no_first_class_kind_or_provenance_fields():
     relation_fields = {f.name for f in fields(Relation)}
     assert relation_fields == {"src", "dst", "sign", "key"}
