@@ -9,6 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout pinned OpenAI/math PiExponent sources
+        uses: actions/checkout@v4
+        with:
+          repository: openai/math
+          ref: fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb
+          path: openai-math
+          sparse-checkout: |
+            lean/OAI/NumberTheory/PiExponent
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -19,3 +27,5 @@ jobs:
         run: python -m pytest -q -s tests/test_lean_dependency_graph_comparison_20261012.py
       - run: python experiments/run_v09_verification.py
       - run: python bridges/RELATION_GEOMETRY_NONRECIPROCAL_EXP_002.py
+      - name: Run full PiExponent import graph comparison against Ω-Math core
+        run: python tools/lean_import_graph_full_project.py
