@@ -24,7 +24,7 @@ IMPORT_RE = re.compile(r"^\s*import\s+([A-Za-z0-9_.]+)\s*$", re.MULTILINE)
 
 
 def git_blob_sha(content: bytes) -> str:
-    header = f"blob {len(content)}\\0".encode()
+    header = f"blob {len(content)}\0".encode()
     return sha1(header + content).hexdigest()
 
 
@@ -155,7 +155,7 @@ def main():
     assert not has_cycle(nodes, edges), "cycle in PiExponent source-level import graph"
 
     digest = sha256(
-        "\\n".join(f"{mod} {blob_shas[mod]}" for mod in source_modules).encode()
+        "\n".join(f"{mod} {blob_shas[mod]}" for mod in source_modules).encode()
     ).hexdigest()
     print("FULL_PROJECT_IMPORT_GRAPH PASS")
     print(f"UPSTREAM_COMMIT {commit}")
