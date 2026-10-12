@@ -150,6 +150,9 @@ def main():
     assert next(r for r in wrong_legal_sign.relations if (r.src, r.dst) == first_edge).sign == -1
     wrong_state = make_omega(nodes, source_modules, edges, states={source_modules[0]: 1})
     assert next(e for e in wrong_state.entities if e.id == source_modules[0]).state == 1
+    wrong_kind_key = ("kind", "uses-definition", "source", first_edge[0], "target", first_edge[1])
+    wrong_kind = make_omega(nodes, source_modules, edges, keys={first_edge: wrong_kind_key})
+    assert next(r for r in wrong_kind.relations if (r.src, r.dst) == first_edge).key == wrong_kind_key
     relation_fields = {f.name for f in fields(Relation)}
     assert relation_fields == {"src", "dst", "sign", "key"}
     assert not has_cycle(nodes, edges), "cycle in PiExponent source-level import graph"
@@ -173,6 +176,7 @@ def main():
     print("INVALID_SIGN 0=REJECT; VALID_BUT_WRONG_SIGN -1=ACCEPT")
     print("WRONG_VALID_ENTITY_STATE=ACCEPT")
     print("RELATION_FIELDS src,dst,sign,key; kind/provenance=NO_FIRST_CLASS_FIELDS; key=OPAQUE")
+    print("WRONG_RELATION_KIND encoded_in_opaque_key=ACCEPT; core_does_not_validate_key_semantics")
     print("SOURCE_IMPORT_GRAPH_CYCLES 0")
 
 
