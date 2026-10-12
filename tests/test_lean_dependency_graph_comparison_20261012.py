@@ -21,7 +21,7 @@ CORPUS = {
         ],
     },
     "lean/OAI/NumberTheory/PiExponent/Approximation/AdmissibleMatrixInterpolation.lean": {
-        "sha": "4020f7dd25e5a10de7893cf0f302edb873801f2",
+        "sha": "4020f7dd25e10186f64d56b7edbd47fb07b45921",
         "imports": [
             "OAI.NumberTheory.PiExponent.Ampleness.AdmissibleBlowupGeometry",
             "OAI.NumberTheory.PiExponent.Approximation.DeterminantContradiction",
