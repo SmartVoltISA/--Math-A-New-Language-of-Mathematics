@@ -138,8 +138,8 @@ def main():
         raise AssertionError("Ω-Math Configuration accepted a dangling endpoint")
 
     # Ω-Math has a sign domain, but no source-specific semantic oracle for the
-    # sign: both allowed signs are accepted. The relation schema has no kind or
-    # provenance fields.
+    # sign: both allowed signs are accepted. Relation has no dedicated kind or
+    # provenance fields; key is opaque and the core does not validate its meaning.
     try:
         make_omega(nodes, source_modules, edges, signs={first_edge: 0})
     except TypeError:
@@ -172,7 +172,7 @@ def main():
     print("DANGLING_ENDPOINT omega_Configuration=REJECT")
     print("INVALID_SIGN 0=REJECT; VALID_BUT_WRONG_SIGN -1=ACCEPT")
     print("WRONG_VALID_ENTITY_STATE=ACCEPT")
-    print("RELATION_FIELDS src,dst,sign,key; kind/provenance=NOT_REPRESENTABLE")
+    print("RELATION_FIELDS src,dst,sign,key; kind/provenance=NO_FIRST_CLASS_FIELDS; key=OPAQUE")
     print("SOURCE_IMPORT_GRAPH_CYCLES 0")
 
 
