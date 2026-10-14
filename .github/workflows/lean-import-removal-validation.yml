@@ -1,0 +1,54 @@
+name: Lean import-removal validation
+
+on:
+  push:
+    branches:
+      - experiment/lean-import-removal-20261014
+  pull_request:
+    branches:
+      - experiment/lean-import-removal-20261014
+
+jobs:
+  lean-import-removal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout experiment repository
+        uses: actions/checkout@v4
+
+      - name: Checkout pinned OpenAI Lean sources
+        uses: actions/checkout@v4
+        with:
+          repository: openai/math
+          ref: fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb
+          path: openai-math
+          sparse-checkout: lean
+          sparse-checkout-cone-mode: true
+
+      - name: Install pinned Lean toolchain and Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: openai-math/lean
+          build: false
+          test: false
+          use-mathlib-cache: true
+
+      - name: Compile the pinned PiExponent source slice
+        working-directory: openai-math/lean
+        run: |
+          lake build \
+            OAI.NumberTheory.PiExponent.Main \
+            OAI.NumberTheory.PiExponent.Approximation.AdmissibleMatrixInterpolation \
+            OAI.NumberTheory.PiExponent.Approximation.AdmissibleMatrixGeometry \
+            OAI.NumberTheory.PiExponent.Approximation.InterpolationConsequence \
+            OAI.NumberTheory.PiExponent.Ampleness.AdmissibleBlowupGeometry \
+            OAI.NumberTheory.PiExponent.Approximation.DeterminantContradiction \
+            OAI.NumberTheory.PiExponent.Approximation.FormalMatrixSurjectivity \
+            OAI.NumberTheory.PiExponent.Approximation.WeightedSliceDegree \
+            OAI.NumberTheory.PiExponent.Approximation.AdmissibleMatrixFrame \
+            OAI.NumberTheory.PiExponent.Approximation.WeightedGlobalSectionBound \
+            OAI.NumberTheory.PiExponent.Jets.AdmissibleJetPackets \
+            OAI.NumberTheory.PiExponent.Statement
+
+      - name: Delete each declared import and re-run Lean
+        run: python tools/lean_import_removal_probe.py
